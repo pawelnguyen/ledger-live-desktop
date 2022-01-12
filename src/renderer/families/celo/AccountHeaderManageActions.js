@@ -23,7 +23,7 @@ const AccountHeaderManageActions = ({ account }: Props) => {
 
   const onClick = useCallback(() => {
     dispatch(
-      openModal("MODAL_POLKADOT_REWARDS_INFO", {
+      openModal("MODAL_CELO_MANAGE", {
         account,
       }),
     );
@@ -31,13 +31,13 @@ const AccountHeaderManageActions = ({ account }: Props) => {
 
   const manageEnabled = true;
 
-  const label = "polkadot.manage.title";
+  const label = "Manage assets";
 
   return [
     {
       key: "polkadot",
       onClick: onClick,
-      icon: hasBondedBalance ? CryptoCurrencyIcon : IconChartLine,
+      icon: CryptoCurrencyIcon,
       disabled: !manageEnabled,
       label,
     },
