@@ -51,10 +51,11 @@ type StateProps = {|
 
 type Props = OwnProps & StateProps;
 
+// TODO: i18n
 const steps: Array<St> = [
   {
     id: "amount",
-    label: <Trans i18nKey="polkadot.bond.steps.amount.title" />,
+    label: <Trans i18nKey="Amount to lock" />,
     component: StepAmount,
     noScroll: true,
     footer: StepAmountFooter,
@@ -113,9 +114,8 @@ const Body = ({
     const t = bridge.createTransaction(account);
 
     const transaction = bridge.updateTransaction(t, {
-      mode: "bond",
+      mode: "lock",
       recipient: account.freshAddress,
-      rewardDestination: "Stash",
     });
 
     return { account, parentAccount, transaction };
@@ -155,8 +155,9 @@ const Body = ({
 
   const error = transactionError || bridgeError;
 
+  // TODO: i18n
   const stepperProps = {
-    title: t("polkadot.bond.title"),
+    title: "Lock assets",
     device,
     account,
     parentAccount,
