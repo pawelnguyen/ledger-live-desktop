@@ -115,14 +115,12 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
     [dispatch, account],
   );
 
-  const electionOpen = false;
-
   const nominationEnabled = false;
-  const chillEnabled = false;
-  const bondingEnabled = false;
+  const bondingEnabled = true;
   const unbondingEnabled = false;
   const withdrawEnabled = false
 
+  //TODO: i18n, descriptions
   return (
     <Modal
       {...rest}
@@ -146,7 +144,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </IconWrapper>
                   <InfoWrapper>
                     <Title>
-                      <Trans i18nKey="polkadot.manage.bond.title" />
+                      <Trans i18nKey="Lock" />
                     </Title>
                     <Description>
                       <Trans i18nKey="polkadot.manage.bond.description" />
@@ -162,7 +160,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </IconWrapper>
                   <InfoWrapper>
                     <Title>
-                      <Trans i18nKey="polkadot.manage.unbond.title" />
+                      <Trans i18nKey="Unlock" />
                     </Title>
                     <Description>
                       <Trans i18nKey="polkadot.manage.unbond.description" />
@@ -198,7 +196,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </IconWrapper>
                   <InfoWrapper>
                     <Title>
-                      <Trans i18nKey="polkadot.manage.nominate.title" />
+                      <Trans i18nKey="Vote" />
                     </Title>
                     <Description>
                       <Trans i18nKey="polkadot.manage.nominate.description" />
@@ -206,22 +204,34 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </InfoWrapper>
                 </ManageButton>
                 <ManageButton
-                  disabled={!chillEnabled}
-                  onClick={() =>
-                    onSelectAction(onClose, "MODAL_POLKADOT_SIMPLE_OPERATION", {
-                      mode: "chill",
-                    })
-                  }
+                  disabled={!nominationEnabled}
+                  onClick={() => onSelectAction(onClose, "MODAL_POLKADOT_NOMINATE")}
                 >
                   <IconWrapper>
-                    <ChillIcon size={16} />
+                    <NominateIcon size={16} />
                   </IconWrapper>
                   <InfoWrapper>
                     <Title>
-                      <Trans i18nKey="polkadot.manage.chill.title" />
+                      <Trans i18nKey="Activate vote" />
                     </Title>
                     <Description>
-                      <Trans i18nKey="polkadot.manage.chill.description" />
+                      <Trans i18nKey="polkadot.manage.nominate.description" />
+                    </Description>
+                  </InfoWrapper>
+                </ManageButton>
+                <ManageButton
+                  disabled={!nominationEnabled}
+                  onClick={() => onSelectAction(onClose, "MODAL_POLKADOT_NOMINATE")}
+                >
+                  <IconWrapper>
+                    <NominateIcon size={16} />
+                  </IconWrapper>
+                  <InfoWrapper>
+                    <Title>
+                      <Trans i18nKey="Revoke vote" />
+                    </Title>
+                    <Description>
+                      <Trans i18nKey="polkadot.manage.nominate.description" />
                     </Description>
                   </InfoWrapper>
                 </ManageButton>
