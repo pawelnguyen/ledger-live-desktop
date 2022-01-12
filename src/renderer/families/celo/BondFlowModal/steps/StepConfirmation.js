@@ -1,11 +1,9 @@
 // @flow
 
-import invariant from "invariant";
 import { useSelector } from "react-redux";
 import React, { useCallback, useRef } from "react";
 import { Trans } from "react-i18next";
 import styled, { withTheme } from "styled-components";
-import { usePolkadotBondLoading } from "@ledgerhq/live-common/lib/families/polkadot/react";
 import { isFirstBond } from "@ledgerhq/live-common/lib/families/polkadot/logic";
 
 import { accountSelector } from "~/renderer/reducers/accounts";
@@ -18,7 +16,6 @@ import RetryButton from "~/renderer/components/RetryButton";
 import ErrorDisplay from "~/renderer/components/ErrorDisplay";
 import SuccessDisplay from "~/renderer/components/SuccessDisplay";
 import BroadcastErrorDisclaimer from "~/renderer/components/BroadcastErrorDisclaimer";
-import ToolTip from "~/renderer/components/Tooltip";
 import Text from "~/renderer/components/Text";
 import { OperationDetails } from "~/renderer/drawers/OperationDetails";
 import { setDrawer } from "~/renderer/drawers/Provider";
@@ -62,12 +59,8 @@ function StepConfirmation({
       <Container>
         <TrackPage category="Bond Flow" name="Step Confirmed" />
         <SuccessDisplay
-          title={<Trans i18nKey="polkadot.bond.steps.confirmation.success.title" />}
-          description={multiline(
-            wasFirstBond.current
-              ? t("polkadot.bond.steps.confirmation.success.textNominate")
-              : t("polkadot.bond.steps.confirmation.success.text"),
-          )}
+          title={<Trans i18nKey="Assets successfully locked" />}
+          description={multiline(t("polkadot.bond.steps.confirmation.success.textNominate"))}
         />
       </Container>
     );
@@ -100,21 +93,7 @@ export function StepConfirmationFooter({
   onClose,
   optimisticOperation,
 }: StepProps) {
-  invariant(initialAccount && initialAccount.polkadotResources, "polkadot account required");
-  const wasFirstBond = useRef(initialAccount && isFirstBond(initialAccount));
   const account = useSelector(s => accountSelector(s, { accountId: initialAccount.id }));
-  invariant(account, "polkadot account still exists");
-
-  const isLoading = usePolkadotBondLoading(account);
-
-  const openNominate = useCallback(() => {
-    onClose();
-    if (account) {
-      openModal("MODAL_POLKADOT_NOMINATE", {
-        account: account,
-      });
-    }
-  }, [account, onClose, openModal]);
 
   const goToOperationDetails = useCallback(() => {
     onClose();
@@ -130,18 +109,7 @@ export function StepConfirmationFooter({
     return <RetryButton ml={2} primary onClick={onRetry} />;
   }
 
-  return wasFirstBond.current ? (
-    <Box horizontal alignItems="right">
-      <Button ml={2} onClick={onClose} secondary>
-        <Trans i18nKey="polkadot.bond.steps.confirmation.success.later" />
-      </Button>
-      <ToolTip content={isLoading ? <TooltipContent /> : null}>
-        <Button ml={2} isLoading={isLoading} disabled={isLoading} primary onClick={openNominate}>
-          <Trans i18nKey="polkadot.bond.steps.confirmation.success.nominate" />
-        </Button>
-      </ToolTip>
-    </Box>
-  ) : (
+  return (
     <Box horizontal alignItems="right">
       <Button data-test-id="modal-close-button" ml={2} onClick={onClose}>
         <Trans i18nKey="common.close" />
