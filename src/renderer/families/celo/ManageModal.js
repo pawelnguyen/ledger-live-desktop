@@ -137,7 +137,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
               <Box>
                 <ManageButton
                   disabled={!bondingEnabled}
-                  onClick={() => onSelectAction(onClose, "MODAL_POLKADOT_BOND")}
+                  onClick={() => onSelectAction(onClose, "MODAL_CELO_BOND")}
                 >
                   <IconWrapper>
                     <BondIcon size={16} />
