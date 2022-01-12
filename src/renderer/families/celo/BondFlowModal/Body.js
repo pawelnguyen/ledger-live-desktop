@@ -115,7 +115,6 @@ const Body = ({
 
     const transaction = bridge.updateTransaction(t, {
       mode: "lock",
-      recipient: account.freshAddress,
     });
 
     return { account, parentAccount, transaction };
