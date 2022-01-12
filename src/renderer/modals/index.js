@@ -61,6 +61,7 @@ import MODAL_POLKADOT_UNBOND from "../families/polkadot/UnbondFlowModal";
 import MODAL_POLKADOT_REBOND from "../families/polkadot/RebondFlowModal";
 
 import MODAL_CELO_MANAGE from "../families/celo/ManageModal";
+import MODAL_CELO_BOND from "../families/celo/BondFlowModal";
 
 // Lending
 import MODAL_LEND_MANAGE from "../screens/lend/modals/ManageLend";
@@ -121,6 +122,7 @@ const modals: { [_: string]: React$ComponentType<any> } = {
   MODAL_POLKADOT_UNBOND,
   MODAL_POLKADOT_REBOND,
   MODAL_CELO_MANAGE,
+  MODAL_CELO_BOND,
   MODAL_FULL_NODE,
   MODAL_LOTTIE_DEBUGGER,
   MODAL_RECOVERY_SEED_WARNING,
