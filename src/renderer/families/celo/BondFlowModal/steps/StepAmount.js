@@ -1,24 +1,17 @@
 // @flow
 import invariant from "invariant";
-import React, { useCallback } from "react";
+import React from "react";
 import { Trans } from "react-i18next";
-import { isStash } from "@ledgerhq/live-common/lib/families/polkadot/logic";
 
-import { getAccountBridge } from "@ledgerhq/live-common/lib/bridge";
 import { SyncSkipUnderPriority } from "@ledgerhq/live-common/lib/bridge/react";
 
-import { urls } from "~/config/urls";
-
 import AccountFooter from "~/renderer/modals/Send/AccountFooter";
-import TrackPage from "~/renderer/analytics/TrackPage";
 import Box from "~/renderer/components/Box";
 import Button from "~/renderer/components/Button";
-import Alert from "~/renderer/components/Alert";
 import ErrorBanner from "~/renderer/components/ErrorBanner";
 
 import type { StepProps } from "../types";
 import AmountField from "../fields/AmountField";
-import RewardDestinationField from "../fields/RewardDestinationField";
 
 export default function StepAmount({
   account,
@@ -31,39 +24,11 @@ export default function StepAmount({
   t,
 }: StepProps) {
   invariant(account && transaction, "account and transaction required");
-  const bridge = getAccountBridge(account, parentAccount);
-
-  const { rewardDestination } = transaction;
-
-  const setRewardDestination = useCallback(
-    (rewardDestination: string) => {
-      onChangeTransaction(bridge.updateTransaction(transaction, { rewardDestination }));
-    },
-    [bridge, transaction, onChangeTransaction],
-  );
-
-  // If account is not a stash, it's a fresh bond transaction.
-  const showRewardDestination = !isStash(account);
 
   return (
     <Box flow={1}>
       <SyncSkipUnderPriority priority={100} />
-      <TrackPage category="Bond Flow" name="Step 1" />
       {error && <ErrorBanner error={error} />}
-      <Alert
-        type="primary"
-        learnMoreUrl={urls.stakingPolkadot}
-        learnMoreLabel={<Trans i18nKey="polkadot.bond.steps.amount.learnMore" />}
-        mb={4}
-      >
-        <Trans i18nKey="polkadot.bond.steps.amount.info" />
-      </Alert>
-      {showRewardDestination ? (
-        <RewardDestinationField
-          rewardDestination={rewardDestination || "Slash"}
-          onChange={setRewardDestination}
-        />
-      ) : null}
       <AmountField
         transaction={transaction}
         account={account}

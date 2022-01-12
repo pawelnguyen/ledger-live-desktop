@@ -90,11 +90,12 @@ const AmountField = ({
     amountError = null;
   }
 
+  // TODO: i18n
   return (
     <Box vertical flow={1}>
       <Box horizontal justifyContent="space-between">
         <Label>
-          <Trans i18nKey="polkadot.bond.steps.amount.amountLabel" />
+          <Trans i18nKey="Amount to lock" />
         </Label>
         {typeof useAllAmount === "boolean" ? (
           <Box horizontal alignItems="center">
