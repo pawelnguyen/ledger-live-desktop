@@ -39,10 +39,10 @@ function StepConfirmation({
   if (optimisticOperation) {
     return (
       <Container>
-        <TrackPage category="Unbond Flow" name="Step Confirmed" />
+        <TrackPage category="Unlock Flow" name="Step Confirmed" />
         <SuccessDisplay
-          title={<Trans i18nKey="polkadot.unbond.steps.confirmation.success.title" />}
-          description={multiline(t("polkadot.unbond.steps.confirmation.success.text"))}
+          title={"Unlock transaction sent successfully"}
+          description={multiline("Unlocked assets can be withdrawn in 3 days.")}
         />
       </Container>
     );

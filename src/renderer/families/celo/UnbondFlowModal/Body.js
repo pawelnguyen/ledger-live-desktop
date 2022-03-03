@@ -113,7 +113,7 @@ const Body = ({
     const t = bridge.createTransaction(account);
 
     const transaction = bridge.updateTransaction(t, {
-      mode: "unbond",
+      mode: "unlock",
     });
 
     return { account, parentAccount, transaction };
