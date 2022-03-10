@@ -117,7 +117,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
 
   const nominationEnabled = false;
   const bondingEnabled = true;
-  const unbondingEnabled = true;
+  const unlockingEnabled = true;
   const withdrawEnabled = false;
 
   //TODO: i18n, descriptions
@@ -152,8 +152,8 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </InfoWrapper>
                 </ManageButton>
                 <ManageButton
-                  disabled={!unbondingEnabled}
-                  onClick={() => onSelectAction(onClose, "MODAL_CELO_UNBOND")}
+                  disabled={!unlockingEnabled}
+                  onClick={() => onSelectAction(onClose, "MODAL_CELO_UNLOCK")}
                 >
                   <IconWrapper>
                     <UnbondIcon size={16} />
