@@ -168,10 +168,10 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </InfoWrapper>
                 </ManageButton>
                 <ManageButton
-                  disabled={!withdrawEnabled}
+                  disabled={false}
                   onClick={() =>
-                    onSelectAction(onClose, "MODAL_POLKADOT_SIMPLE_OPERATION", {
-                      mode: "withdrawUnbonded",
+                    onSelectAction(onClose, "MODAL_CELO_SIMPLE_OPERATION", {
+                      mode: "register",
                     })
                   }
                 >
