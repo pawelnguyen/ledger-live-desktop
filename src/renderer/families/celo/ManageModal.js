@@ -119,6 +119,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
   const bondingEnabled = true;
   const unlockingEnabled = true;
   const withdrawEnabled = false;
+  const registeredAccount = false;
 
   //TODO: i18n, descriptions
   return (
@@ -136,8 +137,15 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
             <>
               <Box>
                 <ManageButton
-                  disabled={!bondingEnabled}
-                  onClick={() => onSelectAction(onClose, "MODAL_CELO_LOCK")}
+                  onClick={() => {
+                    if (registeredAccount) {
+                      onSelectAction(onClose, "MODAL_CELO_LOCK");
+                    } else {
+                      onSelectAction(onClose, "MODAL_CELO_SIMPLE_OPERATION", {
+                        mode: "register",
+                      });
+                    }
+                  }}
                 >
                   <IconWrapper>
                     <BondIcon size={16} />
@@ -168,10 +176,10 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </InfoWrapper>
                 </ManageButton>
                 <ManageButton
-                  disabled={false}
+                  disabled={!withdrawEnabled}
                   onClick={() =>
-                    onSelectAction(onClose, "MODAL_CELO_SIMPLE_OPERATION", {
-                      mode: "register",
+                    onSelectAction(onClose, "MODAL_POLKADOT_SIMPLE_OPERATION", {
+                      mode: "withdrawUnbonded",
                     })
                   }
                 >
