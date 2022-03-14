@@ -1,6 +1,6 @@
 // @flow
 
-import React from "react";
+import React, { useCallback } from "react";
 import { Trans } from "react-i18next";
 import styled, { withTheme } from "styled-components";
 
@@ -79,18 +79,36 @@ export function StepConfirmationFooter({
   openModal,
   onClose,
   optimisticOperation,
+  mode,
 }: StepProps) {
-  return (
+  const isRegister = mode === "register";
+
+  //TODO: implement
+  const isLoading = false;
+
+  const openLock = useCallback(() => {
+    onClose();
+    if (account) {
+      openModal("MODAL_CELO_LOCK", {
+        account: account,
+      });
+    }
+  }, [account, onClose, openModal]);
+
+  //TODO: i18n
+  return isRegister ? (
+    <Box horizontal alignItems="right">
+      {error && <RetryButton primary ml={2} onClick={onRetry} />}
+      <Button ml={2} isLoading={isLoading} disabled={isLoading} primary onClick={openLock}>
+        <Trans i18nKey="Lock" />
+      </Button>
+    </Box>
+  ) : (
     <Box horizontal alignItems="right">
       {error ? (
         <RetryButton primary ml={2} onClick={onRetry} />
       ) : (
-        <Button
-          primary
-          ml={2}
-          event="ClaimRewards Algorand Flow Step 3 View OpD Clicked"
-          onClick={onClose}
-        >
+        <Button primary ml={2} event="ClaimRewards Flow Step 3 View OpD Clicked" onClick={onClose}>
           <Trans i18nKey="polkadot.simpleOperation.steps.confirmation.success.cta" />
         </Button>
       )}
