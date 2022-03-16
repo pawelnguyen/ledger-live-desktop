@@ -13,11 +13,9 @@ import Modal, { ModalBody } from "~/renderer/components/Modal";
 import BondIcon from "~/renderer/icons/LinkIcon";
 import UnbondIcon from "~/renderer/icons/Undelegate";
 import NominateIcon from "~/renderer/icons/Vote";
-import ChillIcon from "~/renderer/icons/VoteNay";
 import WithdrawUnbondedIcon from "~/renderer/icons/Coins";
 
 import Text from "~/renderer/components/Text";
-
 
 const IconWrapper = styled.div`
   width: 32px;
@@ -116,10 +114,8 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
   );
 
   const nominationEnabled = false;
-  const bondingEnabled = true;
   const unlockingEnabled = true;
   const withdrawEnabled = false;
-  const registeredAccount = false;
 
   //TODO: i18n, descriptions
   return (
@@ -138,7 +134,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
               <Box>
                 <ManageButton
                   onClick={() => {
-                    if (registeredAccount) {
+                    if (account.celoResources?.registrationStatus) {
                       onSelectAction(onClose, "MODAL_CELO_LOCK");
                     } else {
                       onSelectAction(onClose, "MODAL_CELO_SIMPLE_OPERATION", {

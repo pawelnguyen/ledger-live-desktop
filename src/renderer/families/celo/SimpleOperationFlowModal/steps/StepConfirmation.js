@@ -83,9 +83,6 @@ export function StepConfirmationFooter({
 }: StepProps) {
   const isRegister = mode === "register";
 
-  //TODO: implement
-  const isLoading = false;
-
   const openLock = useCallback(() => {
     onClose();
     if (account) {
@@ -98,10 +95,13 @@ export function StepConfirmationFooter({
   //TODO: i18n
   return isRegister ? (
     <Box horizontal alignItems="right">
-      {error && <RetryButton primary ml={2} onClick={onRetry} />}
-      <Button ml={2} isLoading={isLoading} disabled={isLoading} primary onClick={openLock}>
-        <Trans i18nKey="Lock" />
-      </Button>
+      {error ? (
+        <RetryButton primary ml={2} onClick={onRetry} />
+      ) : (
+        <Button ml={2} primary onClick={openLock}>
+          <Trans i18nKey="Lock" />
+        </Button>
+      )}
     </Box>
   ) : (
     <Box horizontal alignItems="right">
