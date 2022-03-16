@@ -2077,6 +2077,38 @@
       "MERGE_OUTPUTS": "Minimize future fees (merge coins)"
     }
   },
+  "celo": {
+    "simpleOperation": {
+      "modes": {
+        "register": {
+          "title": "Register account",
+          "description": "Register your account on-chain",
+          "info": "Before locking any Celo you need to register your account on-chain."
+        }
+      },
+      "steps": {
+        "info": {
+          "title": "Info"
+        },
+        "connectDevice": {
+          "title": "Device"
+        },
+        "confirmation": {
+          "title": "Confirmation",
+          "label": "Confirmation",
+          "success": {
+            "title": "Transaction sent successfully",
+            "text": "You will see your operation in history soon.",
+            "cta": "View details"
+          },
+          "pending": {
+            "title": "Broadcasting transaction..."
+          },
+          "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
+        }
+      }
+    }
+  },
   "cosmos": {
     "delegation": {
       "emptyState": {
