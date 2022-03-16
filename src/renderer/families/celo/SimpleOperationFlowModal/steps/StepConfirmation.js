@@ -37,13 +37,13 @@ function StepConfirmation({
   if (optimisticOperation) {
     return (
       <Container>
-        <TrackPage category="Polkadot SimpleOperationFlow" name="Step Confirmed" />
+        <TrackPage category="Celo SimpleOperationFlow" name="Step Confirmed" />
         <SyncOneAccountOnMount priority={10} accountId={optimisticOperation.accountId} />
         <SuccessDisplay
-          title={<Trans i18nKey={`polkadot.simpleOperation.steps.confirmation.success.title`} />}
+          title={<Trans i18nKey={`celo.simpleOperation.steps.confirmation.success.title`} />}
           description={
             <div>
-              <Trans i18nKey={`polkadot.simpleOperation.steps.confirmation.success.text`}>
+              <Trans i18nKey={`celo.simpleOperation.steps.confirmation.success.text`}>
                 <b></b>
               </Trans>
             </div>
@@ -56,10 +56,10 @@ function StepConfirmation({
   if (error) {
     return (
       <Container shouldSpace={signed}>
-        <TrackPage category="Polkadot Flow" name="Step Confirmation Error" />
+        <TrackPage category="Celo Flow" name="Step Confirmation Error" />
         {signed ? (
           <BroadcastErrorDisclaimer
-            title={<Trans i18nKey="polkadot.simpleOperation.steps.confirmation.broadcastError" />}
+            title={<Trans i18nKey="celo.simpleOperation.steps.confirmation.broadcastError" />}
           />
         ) : null}
         <ErrorDisplay error={error} withExportLogs />
@@ -81,8 +81,6 @@ export function StepConfirmationFooter({
   optimisticOperation,
   mode,
 }: StepProps) {
-  const isRegister = mode === "register";
-
   const openLock = useCallback(() => {
     onClose();
     if (account) {
@@ -92,8 +90,7 @@ export function StepConfirmationFooter({
     }
   }, [account, onClose, openModal]);
 
-  //TODO: i18n
-  return isRegister ? (
+  return mode === "register" ? (
     <Box horizontal alignItems="right">
       {error ? (
         <RetryButton primary ml={2} onClick={onRetry} />
@@ -109,7 +106,7 @@ export function StepConfirmationFooter({
         <RetryButton primary ml={2} onClick={onRetry} />
       ) : (
         <Button primary ml={2} event="ClaimRewards Flow Step 3 View OpD Clicked" onClick={onClose}>
-          <Trans i18nKey="polkadot.simpleOperation.steps.confirmation.success.cta" />
+          <Trans i18nKey="celo.simpleOperation.steps.confirmation.success.cta" />
         </Button>
       )}
     </Box>

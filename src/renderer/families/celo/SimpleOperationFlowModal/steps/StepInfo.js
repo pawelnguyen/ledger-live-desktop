@@ -26,12 +26,7 @@ export default function StepInfo({
   t,
   mode,
 }: StepProps) {
-  // invariant(
-  //   account && account.polkadotResources && transaction,
-  //   "account and transaction required",
-  // );
-
-  console.log('account', account, 'transaction', transaction)
+  invariant(account && account.celoResources && transaction, "account and transaction required");
 
   return (
     <Box flow={1}>
@@ -44,13 +39,13 @@ export default function StepInfo({
         </Box> */}
 
         <Text textAlign="center" ff="Inter|Medium" fontSize={4}>
-          <Trans i18nKey={`polkadot.simpleOperation.modes.${mode}.description`} />
+          <Trans i18nKey={`celo.simpleOperation.modes.${mode}.description`} />
         </Text>
       </Box>
 
-      {mode !== "withdrawUnbonded" ? (
-        <Alert type="primary" learnMoreUrl={urls.stakingPolkadot}>
-          <Trans i18nKey={`polkadot.simpleOperation.modes.${mode}.info`} />
+      {mode !== "withdraw" ? (
+        <Alert type="primary">
+          <Trans i18nKey={`celo.simpleOperation.modes.${mode}.info`} />
         </Alert>
       ) : null}
     </Box>

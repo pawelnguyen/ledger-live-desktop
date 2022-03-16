@@ -56,19 +56,19 @@ type Props = OwnProps & StateProps;
 const steps: Array<St> = [
   {
     id: "info",
-    label: <Trans i18nKey="polkadot.simpleOperation.steps.info.title" />,
+    label: <Trans i18nKey="celo.simpleOperation.steps.info.title" />,
     component: StepInfo,
     footer: StepInfoFooter,
   },
   {
     id: "connectDevice",
-    label: <Trans i18nKey="polkadot.simpleOperation.steps.connectDevice.title" />,
+    label: <Trans i18nKey="celo.simpleOperation.steps.connectDevice.title" />,
     component: GenericStepConnectDevice,
     onBack: ({ transitionTo }: StepProps) => transitionTo("info"),
   },
   {
     id: "confirmation",
-    label: <Trans i18nKey="polkadot.simpleOperation.steps.confirmation.title" />,
+    label: <Trans i18nKey="celo.simpleOperation.steps.confirmation.title" />,
     component: StepConfirmation,
     footer: StepConfirmationFooter,
   },
@@ -119,7 +119,7 @@ const Body = ({
   } = useBridgeTransaction(() => {
     const { account } = params;
 
-    invariant(account, "polkadot: account required");
+    invariant(account, "celo: account required");
 
     const bridge = getAccountBridge(account, undefined);
 
@@ -175,7 +175,7 @@ const Body = ({
     errorSteps.push(0);
   }
 
-  const title = t(`polkadot.simpleOperation.modes.${mode}.title`);
+  const title = t(`celo.simpleOperation.modes.${mode}.title`);
 
   const stepperProps = {
     title,
