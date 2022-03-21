@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import React, { useCallback, useRef } from "react";
 import { Trans } from "react-i18next";
 import styled, { withTheme } from "styled-components";
-import { isFirstBond } from "@ledgerhq/live-common/lib/families/polkadot/logic";
 
 import { accountSelector } from "~/renderer/reducers/accounts";
 import TrackPage from "~/renderer/analytics/TrackPage";
@@ -34,10 +33,10 @@ const Container: ThemedComponent<{ shouldSpace?: boolean }> = styled(Box).attrs(
 const TooltipContent = () => (
   <Box style={{ padding: 4 }}>
     <Text style={{ marginBottom: 5 }}>
-      <Trans i18nKey="polkadot.bond.steps.confirmation.tooltip.title" />
+      <Trans i18nKey="celo.lock.steps.confirmation.tooltip.title" />
     </Text>
     <Text>
-      <Trans i18nKey="polkadot.bond.steps.confirmation.tooltip.desc" />
+      <Trans i18nKey="celo.lock.steps.confirmation.tooltip.desc" />
     </Text>
   </Box>
 );
@@ -52,15 +51,13 @@ function StepConfirmation({
   signed,
   transaction,
 }: StepProps & { theme: * }) {
-  const wasFirstBond = useRef(account && isFirstBond(account));
-
   if (optimisticOperation) {
     return (
       <Container>
-        <TrackPage category="Bond Flow" name="Step Confirmed" />
+        <TrackPage category="Lock Flow" name="Step Confirmed" />
         <SuccessDisplay
-          title={<Trans i18nKey="Assets successfully locked" />}
-          description={multiline(t("polkadot.bond.steps.confirmation.success.textNominate"))}
+          title={<Trans i18nKey="celo.lock.steps.confirmation.success.title" />}
+          description={multiline(t("celo.lock.steps.confirmation.success.textVote"))}
         />
       </Container>
     );
@@ -69,10 +66,10 @@ function StepConfirmation({
   if (error) {
     return (
       <Container shouldSpace={signed}>
-        <TrackPage category="Bond Flow" name="Step Confirmation Error" />
+        <TrackPage category="Lock Flow" name="Step Confirmation Error" />
         {signed ? (
           <BroadcastErrorDisclaimer
-            title={<Trans i18nKey="polkadot.bond.steps.confirmation.broadcastError" />}
+            title={<Trans i18nKey="celo.lock.steps.confirmation.broadcastError" />}
           />
         ) : null}
         <ErrorDisplay error={error} withExportLogs />
@@ -119,10 +116,10 @@ export function StepConfirmationFooter({
         <Button
           primary
           ml={2}
-          event="Bond Flow Step 3 View OpD Clicked"
+          event="Lock Flow Step 3 View OpD Clicked"
           onClick={goToOperationDetails}
         >
-          <Trans i18nKey="polkadot.unbond.steps.confirmation.success.cta" />
+          <Trans i18nKey="celo.lock.steps.confirmation.success.cta" />
         </Button>
       ) : null}
     </Box>

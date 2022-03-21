@@ -2064,6 +2064,40 @@
     }
   },
   "celo": {
+    "manage": {
+      "title": "Manage assets",
+      "lock": {
+        "title": "Lock",
+        "description": "To earn rewards, first lock an amount. Then you must vote for your validator(s)."
+      }
+    },
+    "lock": {
+      "title": "Lock assets",
+      "steps": {
+        "amount": {
+          "title": "Amount",
+          "amountLabel": "Amount to lock",
+          "availableLabel": "Available",
+          "maxLabel": "Max"
+        },
+        "connectDevice": {
+          "title": "Device"
+        },
+        "confirmation": {
+          "title": "Confirmation",
+          "success": {
+            "title": "Assets successfully locked",
+            "text": "You can vote for validators once the network has confirmed the transaction.",
+            "textVote": "You will be able to vote validators once the network has confirmed your transaction.",
+            "cta": "View details"
+          },
+          "pending": {
+            "title": "Locking your assets..."
+          },
+          "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
+        }
+      }
+    },
     "simpleOperation": {
       "modes": {
         "register": {

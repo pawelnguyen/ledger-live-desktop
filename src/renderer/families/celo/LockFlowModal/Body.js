@@ -62,13 +62,13 @@ const steps: Array<St> = [
   },
   {
     id: "connectDevice",
-    label: <Trans i18nKey="polkadot.bond.steps.connectDevice.title" />,
+    label: <Trans i18nKey="celo.lock.steps.connectDevice.title" />,
     component: GenericStepConnectDevice,
     onBack: ({ transitionTo }: StepProps) => transitionTo("amount"),
   },
   {
     id: "confirmation",
-    label: <Trans i18nKey="polkadot.bond.steps.confirmation.title" />,
+    label: <Trans i18nKey="celo.lock.steps.confirmation.title" />,
     component: StepConfirmation,
     footer: StepConfirmationFooter,
   },
@@ -185,7 +185,7 @@ const Body = ({
 
   return (
     <Stepper {...stepperProps}>
-      <Track onUnmount event="CloseModalBond" />
+      <Track onUnmount event="CloseModalLock" />
     </Stepper>
   );
 };
