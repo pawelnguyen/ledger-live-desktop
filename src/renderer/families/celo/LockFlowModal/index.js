@@ -14,7 +14,7 @@ const INITIAL_STATE = {
   stepId: "amount",
 };
 
-class BondModal extends PureComponent<{ name: string }, State> {
+class LockModal extends PureComponent<{ name: string }, State> {
   state = INITIAL_STATE;
 
   handleReset = () => this.setState({ ...INITIAL_STATE });
@@ -55,4 +55,4 @@ class BondModal extends PureComponent<{ name: string }, State> {
   }
 }
 
-export default BondModal;
+export default LockModal;
