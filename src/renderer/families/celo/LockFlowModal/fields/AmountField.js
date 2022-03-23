@@ -90,7 +90,6 @@ const AmountField = ({
     amountError = null;
   }
 
-  // TODO: i18n
   return (
     <Box vertical flow={1}>
       <Box horizontal justifyContent="space-between">
@@ -100,7 +99,7 @@ const AmountField = ({
         {typeof useAllAmount === "boolean" ? (
           <Box horizontal alignItems="center">
             <Text color="palette.text.shade40" ff="Inter|Medium" fontSize={13}>
-              <Trans i18nKey="polkadot.bond.steps.amount.availableLabel" />
+              <Trans i18nKey="celo.lock.steps.amount.availableLabel" />
               {": "}
             </Text>
             <Text color="palette.text.shade40" ff="Inter|Medium" fontSize={13}>
@@ -119,7 +118,7 @@ const AmountField = ({
               style={{ paddingRight: 5 }}
               onClick={() => onChangeUseMax(!useAllAmount)}
             >
-              <Trans i18nKey="polkadot.bond.steps.amount.maxLabel" />
+              <Trans i18nKey="celo.lock.steps.amount.maxLabel" />
             </Text>
             <Switch small isChecked={useAllAmount} onChange={onChangeUseMax} />
           </Box>
