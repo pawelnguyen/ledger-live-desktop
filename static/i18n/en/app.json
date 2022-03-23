@@ -2102,7 +2102,7 @@
       "modes": {
         "register": {
           "title": "Register account",
-          "description": "Register your account on-chain",
+          "description": "",
           "info": "Before locking any Celo you need to register your account on-chain."
         }
       },
@@ -2116,10 +2116,14 @@
         "confirmation": {
           "title": "Confirmation",
           "label": "Confirmation",
-          "success": {
-            "title": "Transaction sent successfully",
-            "text": "You will see your operation in history soon.",
-            "cta": "View details"
+          "modes": {
+            "register": {
+              "success": {
+                "title": "Account registered successfully",
+                "text": "You will see your operation in history soon.",
+                "cta": "Lock"
+              }
+            }
           },
           "pending": {
             "title": "Broadcasting transaction..."

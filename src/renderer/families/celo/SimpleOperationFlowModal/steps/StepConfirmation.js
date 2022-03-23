@@ -33,6 +33,7 @@ function StepConfirmation({
   device,
   signed,
   transaction,
+  mode,
 }: StepProps & { theme: * }) {
   if (optimisticOperation) {
     return (
@@ -40,10 +41,14 @@ function StepConfirmation({
         <TrackPage category="Celo SimpleOperationFlow" name="Step Confirmed" />
         <SyncOneAccountOnMount priority={10} accountId={optimisticOperation.accountId} />
         <SuccessDisplay
-          title={<Trans i18nKey={`celo.simpleOperation.steps.confirmation.success.title`} />}
+          title={
+            <Trans
+              i18nKey={`celo.simpleOperation.steps.confirmation.modes.${mode}.success.title`}
+            />
+          }
           description={
             <div>
-              <Trans i18nKey={`celo.simpleOperation.steps.confirmation.success.text`}>
+              <Trans i18nKey={`celo.simpleOperation.steps.confirmation.modes.${mode}.success.text`}>
                 <b></b>
               </Trans>
             </div>
@@ -90,23 +95,13 @@ export function StepConfirmationFooter({
     }
   }, [account, onClose, openModal]);
 
-  return mode === "register" ? (
+  return (
     <Box horizontal alignItems="right">
       {error ? (
         <RetryButton primary ml={2} onClick={onRetry} />
       ) : (
         <Button ml={2} primary onClick={openLock}>
-          <Trans i18nKey="Lock" />
-        </Button>
-      )}
-    </Box>
-  ) : (
-    <Box horizontal alignItems="right">
-      {error ? (
-        <RetryButton primary ml={2} onClick={onRetry} />
-      ) : (
-        <Button primary ml={2} event="ClaimRewards Flow Step 3 View OpD Clicked" onClick={onClose}>
-          <Trans i18nKey="celo.simpleOperation.steps.confirmation.success.cta" />
+          <Trans i18nKey={`celo.simpleOperation.steps.confirmation.modes.${mode}.success.cta`} />
         </Button>
       )}
     </Box>

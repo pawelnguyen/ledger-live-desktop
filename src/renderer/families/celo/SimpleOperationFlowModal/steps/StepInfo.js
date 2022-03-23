@@ -28,26 +28,24 @@ export default function StepInfo({
 }: StepProps) {
   invariant(account && account.celoResources && transaction, "account and transaction required");
 
+  const description = t(`celo.simpleOperation.modes.${mode}.description`);
+
   return (
     <Box flow={1}>
       <TrackPage category="SimpleOperationFlow Flow" name="Step 1" />
       {warning && !error ? <ErrorBanner error={warning} warning /> : null}
       {error ? <ErrorBanner error={error} /> : null}
-      <Box px={5} py={2}>
-        {/* <Box horizontal justifyContent="center" mb={4}>
-          <Image alt="" resource={ClaimRewardsIllu} width="100" />
-        </Box> */}
+      {description && (
+        <Box px={5} py={2}>
+          <Text textAlign="center" ff="Inter|Medium" fontSize={4}>
+            <Trans i18nKey={`celo.simpleOperation.modes.${mode}.description`} />
+          </Text>
+        </Box>
+      )}
 
-        <Text textAlign="center" ff="Inter|Medium" fontSize={4}>
-          <Trans i18nKey={`celo.simpleOperation.modes.${mode}.description`} />
-        </Text>
-      </Box>
-
-      {mode !== "withdraw" ? (
-        <Alert type="primary">
-          <Trans i18nKey={`celo.simpleOperation.modes.${mode}.info`} />
-        </Alert>
-      ) : null}
+      <Alert type="primary">
+        <Trans i18nKey={`celo.simpleOperation.modes.${mode}.info`} />
+      </Alert>
     </Box>
   );
 }
