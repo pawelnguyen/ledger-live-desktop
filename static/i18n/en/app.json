@@ -2092,7 +2092,8 @@
           "title": "Amount",
           "amountLabel": "Amount to lock",
           "availableLabel": "Available",
-          "maxLabel": "Max"
+          "maxLabel": "Max",
+          "info": "Locked assets can be unlocked at any time, but unlocking takes 3 days."
         },
         "connectDevice": {
           "title": "Device"

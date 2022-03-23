@@ -12,6 +12,7 @@ import ErrorBanner from "~/renderer/components/ErrorBanner";
 
 import type { StepProps } from "../types";
 import AmountField from "../fields/AmountField";
+import Alert from "~/renderer/components/Alert";
 
 export default function StepAmount({
   account,
@@ -29,6 +30,9 @@ export default function StepAmount({
     <Box flow={1}>
       <SyncSkipUnderPriority priority={100} />
       {error && <ErrorBanner error={error} />}
+      <Alert type="primary" mb={4}>
+        <Trans i18nKey="celo.lock.steps.amount.info" />
+      </Alert>
       <AmountField
         transaction={transaction}
         account={account}
