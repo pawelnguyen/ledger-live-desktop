@@ -28,7 +28,6 @@ export default function StepAmount({
 }: StepProps) {
   invariant(account && transaction, "account and transaction required");
 
-  //TODO i18n
   return (
     <Box flow={1}>
       <SyncSkipUnderPriority priority={100} />
@@ -36,8 +35,8 @@ export default function StepAmount({
       {error && <ErrorBanner error={error} />}
       <Alert
         type="primary"
-        learnMoreUrl={urls.stakingPolkadot}
-        learnMoreLabel={<Trans i18nKey="polkadot.unbond.steps.amount.learnMore" />}
+        learnMoreUrl={urls.stakingCelo}
+        learnMoreLabel={<Trans i18nKey="celo.unlock.steps.amount.learnMore" />}
         mb={4}
       >
         Unlocked assets can be withdrawn after the 3-day unlocking period.

@@ -54,7 +54,7 @@ function StepConfirmation({
         <TrackPage category="Unbond Flow" name="Step Confirmation Error" />
         {signed ? (
           <BroadcastErrorDisclaimer
-            title={<Trans i18nKey="polkadot.unbond.steps.confirmation.broadcastError" />}
+            title={<Trans i18nKey="celo.unlock.steps.confirmation.broadcastError" />}
           />
         ) : null}
         <ErrorDisplay error={error} withExportLogs />
@@ -98,7 +98,7 @@ export function StepConfirmationFooter({
             }
           }}
         >
-          <Trans i18nKey="polkadot.unbond.steps.confirmation.success.cta" />
+          <Trans i18nKey="celo.unlock.steps.confirmation.success.cta" />
         </Button>
       ) : error ? (
         <RetryButton primary ml={2} onClick={onRetry} />
