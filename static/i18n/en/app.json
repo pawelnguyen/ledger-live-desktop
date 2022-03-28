@@ -2071,6 +2071,10 @@
       "lock": {
         "title": "Lock",
         "description": "To earn rewards, first lock an amount. Then you must vote for your validator(s)."
+      },
+      "unlock": {
+        "title": "Unlock",
+        "description": "To make a locked amount available again, first you need to unlock it. You can withdraw it after the 3-day unlocking period."
       }
     },
     "lock": {

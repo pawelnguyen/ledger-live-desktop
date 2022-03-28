@@ -30,17 +30,6 @@ const Container: ThemedComponent<{ shouldSpace?: boolean }> = styled(Box).attrs(
   min-height: 220px;
 `;
 
-const TooltipContent = () => (
-  <Box style={{ padding: 4 }}>
-    <Text style={{ marginBottom: 5 }}>
-      <Trans i18nKey="celo.lock.steps.confirmation.tooltip.title" />
-    </Text>
-    <Text>
-      <Trans i18nKey="celo.lock.steps.confirmation.tooltip.desc" />
-    </Text>
-  </Box>
-);
-
 function StepConfirmation({
   account,
   t,

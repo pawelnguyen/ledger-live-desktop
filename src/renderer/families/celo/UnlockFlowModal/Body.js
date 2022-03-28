@@ -51,7 +51,6 @@ type StateProps = {|
 
 type Props = OwnProps & StateProps;
 
-//TODO: i18n
 const steps: Array<St> = [
   {
     id: "amount",
@@ -155,7 +154,7 @@ const Body = ({
   const error = transactionError || bridgeError;
 
   const stepperProps = {
-    title: t("celo.lock.title"),
+    title: t("celo.unlock.title"),
     device,
     account,
     parentAccount,
