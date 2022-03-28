@@ -108,6 +108,7 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
               <Title>
                 <Trans i18nKey="celo.lockedBalance" />
               </Title>
+              <InfoCircle size={13} />
             </TitleWrapper>
           </ToolTip>
           <AmountValue>
