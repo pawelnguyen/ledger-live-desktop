@@ -2101,6 +2101,35 @@
         }
       }
     },
+    "unlock": {
+      "title": "Unlock assets",
+      "steps": {
+        "amount": {
+          "title": "Amount",
+          "amountLabel": "Amount to unlock",
+          "availableLabel": "Locked",
+          "maxLabel": "Max",
+          "info": "Unlocked assets can be withdrawn after the 3-day unlocking period.",
+          "learnMore": "Learn More"
+        },
+        "connectDevice": {
+          "title": "Device"
+        },
+        "confirmation": {
+          "title": "Confirmation",
+          "label": "Confirmation",
+          "success": {
+            "title": "Unlock transaction sent successfully",
+            "text": "Unlocked assets can be withdrawn in 3 days.",
+            "cta": "View details"
+          },
+          "pending": {
+            "title": "Unlocking your assets..."
+          },
+          "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
+        }
+      }
+    },
     "simpleOperation": {
       "modes": {
         "register": {

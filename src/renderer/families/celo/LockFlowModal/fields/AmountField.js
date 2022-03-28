@@ -10,7 +10,7 @@ import { getAccountBridge } from "@ledgerhq/live-common/lib/bridge";
 import { getAccountUnit } from "@ledgerhq/live-common/lib/account";
 import type { TFunction } from "react-i18next";
 import type { Account, TransactionStatus } from "@ledgerhq/live-common/lib/types";
-import type { Transaction } from "@ledgerhq/live-common/lib/families/polkadot/types";
+import type { Transaction } from "@ledgerhq/live-common/lib/families/celo/types";
 
 import SpendableAmount from "~/renderer/components/SpendableAmount";
 import Label from "~/renderer/components/Label";

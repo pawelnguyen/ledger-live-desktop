@@ -51,23 +51,24 @@ type StateProps = {|
 
 type Props = OwnProps & StateProps;
 
+//TODO: i18n
 const steps: Array<St> = [
   {
     id: "amount",
-    label: <Trans i18nKey="polkadot.unbond.steps.amount.title" />,
+    label: <Trans i18nKey="celo.unlock.steps.amount.title" />,
     component: StepAmount,
     noScroll: true,
     footer: StepAmountFooter,
   },
   {
     id: "connectDevice",
-    label: <Trans i18nKey="polkadot.unbond.steps.connectDevice.title" />,
+    label: <Trans i18nKey="celo.unlock.steps.connectDevice.title" />,
     component: GenericStepConnectDevice,
     onBack: ({ transitionTo }: StepProps) => transitionTo("amount"),
   },
   {
     id: "confirmation",
-    label: <Trans i18nKey="polkadot.unbond.steps.confirmation.title" />,
+    label: <Trans i18nKey="celo.unlock.steps.confirmation.title" />,
     component: StepConfirmation,
     footer: StepConfirmationFooter,
   },

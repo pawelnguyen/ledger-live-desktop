@@ -5,7 +5,7 @@ import type { Step } from "~/renderer/components/Stepper";
 
 import type { Account, TransactionStatus, Operation } from "@ledgerhq/live-common/lib/types";
 
-import type { Transaction } from "@ledgerhq/live-common/lib/families/polkadot/types";
+import type { Transaction } from "@ledgerhq/live-common/lib/families/celo/types";
 
 export type StepId = "amount" | "connectDevice" | "confirmation";
 
