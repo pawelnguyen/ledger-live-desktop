@@ -12,7 +12,7 @@ const INITIAL_STATE = {
   stepId: "amount",
 };
 
-class UnbondModal extends PureComponent<{ name: string }, State> {
+class UnlockModal extends PureComponent<{ name: string }, State> {
   state = INITIAL_STATE;
 
   handleReset = () => this.setState({ ...INITIAL_STATE });
@@ -53,4 +53,4 @@ class UnbondModal extends PureComponent<{ name: string }, State> {
   }
 }
 
-export default UnbondModal;
+export default UnlockModal;
