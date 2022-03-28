@@ -167,7 +167,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                       <Trans i18nKey="Unlock" />
                     </Title>
                     <Description>
-                      <Trans i18nKey="polkadot.manage.unbond.description" />
+                      <Trans i18nKey="celo.manage.unlock.description" />
                     </Description>
                   </InfoWrapper>
                 </ManageButton>

@@ -20,6 +20,7 @@ const Warning = ({
   switch (transaction.mode) {
     case "register":
     case "lock":
+    case "unlock":
       return null;
     default:
       return (

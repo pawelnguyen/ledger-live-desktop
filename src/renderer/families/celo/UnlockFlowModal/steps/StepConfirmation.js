@@ -41,8 +41,8 @@ function StepConfirmation({
       <Container>
         <TrackPage category="Unlock Flow" name="Step Confirmed" />
         <SuccessDisplay
-          title={"Unlock transaction sent successfully"}
-          description={multiline("Unlocked assets can be withdrawn in 3 days.")}
+          title={<Trans i18nKey="celo.unlock.steps.confirmation.success.title" />}
+          description={multiline(t("celo.unlock.steps.confirmation.success.text"))}
         />
       </Container>
     );
