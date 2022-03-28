@@ -64,7 +64,14 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
   const discreet = useDiscreetMode();
   const locale = useSelector(localeSelector);
 
-  const { spendableBalance: _spendableBalance } = account;
+  if (!account.celoResources) return null;
+
+  const { spendableBalance: _spendableBalance, celoResources } = account;
+  const {
+    lockedBalance: _lockedBalance,
+    // unlockingBalance: _unlockingBalance,
+    // unlockedBalance: _unlockedBalance,
+  } = celoResources;
 
   const unit = getAccountUnit(account);
 
@@ -77,6 +84,7 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
   };
 
   const spendableBalance = formatCurrencyUnit(unit, _spendableBalance, formatConfig);
+  const lockedBalance = formatCurrencyUnit(unit, _lockedBalance, formatConfig);
 
   return (
     <Wrapper>
@@ -93,6 +101,20 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
           <Discreet>{spendableBalance}</Discreet>
         </AmountValue>
       </BalanceDetail>
+      {_lockedBalance.gt(0) && (
+        <BalanceDetail>
+          <ToolTip content={<Trans i18nKey="celo.lockedTooltip" />}>
+            <TitleWrapper>
+              <Title>
+                <Trans i18nKey="celo.lockedBalance" />
+              </Title>
+            </TitleWrapper>
+          </ToolTip>
+          <AmountValue>
+            <Discreet>{lockedBalance}</Discreet>
+          </AmountValue>
+        </BalanceDetail>
+      )}
     </Wrapper>
   );
 };
