@@ -154,9 +154,8 @@ const Body = ({
 
   const error = transactionError || bridgeError;
 
-  //TODO: i18n
   const stepperProps = {
-    title: "Unlock assets",
+    title: t("celo.lock.title"),
     device,
     account,
     parentAccount,
@@ -185,7 +184,7 @@ const Body = ({
 
   return (
     <Stepper {...stepperProps}>
-      <Track onUnmount event="CloseModalUnbond" />
+      <Track onUnmount event="CloseModalUnlock" />
     </Stepper>
   );
 };

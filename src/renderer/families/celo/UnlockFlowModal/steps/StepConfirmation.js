@@ -51,7 +51,7 @@ function StepConfirmation({
   if (error) {
     return (
       <Container shouldSpace={signed}>
-        <TrackPage category="Unbond Flow" name="Step Confirmation Error" />
+        <TrackPage category="Unlock Flow" name="Step Confirmation Error" />
         {signed ? (
           <BroadcastErrorDisclaimer
             title={<Trans i18nKey="celo.unlock.steps.confirmation.broadcastError" />}
@@ -86,7 +86,7 @@ export function StepConfirmationFooter({
         <Button
           primary
           ml={2}
-          event="Unbond Flow Step 3 View OpD Clicked"
+          event="Unlock Flow Step 3 View OpD Clicked"
           onClick={() => {
             onClose();
             if (account && optimisticOperation) {
