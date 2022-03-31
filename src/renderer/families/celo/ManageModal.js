@@ -115,7 +115,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
 
   const nominationEnabled = false;
   const unlockingEnabled = true;
-  const withdrawEnabled = false;
+  const withdrawEnabled = true;
 
   //TODO: i18n, descriptions
   return (
@@ -174,8 +174,8 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                 <ManageButton
                   disabled={!withdrawEnabled}
                   onClick={() =>
-                    onSelectAction(onClose, "MODAL_POLKADOT_SIMPLE_OPERATION", {
-                      mode: "withdrawUnbonded",
+                    onSelectAction(onClose, "MODAL_CELO_WITHDRAW", {
+                      mode: "withdraw",
                     })
                   }
                 >
