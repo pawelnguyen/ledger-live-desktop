@@ -22,6 +22,7 @@ import Clock from "~/renderer/icons/Clock";
 import ErrorBanner from "~/renderer/components/ErrorBanner";
 
 import { getUnfreezeData } from "../Body";
+import { BigNumber } from "bignumber.js";
 
 const Description = styled(Text).attrs(({ isPill }) => ({
   ff: isPill ? "Inter|SemiBold" : "Inter|Regular",
@@ -83,112 +84,66 @@ export default function StepAmount({
   bridgePending,
   t,
 }: StepProps) {
-  // invariant(
-  //   account && transaction && account.tronResources && account.tronResources.frozen,
-  //   "account with frozen assets and transaction required",
-  // );
+  invariant(
+    account && transaction && account.celoResources && account.celoResources.pendingWithdrawals,
+    "account with pending withdrawals and transaction required",
+  );
 
   const bridge = getAccountBridge(account, parentAccount);
 
   const onChange = useCallback(
-    (resource: string) =>
+    (index: number) => {
+      console.log('transaction', transaction);
       onChangeTransaction(
         bridge.updateTransaction(transaction, {
-          resource,
+          index,
         }),
-      ),
+      );
+    },
     [bridge, transaction, onChangeTransaction],
   );
 
-  const selectBandwidth = useCallback(() => onChange("BANDWIDTH"), [onChange]);
+  const selectWithdrawal = useCallback((index: number) => onChange(index), [onChange]);
 
-  const selectEnergy = useCallback(() => onChange("ENERGY"), [onChange]);
+  // const formattedBandwidthDate = useMemo(() => moment(bandwidthExpiredAt).fromNow(), [
+  //   bandwidthExpiredAt,
+  // ]);
 
-  const {
-    unfreezeBandwidth,
-    unfreezeEnergy,
-    canUnfreezeBandwidth,
-    canUnfreezeEnergy,
-    bandwidthExpiredAt,
-    energyExpiredAt,
-  } = useMemo(() => getUnfreezeData(account), [account]);
+  const { pendingWithdrawals } = account.celoResources;
 
-  const formattedBandwidthDate = useMemo(() => moment(bandwidthExpiredAt).fromNow(), [
-    bandwidthExpiredAt,
-  ]);
-
-  const formattedEnergyDate = useMemo(() => moment(energyExpiredAt).fromNow(), [energyExpiredAt]);
-
-  const { resource } = transaction;
+  console.log("pendingWithdrawals", pendingWithdrawals);
 
   return (
     <Box flow={1}>
       <TrackPage category="Unfreeze Flow" name="Step 1" />
       {error ? <ErrorBanner error={error} /> : null}
       <Box vertical>
-        <SelectResource disabled={!canUnfreezeBandwidth}>
-          <Text ff="Inter|SemiBold" fontSize={4}>
-            <Trans i18nKey="account.bandwidth" />
-          </Text>
-          <Box horizontal alignItems="center">
-            {unfreezeBandwidth.gt(0) && !canUnfreezeBandwidth ? (
+        {pendingWithdrawals.map(({ value, time, index }) => (
+          <SelectResource disabled={index % 2} key={index}>
+            <Text ff="Inter|SemiBold"></Text>
+            <Box horizontal alignItems="center">
               <TimerWrapper>
                 <Clock size={12} />
-                <Description isPill>{formattedBandwidthDate}</Description>
+                <Description isPill>{time.toString()}</Description>
               </TimerWrapper>
-            ) : null}
-            <FormattedVal
-              val={unfreezeBandwidth}
-              unit={account.unit}
-              style={{ textAlign: "right", width: "auto", marginRight: 10 }}
-              showCode
-              fontSize={4}
-              color="palette.text.shade60"
-            />
-            <CheckBox
-              isRadio
-              disabled={!canUnfreezeBandwidth}
-              isChecked={transaction.resource === "BANDWIDTH"}
-              onChange={selectBandwidth}
-            />
-          </Box>
-        </SelectResource>
-        <SelectResource disabled={!canUnfreezeEnergy}>
-          <Text ff="Inter|SemiBold" fontSize={4}>
-            <Trans i18nKey="account.energy" />
-          </Text>
-          <Box horizontal alignItems="center">
-            {unfreezeEnergy.gt(0) && !canUnfreezeEnergy ? (
-              <TimerWrapper>
-                <Clock size={12} />
-                <Description isPill>{formattedEnergyDate}</Description>
-              </TimerWrapper>
-            ) : null}
-            <FormattedVal
-              val={unfreezeEnergy}
-              unit={account.unit}
-              style={{ textAlign: "right", width: "auto", marginRight: 10 }}
-              showCode
-              fontSize={4}
-              color="palette.text.shade60"
-            />
-            <CheckBox
-              isRadio
-              disabled={!canUnfreezeEnergy}
-              isChecked={transaction.resource === "ENERGY"}
-              onChange={selectEnergy}
-            />
-          </Box>
-        </SelectResource>
+              <FormattedVal
+                val={value}
+                unit={account.unit}
+                style={{ textAlign: "right", width: "auto", marginRight: 10 }}
+                showCode
+                fontSize={4}
+                color="palette.text.shade60"
+              />
+              <CheckBox
+                isRadio
+                disabled={index % 2}
+                isChecked={transaction.index === index}
+                onChange={() => onChange(index)}
+              />
+            </Box>
+          </SelectResource>
+        ))}
       </Box>
-      {resource && (
-        <Alert type="primary" my={4}>
-          <Trans
-            i18nKey="unfreeze.steps.amount.info"
-            values={{ resource: resource.toLowerCase() }}
-          />
-        </Alert>
-      )}
     </Box>
   );
 }
