@@ -1,6 +1,6 @@
 // @flow
 
-import React from "react";
+import React, { useCallback } from "react";
 import { Trans } from "react-i18next";
 import styled, { withTheme } from "styled-components";
 
@@ -16,6 +16,8 @@ import SuccessDisplay from "~/renderer/components/SuccessDisplay";
 import BroadcastErrorDisclaimer from "~/renderer/components/BroadcastErrorDisclaimer";
 
 import type { StepProps } from "../types";
+import { setDrawer } from "~/renderer/drawers/Provider";
+import { OperationDetails } from "~/renderer/drawers/OperationDetails";
 
 const Container: ThemedComponent<{ shouldSpace?: boolean }> = styled(Box).attrs(() => ({
   alignItems: "center",
@@ -39,12 +41,12 @@ function StepConfirmation({
   if (optimisticOperation) {
     return (
       <Container>
-        <TrackPage category="Unfreeze Flow" name="Step Confirmed" />
+        <TrackPage category="Withdraw Flow" name="Step Confirmed" />
         <SyncOneAccountOnMount priority={10} accountId={optimisticOperation.accountId} />
         <SuccessDisplay
-          title={<Trans i18nKey="unfreeze.steps.confirmation.success.title" />}
+          title={<Trans i18nKey="celo.withdraw.steps.confirmation.success.title" />}
           description={multiline(
-            t("unfreeze.steps.confirmation.success.text", {
+            t("celo.withdraw.steps.confirmation.success.text", {
               resource: transaction && transaction.resource && transaction.resource.toLowerCase(),
             }),
           )}
@@ -56,10 +58,10 @@ function StepConfirmation({
   if (error) {
     return (
       <Container shouldSpace={signed}>
-        <TrackPage category="Unfreeze Flow" name="Step Confirmation Error" />
+        <TrackPage category="Withdraw Flow" name="Step Confirmation Error" />
         {signed ? (
           <BroadcastErrorDisclaimer
-            title={<Trans i18nKey="unfreeze.steps.confirmation.broadcastError" />}
+            title={<Trans i18nKey="celo.withdraw.steps.confirmation.broadcastError" />}
           />
         ) : null}
         <ErrorDisplay error={error} withExportLogs />
@@ -76,12 +78,28 @@ export function StepConfirmationFooter({
   onRetry,
   error,
   onClose,
+  optimisticOperation,
 }: StepProps) {
+  const goToOperationDetails = useCallback(() => {
+    onClose();
+    if (account && optimisticOperation) {
+      setDrawer(OperationDetails, {
+        operationId: optimisticOperation.id,
+        accountId: account.id,
+      });
+    }
+  }, [account, optimisticOperation, onClose]);
+
   return error ? (
     <RetryButton ml={2} primary onClick={onRetry} />
   ) : (
-    <Button ml={2} event="Unfreeze Flow Step 3 View OpD Clicked" onClick={onClose} primary>
-      <Trans i18nKey="unfreeze.steps.confirmation.success.continue" />
+    <Button
+      ml={2}
+      event="Withdraw Flow Step 3 View OpD Clicked"
+      onClick={goToOperationDetails}
+      primary
+    >
+      <Trans i18nKey="celo.withdraw.steps.confirmation.success.cta" />
     </Button>
   );
 }
