@@ -66,15 +66,12 @@ function StepConfirmation({
 }
 
 export function StepConfirmationFooter({
-  transitionTo,
   account,
   parentAccount,
   onRetry,
   error,
-  openModal,
   onClose,
   optimisticOperation,
-  transaction,
 }: StepProps) {
   return (
     <Box horizontal alignItems="right">
