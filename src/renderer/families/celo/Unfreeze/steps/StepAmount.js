@@ -90,7 +90,6 @@ export default function StepAmount({
 
   const onChange = useCallback(
     (index: number) => {
-      console.log('transaction', transaction);
       onChangeTransaction(
         bridge.updateTransaction(transaction, {
           index,
@@ -100,15 +99,10 @@ export default function StepAmount({
     [bridge, transaction, onChangeTransaction],
   );
 
-  const selectWithdrawal = useCallback((index: number) => onChange(index), [onChange]);
-
-  // const formattedBandwidthDate = useMemo(() => moment(bandwidthExpiredAt).fromNow(), [
-  //   bandwidthExpiredAt,
-  // ]);
-
   const { pendingWithdrawals } = account.celoResources;
 
-  console.log("pendingWithdrawals", pendingWithdrawals);
+  if (transaction.index === null || transaction.index === undefined)
+    onChange(pendingWithdrawals[0].index);
 
   return (
     <Box flow={1}>
