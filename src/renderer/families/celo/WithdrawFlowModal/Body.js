@@ -29,44 +29,6 @@ import GenericStepConnectDevice from "~/renderer/modals/Send/steps/GenericStepCo
 import StepConfirmation, { StepConfirmationFooter } from "./steps/StepConfirmation";
 import logger from "~/logger/logger";
 
-export const getUnfreezeData = (
-  account: Account,
-): {
-  unfreezeBandwidth: BigNumber,
-  unfreezeEnergy: BigNumber,
-  canUnfreezeBandwidth: boolean,
-  canUnfreezeEnergy: boolean,
-  bandwidthExpiredAt: Date,
-  energyExpiredAt: Date,
-} => {
-  // const { tronResources } = account;
-  // const {
-  //   frozen: { bandwidth, energy },
-  // } = tronResources || {};
-  //
-  // /** ! expiredAt should always be set with the amount if not this will disable the field by default ! */
-  // const { amount: bandwidthAmount, expiredAt: bandwidthExpiredAt } = bandwidth || {};
-  // const _bandwidthExpiredAt = +new Date(bandwidthExpiredAt);
-  //
-  // const { amount: energyAmount, expiredAt: energyExpiredAt } = energy || {};
-  // const _energyExpiredAt = +new Date(energyExpiredAt);
-  //
-  // const unfreezeBandwidth = BigNumber(bandwidthAmount || 0);
-  // const canUnfreezeBandwidth = unfreezeBandwidth.gt(0) && Date.now() > _bandwidthExpiredAt;
-  //
-  // const unfreezeEnergy = BigNumber(energyAmount || 0);
-  // const canUnfreezeEnergy = unfreezeEnergy.gt(0) && Date.now() > _energyExpiredAt;
-
-  return {
-    unfreezeBandwidth: new BigNumber(100),
-    unfreezeEnergy: new BigNumber(200),
-    canUnfreezeBandwidth: true,
-    canUnfreezeEnergy: true,
-    bandwidthExpiredAt: new Date(2020, 3, 1),
-    energyExpiredAt: new Date(2020, 4, 1),
-  };
-};
-
 type OwnProps = {|
   stepId: StepId,
   onClose: () => void,

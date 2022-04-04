@@ -101,7 +101,7 @@ export default function StepAmount({
 
   const { pendingWithdrawals } = account.celoResources;
 
-  if (transaction.index === null || transaction.index === undefined)
+  if ((transaction.index === null || transaction.index === undefined) && pendingWithdrawals[0])
     onChange(pendingWithdrawals[0].index);
 
   return (
