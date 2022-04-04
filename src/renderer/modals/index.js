@@ -64,7 +64,7 @@ import MODAL_CELO_MANAGE from "../families/celo/ManageModal";
 import MODAL_CELO_LOCK from "../families/celo/LockFlowModal";
 import MODAL_CELO_UNLOCK from "../families/celo/UnlockFlowModal";
 import MODAL_CELO_SIMPLE_OPERATION from "../families/celo/SimpleOperationFlowModal";
-import MODAL_CELO_WITHDRAW from "../families/celo/Unfreeze";
+import MODAL_CELO_WITHDRAW from "../families/celo/WithdrawFlowModal";
 
 // Lending
 import MODAL_LEND_MANAGE from "../screens/lend/modals/ManageLend";
