@@ -55,20 +55,20 @@ type Props = OwnProps & StateProps;
 const steps: Array<St> = [
   {
     id: "amount",
-    label: <Trans i18nKey="unfreeze.steps.amount.title" />,
+    label: <Trans i18nKey="celo.withdraw.steps.amount.title" />,
     component: StepAmount,
     noScroll: true,
     footer: StepAmountFooter,
   },
   {
     id: "connectDevice",
-    label: <Trans i18nKey="unfreeze.steps.connectDevice.title" />,
+    label: <Trans i18nKey="celo.withdraw.steps.connectDevice.title" />,
     component: GenericStepConnectDevice,
     onBack: ({ transitionTo }: StepProps) => transitionTo("amount"),
   },
   {
     id: "confirmation",
-    label: <Trans i18nKey="unfreeze.steps.confirmation.title" />,
+    label: <Trans i18nKey="celo.withdraw.steps.confirmation.title" />,
     component: StepConfirmation,
     footer: StepConfirmationFooter,
   },
@@ -109,15 +109,12 @@ const Body = ({
   } = useBridgeTransaction(() => {
     const { account, parentAccount } = params;
 
-    // const { canUnfreezeBandwidth } = getUnfreezeData(account);
-
     const bridge = getAccountBridge(account, parentAccount);
 
     const t = bridge.createTransaction(account);
 
     const transaction = bridge.updateTransaction(t, {
       mode: "withdraw",
-      // resource: canUnfreezeBandwidth ? "BANDWIDTH" : "ENERGY",
     });
 
     return { account, parentAccount, transaction };
@@ -163,7 +160,7 @@ const Body = ({
     transactionError || bridgeError || (statusError instanceof Error ? statusError : null);
 
   const stepperProps = {
-    title: t("unfreeze.title"),
+    title: t("celo.withdraw.title"),
     device,
     account,
     parentAccount,
@@ -193,7 +190,7 @@ const Body = ({
   return (
     <Stepper {...stepperProps}>
       <SyncSkipUnderPriority priority={100} />
-      <Track onUnmount event="CloseModalUnfreeze" />
+      <Track onUnmount event="CloseModalWithdraw" />
     </Stepper>
   );
 };

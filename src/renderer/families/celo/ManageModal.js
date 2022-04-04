@@ -184,10 +184,10 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </IconWrapper>
                   <InfoWrapper>
                     <Title>
-                      <Trans i18nKey="polkadot.manage.withdrawUnbonded.title" />
+                      <Trans i18nKey="celo.manage.withdraw.title" />
                     </Title>
                     <Description>
-                      <Trans i18nKey="polkadot.manage.withdrawUnbonded.description" />
+                      <Trans i18nKey="celo.manage.withdraw.description" />
                     </Description>
                   </InfoWrapper>
                 </ManageButton>

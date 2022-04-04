@@ -21,6 +21,7 @@ const Warning = ({
     case "register":
     case "lock":
     case "unlock":
+    case "withdraw":
       return null;
     default:
       return (
