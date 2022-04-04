@@ -80,27 +80,34 @@ export function StepConfirmationFooter({
   onClose,
   optimisticOperation,
 }: StepProps) {
-  const goToOperationDetails = useCallback(() => {
-    onClose();
-    if (account && optimisticOperation) {
-      setDrawer(OperationDetails, {
-        operationId: optimisticOperation.id,
-        accountId: account.id,
-      });
-    }
-  }, [account, optimisticOperation, onClose]);
-
-  return error ? (
-    <RetryButton ml={2} primary onClick={onRetry} />
-  ) : (
-    <Button
-      ml={2}
-      event="Withdraw Flow Step 3 View OpD Clicked"
-      onClick={goToOperationDetails}
-      primary
-    >
-      <Trans i18nKey="celo.withdraw.steps.confirmation.success.cta" />
-    </Button>
+  return (
+    <Box horizontal alignItems="right">
+      <Button data-test-id="modal-close-button" ml={2} onClick={onClose}>
+        <Trans i18nKey="common.close" />
+      </Button>
+      {optimisticOperation ? (
+        // FIXME make a standalone component!
+        <Button
+          primary
+          ml={2}
+          event="Withdraw Flow Step 3 View OpD Clicked"
+          onClick={() => {
+            onClose();
+            if (account && optimisticOperation) {
+              setDrawer(OperationDetails, {
+                operationId: optimisticOperation.id,
+                accountId: account.id,
+                parentId: parentAccount && parentAccount.id,
+              });
+            }
+          }}
+        >
+          <Trans i18nKey="celo.withdraw.steps.confirmation.success.cta" />
+        </Button>
+      ) : error ? (
+        <RetryButton primary ml={2} onClick={onRetry} />
+      ) : null}
+    </Box>
   );
 }
 
