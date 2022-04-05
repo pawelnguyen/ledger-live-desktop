@@ -16,6 +16,9 @@ import NominateIcon from "~/renderer/icons/Vote";
 import WithdrawUnbondedIcon from "~/renderer/icons/Coins";
 
 import Text from "~/renderer/components/Text";
+import invariant from "invariant";
+
+import { availablePendingWithdrawals } from "@ledgerhq/live-common/lib/families/celo/logic";
 
 const IconWrapper = styled.div`
   width: 32px;
@@ -98,6 +101,10 @@ type Props = {
 };
 
 const ManageModal = ({ name, account, ...rest }: Props) => {
+  const { celoResources } = account;
+
+  invariant(celoResources, "celo account expected");
+
   const dispatch = useDispatch();
 
   const onSelectAction = useCallback(
@@ -115,7 +122,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
 
   const nominationEnabled = false;
   const unlockingEnabled = true;
-  const withdrawEnabled = true;
+  const withdrawEnabled = (availablePendingWithdrawals(account).length > 0);
 
   //TODO: i18n, descriptions
   return (
