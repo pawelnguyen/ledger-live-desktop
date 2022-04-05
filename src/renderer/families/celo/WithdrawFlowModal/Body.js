@@ -4,7 +4,6 @@ import { compose } from "redux";
 import { connect, useDispatch } from "react-redux";
 import { Trans, withTranslation } from "react-i18next";
 import { createStructuredSelector } from "reselect";
-import { BigNumber } from "bignumber.js";
 
 import { UserRefusedOnDevice } from "@ledgerhq/errors";
 import { addPendingOperation } from "@ledgerhq/live-common/lib/account";

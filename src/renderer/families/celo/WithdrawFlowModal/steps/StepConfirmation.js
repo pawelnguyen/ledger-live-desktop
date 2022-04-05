@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useCallback } from "react";
+import React from "react";
 import { Trans } from "react-i18next";
 import styled, { withTheme } from "styled-components";
 
@@ -29,13 +29,10 @@ const Container: ThemedComponent<{ shouldSpace?: boolean }> = styled(Box).attrs(
 `;
 
 function StepConfirmation({
-  account,
   t,
   transaction,
   optimisticOperation,
   error,
-  theme,
-  device,
   signed,
 }: StepProps & { theme: * }) {
   if (optimisticOperation) {
