@@ -32,6 +32,7 @@ export default function StepValidator({
     const bridge: AccountBridge<Transaction> = getAccountBridge(account, parentAccount);
     //TODO: check
     onUpdateTransaction(tx => {
+      console.log('tx, address', tx, address)
       return bridge.updateTransaction(transaction, {
         address: address,
       });

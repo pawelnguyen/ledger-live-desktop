@@ -120,7 +120,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
     [dispatch, account],
   );
 
-  const nominationEnabled = false;
+  const votingEnabled = true;
   const unlockingEnabled = true;
   const withdrawEnabled = (availablePendingWithdrawals(account).length > 0);
 
@@ -199,8 +199,8 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </InfoWrapper>
                 </ManageButton>
                 <ManageButton
-                  disabled={!nominationEnabled}
-                  onClick={() => onSelectAction(onClose, "MODAL_POLKADOT_NOMINATE")}
+                  disabled={!votingEnabled}
+                  onClick={() => onSelectAction(onClose, "MODAL_CELO_VOTE")}
                 >
                   <IconWrapper>
                     <NominateIcon size={16} />
@@ -215,7 +215,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </InfoWrapper>
                 </ManageButton>
                 <ManageButton
-                  disabled={!nominationEnabled}
+                  disabled={true}
                   onClick={() => onSelectAction(onClose, "MODAL_POLKADOT_NOMINATE")}
                 >
                   <IconWrapper>
@@ -231,7 +231,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </InfoWrapper>
                 </ManageButton>
                 <ManageButton
-                  disabled={!nominationEnabled}
+                  disabled={true}
                   onClick={() => onSelectAction(onClose, "MODAL_POLKADOT_NOMINATE")}
                 >
                   <IconWrapper>

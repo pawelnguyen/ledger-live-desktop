@@ -122,6 +122,7 @@ const Body = ({
     const transaction = bridge.updateTransaction(bridge.createTransaction(account), {
       address: "test",
     });
+    console.log('transaction', transaction)
 
     return { account, parentAccount: undefined, transaction };
   });

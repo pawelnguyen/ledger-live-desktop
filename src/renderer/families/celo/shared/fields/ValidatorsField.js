@@ -1,12 +1,9 @@
 // @flow
 import { getAccountUnit } from "@ledgerhq/live-common/lib/account";
-import { getAddressExplorer, getDefaultExplorerView } from "@ledgerhq/live-common/lib/explorers";
-import { useLedgerFirstShuffledValidators } from "@ledgerhq/live-common/lib/families/celo/react";
-import { swap } from "@ledgerhq/live-common/lib/families/celo/utils";
 import type { ValidatorAppValidator } from "@ledgerhq/live-common/lib/families/celo/validator-app";
 import type { Account, TransactionStatus } from "@ledgerhq/live-common/lib/types";
 import invariant from "invariant";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import type { TFunction } from "react-i18next";
 import { Trans } from "react-i18next";
 import styled from "styled-components";
@@ -15,9 +12,10 @@ import { NoResultPlaceholder } from "~/renderer/components/Delegation/ValidatorS
 import ScrollLoadingList from "~/renderer/components/ScrollLoadingList";
 import Text from "~/renderer/components/Text";
 import IconAngleDown from "~/renderer/icons/AngleDown";
-import { openURL } from "~/renderer/linking";
 import type { ThemedComponent } from "~/renderer/styles/StyleProvider";
 import ValidatorRow from "../components/ValidatorRow";
+
+import { useCeloPreloadData } from "@ledgerhq/live-common/lib/families/celo/react";
 
 type Props = {
   t: TFunction,
@@ -32,18 +30,23 @@ const ValidatorField = ({ t, account, onChangeValidator, chosenVoteAccAddr, stat
 
   invariant(account && account.celoResources, "celo account and resources required");
 
-  const { celoResources } = account;
+  // const { celoResources } = account;
 
   const [search, setSearch] = useState("");
   const [showAll, setShowAll] = useState(false);
 
   const unit = getAccountUnit(account);
 
-  const validators = useLedgerFirstShuffledValidators(account.currency);
+  //TODO: check this method
+  // const validators = useLedgerFirstShuffledValidators(account.currency);
+
+  //TODO: validator groups
+  const preloaded = useCeloPreloadData();
+  const { validatorGroups: validators } = preloaded;
 
   const chosenValidator = useMemo(() => {
     if (chosenVoteAccAddr !== null) {
-      return validators.find(v => v.voteAccount === chosenVoteAccAddr);
+      return validators.find(v => v.account === chosenVoteAccAddr);
     }
   }, [validators, chosenVoteAccAddr]);
 
@@ -51,14 +54,12 @@ const ValidatorField = ({ t, account, onChangeValidator, chosenVoteAccAddr, stat
     return validators.filter(validator => {
       return (
         validator.name?.toLowerCase().includes(search) ||
-        validator.voteAccount.toLowerCase().includes(search)
+        validator.account.toLowerCase().includes(search)
       );
     });
   }, [validators, search]);
 
   const containerRef = useRef();
-
-  const onSearch = (event: SyntheticInputEvent<HTMLInputElement>) => setSearch(event.target.value);
 
   /** auto focus first input on mount */
   useEffect(() => {
@@ -73,10 +74,10 @@ const ValidatorField = ({ t, account, onChangeValidator, chosenVoteAccAddr, stat
     return (
       <ValidatorRow
         currency={account.currency}
-        active={chosenVoteAccAddr === validator.voteAccount}
+        active={chosenVoteAccAddr === validator.account}
         showStake={validatorIdx !== 0}
         onClick={onChangeValidator}
-        key={validator.voteAccount}
+        key={validator.account}
         validator={validator}
         unit={unit}
       ></ValidatorRow>
