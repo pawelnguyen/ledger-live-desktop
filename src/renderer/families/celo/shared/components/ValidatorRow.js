@@ -30,7 +30,8 @@ function CeloValidatorRow({ validator, active, showStake, onClick, unit, currenc
   const explorerView = getDefaultExplorerView(currency);
 
   const onExternalLink = useCallback(() => {
-    const url = validator.wwwUrl || getAddressExplorer(explorerView, validator.voteAccount);
+    //TODO: urls? avatarUrl
+    const url = validator.wwwUrl || getAddressExplorer(explorerView, validator.account);
 
     if (url) {
       openURL(url);
@@ -40,17 +41,17 @@ function CeloValidatorRow({ validator, active, showStake, onClick, unit, currenc
   return (
     <StyledValidatorRow
       onClick={onClick}
-      key={validator.voteAccount}
-      validator={{ address: validator.voteAccount }}
+      key={validator.account}
+      validator={{ address: validator.account }}
       icon={
         <IconContainer isSR>
-          {validator.avatarUrl === undefined && <FirstLetterIcon label={validator.voteAccount} />}
+          {validator.avatarUrl === undefined && <FirstLetterIcon label={validator.account} />}
           {validator.avatarUrl !== undefined && (
             <Image resource={validator.avatarUrl} alt="" width={32} height={32} />
           )}
         </IconContainer>
       }
-      title={validator.name || validator.voteAccount}
+      title={validator.name || validator.account}
       onExternalLink={onExternalLink}
       unit={unit}
       subtitle={
@@ -58,7 +59,7 @@ function CeloValidatorRow({ validator, active, showStake, onClick, unit, currenc
           <>
             <Trans i18nKey="celo.delegation.totalStake"></Trans>
             <Text style={{ marginLeft: 5 }}>
-              {formatCurrencyUnit(unit, new BigNumber(validator.activeStake), {
+              {formatCurrencyUnit(unit, new BigNumber(validator.votes), {
                 showCode: true,
               })}
             </Text>

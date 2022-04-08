@@ -16,6 +16,7 @@ type Props = {
   parentAccount: ?Account,
 };
 
+//TODO: remove?
 export default function CeloEarnRewardsInfoModal({ name, account, parentAccount }: Props) {
   const { t } = useTranslation();
   const dispatch = useDispatch();

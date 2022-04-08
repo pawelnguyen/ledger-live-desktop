@@ -30,21 +30,16 @@ export default function StepValidator({
 
   const updateValidator = ({ address }: { address: string }) => {
     const bridge: AccountBridge<Transaction> = getAccountBridge(account, parentAccount);
+    //TODO: check
     onUpdateTransaction(tx => {
       return bridge.updateTransaction(transaction, {
-        model: {
-          kind: "stake.createAccount",
-          uiState: {
-            delegate: {
-              voteAccAddress: address,
-            },
-          },
-        },
+        address: address,
       });
     });
   };
 
-  const chosenVoteAccAddr = transaction.model.uiState.delegate?.voteAccAddress;
+  //TODO: check, rename
+  const chosenVoteAccAddr = transaction.address;
 
   return (
     <Box flow={1}>
