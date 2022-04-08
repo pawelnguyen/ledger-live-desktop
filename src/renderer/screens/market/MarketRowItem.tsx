@@ -15,6 +15,7 @@ import { Button } from ".";
 import { useTranslation } from "react-i18next";
 import { openModal } from "~/renderer/actions/modals";
 import { getAvailableAccountsById } from "@ledgerhq/live-common/lib/exchange/swap/utils";
+import { flattenAccounts } from "@ledgerhq/live-common/lib/account";
 
 const CryptoCurrencyIconWrapper = styled.div`
   height: 32px;
@@ -25,6 +26,13 @@ const CryptoCurrencyIconWrapper = styled.div`
   img {
     object-fit: cover;
   }
+`;
+
+const EllipsisText = styled(Text)`
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 type Props = {
@@ -38,8 +46,6 @@ type Props = {
   selectCurrency: (currencyId: string) => void;
   availableOnBuy: boolean;
   availableOnSwap: boolean;
-  displayChart: boolean;
-  displayMarketCap: boolean;
 };
 
 function MarketRowItem({
@@ -53,8 +59,6 @@ function MarketRowItem({
   selectCurrency,
   availableOnBuy,
   availableOnSwap,
-  displayChart,
-  displayMarketCap,
 }: Props) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -73,6 +77,7 @@ function MarketRowItem({
   const { colors } = useTheme();
   const graphColor = colors.neutral.c80;
   const allAccounts = useSelector(accountsSelector);
+  const flattenedAccounts = flattenAccounts(allAccounts);
 
   const onCurrencyClick = useCallback(() => {
     selectCurrency(currency.id);
@@ -91,7 +96,8 @@ function MarketRowItem({
       history.push({
         pathname: "/exchange",
         state: {
-          defaultCurrency: currency.internalCurrency,
+          mode: "onRamp",
+          defaultTicker: currency.ticker.toUpperCase(),
         },
       });
     },
@@ -105,20 +111,27 @@ function MarketRowItem({
         e.stopPropagation();
         setTrackingSource("Page Market");
 
-        const defaultAccount = getAvailableAccountsById(
-          currency?.internalCurrency?.id,
-          allAccounts,
-        ).find(Boolean);
+        const currencyId = currency?.internalCurrency?.id;
+
+        const defaultAccount = getAvailableAccountsById(currencyId, flattenedAccounts).find(
+          Boolean,
+        );
 
         if (!defaultAccount) return openAddAccounts();
 
         history.push({
           pathname: "/swap",
-          state: { defaultCurrency: currency.internalCurrency, defaultAccount },
+          state: {
+            defaultCurrency: currency.internalCurrency,
+            defaultAccount,
+            defaultParentAccount: defaultAccount?.parentId
+              ? flattenedAccounts.find(a => a.id === defaultAccount.parentId)
+              : null,
+          },
         });
       }
     },
-    [currency, allAccounts, history, openAddAccounts],
+    [currency?.internalCurrency, flattenedAccounts, openAddAccounts, history],
   );
 
   const onStarClick = useCallback(
@@ -129,6 +142,8 @@ function MarketRowItem({
     },
     [toggleStar],
   );
+
+  const hasActions = currency?.internalCurrency && (availableOnBuy || availableOnSwap);
 
   return (
     <div style={{ ...style }}>
@@ -143,9 +158,9 @@ function MarketRowItem({
           <TableCell loading />
         </TableRow>
       ) : (
-        <TableRow onClick={onCurrencyClick}>
+        <TableRow data-test-id={`market-${currency?.ticker}-row`} onClick={onCurrencyClick}>
           <TableCell>{currency?.marketcapRank ?? "-"}</TableCell>
-          <TableCell>
+          <TableCell mr={3}>
             <CryptoCurrencyIconWrapper>
               {currency.internalCurrency ? (
                 <CryptoCurrencyIcon
@@ -160,28 +175,42 @@ function MarketRowItem({
                 <img width="32px" height="32px" src={currency.image} alt={"currency logo"} />
               )}
             </CryptoCurrencyIconWrapper>
-            <Flex pl={3} flexDirection="row" alignItems="center">
-              <Flex flexDirection="column" alignItems="left" pr={2}>
-                <Text variant="body">{currency.name}</Text>
-                <Text variant="small" color="neutral.c60">
-                  {currency.ticker.toUpperCase()}
-                </Text>
-              </Flex>
-              {currency.internalCurrency && (
-                <>
-                  {availableOnBuy && (
-                    <Button variant="shade" mr={1} onClick={onBuy}>
-                      {t("accounts.contextMenu.buy")}
-                    </Button>
-                  )}
-                  {availableOnSwap && (
-                    <Button variant="shade" onClick={onSwap}>
-                      {t("accounts.contextMenu.swap")}
-                    </Button>
-                  )}
-                </>
-              )}
+            <Flex
+              pl={3}
+              {...(hasActions ? { width: 86 } : {})}
+              overflow="hidden"
+              flexDirection="column"
+              alignItems="left"
+              pr={2}
+            >
+              <EllipsisText variant="body">{currency.name}</EllipsisText>
+              <EllipsisText variant="small" color="neutral.c60">
+                {currency.ticker.toUpperCase()}
+              </EllipsisText>
             </Flex>
+            {hasActions ? (
+              <Flex flex={1}>
+                {availableOnBuy && (
+                  <Button
+                    data-test-id={`market-${currency?.ticker}-buy-button`}
+                    variant="color"
+                    mr={1}
+                    onClick={onBuy}
+                  >
+                    {t("accounts.contextMenu.buy")}
+                  </Button>
+                )}
+                {availableOnSwap && (
+                  <Button
+                    data-test-id={`market-${currency?.ticker}-swap-button`}
+                    variant="color"
+                    onClick={onSwap}
+                  >
+                    {t("accounts.contextMenu.swap")}
+                  </Button>
+                )}
+              </Flex>
+            ) : null}
           </TableCell>
           <TableCell>
             <Text variant="body">
@@ -189,7 +218,7 @@ function MarketRowItem({
             </Text>
           </TableCell>
           <TableCell>
-            {currency.priceChangePercentage && (
+            {currency.priceChangePercentage ? (
               <FormattedVal
                 isPercent
                 isNegative
@@ -197,28 +226,28 @@ function MarketRowItem({
                 inline
                 withIcon
               />
+            ) : (
+              <Text fontWeight={"medium"}>-</Text>
             )}
           </TableCell>
-          {displayMarketCap && (
-            <TableCell>
-              <Text>
-                {counterValueFormatter({
-                  shorten: true,
-                  currency: counterCurrency,
-                  value: currency.marketcap,
-                  locale,
-                })}
-              </Text>
-            </TableCell>
-          )}
-          {displayChart && (
-            <TableCell>
-              {currency.sparklineIn7d && (
-                <SmallMarketItemChart sparklineIn7d={currency.sparklineIn7d} color={graphColor} />
-              )}
-            </TableCell>
-          )}
-          <TableCell onClick={onStarClick}>
+
+          <TableCell>
+            <Text>
+              {counterValueFormatter({
+                shorten: true,
+                currency: counterCurrency,
+                value: currency.marketcap,
+                locale,
+              })}
+            </Text>
+          </TableCell>
+          <TableCell>
+            {currency.sparklineIn7d && (
+              <SmallMarketItemChart sparklineIn7d={currency.sparklineIn7d} color={graphColor} />
+            )}
+          </TableCell>
+
+          <TableCell data-test-id={`market-${currency?.ticker}-star-button`} onClick={onStarClick}>
             <Icon name={isStarred ? "StarSolid" : "Star"} size={18} />
           </TableCell>
         </TableRow>
