@@ -2205,6 +2205,32 @@
           "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
         }
       }
+    },
+    "vote": {
+      "title": "Vote",
+      "steps": {
+        "amount": {
+          "title": "Vote"
+        },
+        "connectDevice": {
+          "title": "Device"
+        },
+        "confirmation": {
+          "title": "Confirmation",
+          "success": {
+            "title": "",
+            "text": "Your assets were withdrawn successfully. The withdrawn amount will be credited to your available balance.",
+            "cta": "View details"
+          },
+          "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
+        },
+        "validator": {
+          "title": "Validators",
+          "ledgerByFigmentTC": "Ledger by Figment T&Cs",
+          "totalVotes": "Total Votes",
+          "commission": "Commission"
+        }
+      }
     }
   },
   "cosmos": {

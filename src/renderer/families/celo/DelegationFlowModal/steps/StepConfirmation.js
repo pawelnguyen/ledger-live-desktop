@@ -40,8 +40,8 @@ function StepConfirmation({
         <TrackPage category="Celo Delegation" name="Step Confirmation" />
         <SyncOneAccountOnMount priority={10} accountId={optimisticOperation.accountId} />
         <SuccessDisplay
-          title={<Trans i18nKey="celo.delegation.flow.steps.confirmation.success.title" />}
-          description={multiline(t("celo.delegation.statusUpdateNotice"))}
+          title={<Trans i18nKey="celo.vote.steps.confirmation.success.title" />}
+          description={multiline(t("celo.vote.steps.confirmation.success.text"))}
         />
       </Container>
     );
@@ -52,7 +52,9 @@ function StepConfirmation({
       <Container shouldSpace={signed}>
         <TrackPage category="Delegation Celo" name="Step Confirmation Error" />
         {signed ? (
-          <BroadcastErrorDisclaimer title={<Trans i18nKey="celo.common.broadcastError" />} />
+          <BroadcastErrorDisclaimer
+            title={<Trans i18nKey="celo.vote.steps.confirmation.broadcastError" />}
+          />
         ) : null}
         <ErrorDisplay error={error} withExportLogs />
       </Container>
@@ -94,7 +96,7 @@ export function StepConfirmationFooter({
             }
           }}
         >
-          <Trans i18nKey="celo.common.viewDetails" />
+          <Trans i18nKey="celo.vote.steps.confirmation.success.cta" />
         </Button>
       ) : error ? (
         <RetryButton primary ml={2} onClick={onRetry} />
