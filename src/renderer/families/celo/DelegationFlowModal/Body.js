@@ -51,14 +51,14 @@ type Props = OwnProps & StateProps;
 const steps: Array<St> = [
   {
     id: "validator",
-    label: <Trans i18nKey="celo.delegation.flow.steps.validator.title" />,
+    label: <Trans i18nKey="celo.vote.steps.validator.title" />,
     component: StepValidator,
     noScroll: true,
     footer: StepValidatorFooter,
   },
   {
     id: "amount",
-    label: <Trans i18nKey="celo.delegation.flow.steps.amount.title" />,
+    label: <Trans i18nKey="celo.vote.steps.amount.title" />,
     component: StepAmount,
     onBack: ({ transitionTo }: StepProps) => transitionTo("validator"),
     noScroll: true,
@@ -66,13 +66,13 @@ const steps: Array<St> = [
   },
   {
     id: "connectDevice",
-    label: <Trans i18nKey="celo.common.connectDevice.title" />,
+    label: <Trans i18nKey="celo.vote.steps.connectDevice.title" />,
     component: GenericStepConnectDevice,
     onBack: ({ transitionTo }: StepProps) => transitionTo("amount"),
   },
   {
     id: "confirmation",
-    label: <Trans i18nKey="celo.common.confirmation.title" />,
+    label: <Trans i18nKey="celo.vote.steps.confirmation.title" />,
     component: StepConfirmation,
     footer: StepConfirmationFooter,
   },
@@ -170,7 +170,7 @@ const Body = ({
   }
 
   const stepperProps = {
-    title: t("celo.delegation.flow.title"),
+    title: t("celo.vote.title"),
     device,
     account,
     parentAccount,

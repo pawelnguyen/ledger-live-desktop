@@ -116,9 +116,6 @@ export const urls = {
     "https://www.ledger.com/staking-tezos?utm_source=ledger_live_desktop&utm_medium=self_referral&utm_content=tezos",
   stakingTron:
     "https://www.ledger.com/staking-tron?utm_source=ledger_live_desktop&utm_medium=self_referral&utm_content=tron",
-  // TODO: replace with a real link when it's available
-  stakingCelo:
-    "https://www.ledger.com/staking-celo?utm_source=ledger_live_desktop&utm_medium=self_referral&utm_content=celo",
   stakingCosmos:
     "https://www.ledger.com/staking-cosmos?utm_source=ledger_live_desktop&utm_medium=self_referral&utm_content=cosmos",
   stakingPolkadot:
@@ -209,5 +206,11 @@ export const urls = {
   },
   solana: {
     recipient_info: "https://support.ledger.com",
+  },
+  // TODO: replace with a real links when available
+  celo: {
+    ledgerByFigmentTC: "https://drive.google.com/file/d/1vlIh2gTwtbMon8_bzFQGjCLhTUqS5uQc",
+    staking:
+      "https://www.ledger.com/staking-celo?utm_source=ledger_live_desktop&utm_medium=self_referral&utm_content=celo",
   },
 };
