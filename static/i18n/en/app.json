@@ -2210,7 +2210,7 @@
       "title": "Vote",
       "steps": {
         "amount": {
-          "title": "Vote"
+          "title": "Amount"
         },
         "connectDevice": {
           "title": "Device"

@@ -46,7 +46,7 @@ const ValidatorField = ({ t, account, onChangeValidator, chosenVoteAccAddr, stat
 
   const chosenValidator = useMemo(() => {
     if (chosenVoteAccAddr !== null) {
-      return validators.find(v => v.account === chosenVoteAccAddr);
+      return validators.find(v => v.address === chosenVoteAccAddr);
     }
   }, [validators, chosenVoteAccAddr]);
 
@@ -54,7 +54,7 @@ const ValidatorField = ({ t, account, onChangeValidator, chosenVoteAccAddr, stat
     return validators.filter(validator => {
       return (
         validator.name?.toLowerCase().includes(search) ||
-        validator.account.toLowerCase().includes(search)
+        validator.address.toLowerCase().includes(search)
       );
     });
   }, [validators, search]);
@@ -74,10 +74,10 @@ const ValidatorField = ({ t, account, onChangeValidator, chosenVoteAccAddr, stat
     return (
       <ValidatorRow
         currency={account.currency}
-        active={chosenVoteAccAddr === validator.account}
+        active={chosenVoteAccAddr === validator.address}
         showStake={validatorIdx !== 0}
         onClick={onChangeValidator}
-        key={validator.account}
+        key={validator.address}
         validator={validator}
         unit={unit}
       ></ValidatorRow>
