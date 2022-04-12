@@ -11,7 +11,6 @@ import Box from "~/renderer/components/Box";
 import type { ValidatorRowProps } from "~/renderer/components/Delegation/ValidatorRow";
 import ValidatorRow, { IconContainer } from "~/renderer/components/Delegation/ValidatorRow";
 import FirstLetterIcon from "~/renderer/components/FirstLetterIcon";
-import Image from "~/renderer/components/Image";
 import Text from "~/renderer/components/Text";
 import Check from "~/renderer/icons/Check";
 import { openURL } from "~/renderer/linking";
