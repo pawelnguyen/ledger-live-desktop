@@ -116,10 +116,12 @@ export default function StepAmount({
             <SelectResource disabled={disabled} key={index}>
               <Text ff="Inter|SemiBold"></Text>
               <Box horizontal alignItems="center">
-                <TimerWrapper>
-                  <Clock size={12} />
-                  <Description isPill>{moment(withdrawalTime).fromNow()}</Description>
-                </TimerWrapper>
+                {disabled && (
+                  <TimerWrapper>
+                    <Clock size={12} />
+                    <Description isPill>{moment(withdrawalTime).fromNow()}</Description>
+                  </TimerWrapper>
+                )}
                 <FormattedVal
                   val={value}
                   unit={account.unit}
