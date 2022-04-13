@@ -118,11 +118,9 @@ const Body = ({
 
     const bridge: AccountBridge<Transaction> = getAccountBridge(account, undefined);
 
-    //TODO: address
     const transaction = bridge.updateTransaction(bridge.createTransaction(account), {
-      address: "test",
+      mode: "vote",
     });
-    console.log('transaction', transaction)
 
     return { account, parentAccount: undefined, transaction };
   });

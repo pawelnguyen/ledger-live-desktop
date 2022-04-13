@@ -34,13 +34,13 @@ export default function StepValidator({
     onUpdateTransaction(tx => {
       console.log('tx, address', tx, address)
       return bridge.updateTransaction(transaction, {
-        address: address,
+        recipient: address,
       });
     });
   };
 
   //TODO: check, rename
-  const chosenVoteAccAddr = transaction.address;
+  const chosenVoteAccAddr = transaction.recipient;
 
   return (
     <Box flow={1}>
