@@ -22,6 +22,7 @@ const Warning = ({
     case "lock":
     case "unlock":
     case "withdraw":
+    case "vote":
       return null;
     default:
       return (
