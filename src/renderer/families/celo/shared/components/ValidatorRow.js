@@ -49,24 +49,24 @@ function CeloValidatorRow({ validator, active, showStake, onClick, unit, currenc
       title={validator.name}
       onExternalLink={onExternalLink}
       unit={unit}
-      subtitle={
-        showStake ? (
-          <>
-            <Trans i18nKey="celo.vote.steps.validator.totalVotes"></Trans>
-            <Text style={{ marginLeft: 5 }}>
-              {formatCurrencyUnit(unit, new BigNumber(validator.votes), {
-                showCode: true,
-              })}
-            </Text>
-          </>
-        ) : null
-      }
       sideInfo={
-        <Box ml={5} style={{ flexDirection: "row", alignItems: "center" }}>
-          <Box ml={3}>
-            <ChosenMark active={active ?? false} />
+        showStake ? (
+          <Box ml={5} style={{ flexDirection: "row", alignItems: "center" }}>
+            <Box>
+              <Text textAlign="center" ff="Inter|SemiBold" fontSize={2}>
+                {formatCurrencyUnit(unit, new BigNumber(validator.votes), {
+                  showCode: true,
+                })}
+              </Text>
+              <Text textAlign="center" fontSize={1}>
+                <Trans i18nKey="celo.vote.steps.validator.totalVotes"></Trans>
+              </Text>
+            </Box>
+            <Box ml={3}>
+              <ChosenMark active={active ?? false} />
+            </Box>
           </Box>
-        </Box>
+        ) : null
       }
     ></StyledValidatorRow>
   );
