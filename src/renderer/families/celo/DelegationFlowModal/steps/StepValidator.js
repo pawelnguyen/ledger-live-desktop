@@ -26,13 +26,11 @@ export default function StepValidator({
     account && account.celoResources && transaction,
     "celo account, resources and transaction required",
   );
-  const { celoResources } = account;
 
   const updateValidator = ({ address }: { address: string }) => {
     const bridge: AccountBridge<Transaction> = getAccountBridge(account, parentAccount);
     //TODO: check
     onUpdateTransaction(tx => {
-      console.log('tx, address', tx, address)
       return bridge.updateTransaction(transaction, {
         recipient: address,
       });
@@ -44,7 +42,7 @@ export default function StepValidator({
 
   return (
     <Box flow={1}>
-      <TrackPage category="Celo Delegation" name="Step Validator" />
+      <TrackPage category="Celo Voting" name="Step Validator" />
       {error && <ErrorBanner error={error} />}
       <ValidatorsField
         account={account}
@@ -60,15 +58,12 @@ export default function StepValidator({
 export function StepValidatorFooter({
   transitionTo,
   account,
-  parentAccount,
   onClose,
-  status,
   bridgePending,
   transaction,
 }: StepProps) {
   invariant(account, "account required");
-  const { errors } = status;
-  const canNext = !bridgePending && !errors.voteAccAddr;
+  const canNext = !bridgePending && transaction.recipient;
 
   return (
     <>
@@ -78,7 +73,7 @@ export function StepValidatorFooter({
           <Trans i18nKey="common.cancel" />
         </Button>
         <Button
-          id="delegate-continue-button"
+          id="vote-continue-button"
           disabled={!canNext}
           primary
           onClick={() => transitionTo("amount")}
