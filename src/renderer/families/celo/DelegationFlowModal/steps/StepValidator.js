@@ -12,6 +12,8 @@ import ErrorBanner from "~/renderer/components/ErrorBanner";
 import LedgerByFigmentTC from "../../shared/components/LedgerByFigmentTCLink";
 import ValidatorsField from "../../shared/fields/ValidatorsField";
 import type { StepProps } from "../types";
+//TODO: move?
+import { LEDGER_BY_FIGMENT_VALIDATOR_GROUP_ADDRESS } from "@ledgerhq/live-common/lib/families/celo/api/hubble";
 
 export default function StepValidator({
   account,
@@ -29,7 +31,6 @@ export default function StepValidator({
 
   const updateValidator = ({ address }: { address: string }) => {
     const bridge: AccountBridge<Transaction> = getAccountBridge(account, parentAccount);
-    //TODO: check
     onUpdateTransaction(tx => {
       return bridge.updateTransaction(transaction, {
         recipient: address,
@@ -64,10 +65,11 @@ export function StepValidatorFooter({
 }: StepProps) {
   invariant(account, "account required");
   const canNext = !bridgePending && transaction.recipient;
+  const displayTC = transaction.recipient === LEDGER_BY_FIGMENT_VALIDATOR_GROUP_ADDRESS;
 
   return (
     <>
-      <LedgerByFigmentTC />
+      {displayTC && <LedgerByFigmentTC />}
       <Box horizontal>
         <Button mr={1} secondary onClick={onClose}>
           <Trans i18nKey="common.cancel" />
