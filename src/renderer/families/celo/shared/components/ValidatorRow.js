@@ -61,6 +61,13 @@ function CeloValidatorRow({ validator, active, showStake, onClick, unit, currenc
           </>
         ) : null
       }
+      sideInfo={
+        <Box ml={5} style={{ flexDirection: "row", alignItems: "center" }}>
+          <Box ml={3}>
+            <ChosenMark active={active ?? false} />
+          </Box>
+        </Box>
+      }
     ></StyledValidatorRow>
   );
 }
