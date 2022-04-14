@@ -12,8 +12,7 @@ import ErrorBanner from "~/renderer/components/ErrorBanner";
 import LedgerByFigmentTC from "../../shared/components/LedgerByFigmentTCLink";
 import ValidatorsField from "../../shared/fields/ValidatorsField";
 import type { StepProps } from "../types";
-//TODO: move?
-import { LEDGER_BY_FIGMENT_VALIDATOR_GROUP_ADDRESS } from "@ledgerhq/live-common/lib/families/celo/api/hubble";
+import { isDefaultValidatorGroupAddress } from "@ledgerhq/live-common/lib/families/celo/logic";
 
 export default function StepValidator({
   account,
@@ -65,7 +64,7 @@ export function StepValidatorFooter({
 }: StepProps) {
   invariant(account, "account required");
   const canNext = !bridgePending && transaction.recipient;
-  const displayTC = transaction.recipient === LEDGER_BY_FIGMENT_VALIDATOR_GROUP_ADDRESS;
+  const displayTC = isDefaultValidatorGroupAddress(transaction.recipient);
 
   return (
     <>

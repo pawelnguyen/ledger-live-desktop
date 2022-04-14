@@ -16,9 +16,7 @@ import Check from "~/renderer/icons/Check";
 import { openURL } from "~/renderer/linking";
 import type { ThemedComponent } from "~/renderer/styles/StyleProvider";
 import Logo from "~/renderer/icons/Logo";
-//TODO: move?
-import { LEDGER_BY_FIGMENT_VALIDATOR_GROUP_ADDRESS } from "@ledgerhq/live-common/lib/families/celo/api/hubble";
-
+import { isDefaultValidatorGroup } from "@ledgerhq/live-common/lib/families/celo/logic";
 
 type Props = {
   currency: CryptoCurrency,
@@ -40,8 +38,7 @@ function CeloValidatorRow({ validator, active, showStake, onClick, unit, currenc
     }
   }, [explorerView, validator]);
 
-  const isLedgerByFigmentValidator = validator.address === LEDGER_BY_FIGMENT_VALIDATOR_GROUP_ADDRESS;
-
+  // TODO: rename validator -> validator group
   return (
     <StyledValidatorRow
       onClick={onClick}
@@ -49,7 +46,7 @@ function CeloValidatorRow({ validator, active, showStake, onClick, unit, currenc
       validator={{ address: validator.address }}
       icon={
         <IconContainer isSR>
-          {isLedgerByFigmentValidator ? (
+          {isDefaultValidatorGroup(validator) ? (
             <Logo size={16} />
           ) : (
             <FirstLetterIcon label={validator.name} />
