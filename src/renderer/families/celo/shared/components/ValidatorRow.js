@@ -50,8 +50,8 @@ function CeloValidatorRow({ validator, active, showStake, onClick, unit, currenc
       onExternalLink={onExternalLink}
       unit={unit}
       sideInfo={
-        showStake ? (
-          <Box ml={5} style={{ flexDirection: "row", alignItems: "center" }}>
+        <Box ml={5} style={{ flexDirection: "row", alignItems: "center" }}>
+          {showStake && (
             <Box>
               <Text textAlign="center" ff="Inter|SemiBold" fontSize={2}>
                 {formatCurrencyUnit(unit, new BigNumber(validator.votes), {
@@ -62,11 +62,11 @@ function CeloValidatorRow({ validator, active, showStake, onClick, unit, currenc
                 <Trans i18nKey="celo.vote.steps.validator.totalVotes"></Trans>
               </Text>
             </Box>
-            <Box ml={3}>
-              <ChosenMark active={active ?? false} />
-            </Box>
+          )}
+          <Box ml={3}>
+            <ChosenMark active={active ?? false} />
           </Box>
-        ) : null
+        </Box>
       }
     ></StyledValidatorRow>
   );
