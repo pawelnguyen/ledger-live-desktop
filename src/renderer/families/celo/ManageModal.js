@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 import { Trans } from "react-i18next";
 import type { Account } from "@ledgerhq/live-common/lib/types";
+import { BigNumber } from "bignumber.js";
 
 import { openModal } from "~/renderer/actions/modals";
 import Box from "~/renderer/components/Box";
@@ -120,9 +121,11 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
     [dispatch, account],
   );
 
-  const votingEnabled = true;
+  const votingEnabled =
+    celoResources.nonvotingLockedBalance &&
+    celoResources.nonvotingLockedBalance.gt(new BigNumber(0));
   const unlockingEnabled = true;
-  const withdrawEnabled = (availablePendingWithdrawals(account).length > 0);
+  const withdrawEnabled = availablePendingWithdrawals(account).length > 0;
 
   //TODO: i18n, descriptions
   return (
@@ -207,10 +210,10 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </IconWrapper>
                   <InfoWrapper>
                     <Title>
-                      <Trans i18nKey="Vote" />
+                      <Trans i18nKey="celo.manage.vote.title" />
                     </Title>
                     <Description>
-                      <Trans i18nKey="polkadot.manage.nominate.description" />
+                      <Trans i18nKey="celo.manage.vote.description" />
                     </Description>
                   </InfoWrapper>
                 </ManageButton>
