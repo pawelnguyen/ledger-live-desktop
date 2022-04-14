@@ -61,21 +61,6 @@ function CeloValidatorRow({ validator, active, showStake, onClick, unit, currenc
           </>
         ) : null
       }
-      sideInfo={
-        <Box ml={5} style={{ flexDirection: "row", alignItems: "center" }}>
-          <Box>
-            <Text textAlign="center" ff="Inter|SemiBold" fontSize={2}>
-              {`${validator.commission} %`}
-            </Text>
-            <Text textAlign="center" fontSize={1}>
-              <Trans i18nKey="celo.vote.steps.validator.commission" />
-            </Text>
-          </Box>
-          <Box ml={3}>
-            <ChosenMark active={active ?? false} />
-          </Box>
-        </Box>
-      }
     ></StyledValidatorRow>
   );
 }
