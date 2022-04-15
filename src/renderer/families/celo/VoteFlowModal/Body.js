@@ -22,7 +22,7 @@ import GenericStepConnectDevice from "~/renderer/modals/Send/steps/GenericStepCo
 import { getCurrentDevice } from "~/renderer/reducers/devices";
 import StepAmount, { StepAmountFooter } from "./steps/StepAmount";
 import StepConfirmation, { StepConfirmationFooter } from "./steps/StepConfirmation";
-import StepValidator, { StepValidatorFooter } from "./steps/StepValidator";
+import StepValidatorGroup, { StepValidatorGroupFooter } from "./steps/StepValidatorGroup";
 import type { St, StepProps, StepId } from "./types";
 import type { Device } from "@ledgerhq/live-common/lib/hw/actions/types";
 
@@ -50,17 +50,17 @@ type Props = OwnProps & StateProps;
 
 const steps: Array<St> = [
   {
-    id: "validator",
-    label: <Trans i18nKey="celo.vote.steps.validator.title" />,
-    component: StepValidator,
+    id: "validatorGroup",
+    label: <Trans i18nKey="celo.vote.steps.validatorGroup.title" />,
+    component: StepValidatorGroup,
     noScroll: true,
-    footer: StepValidatorFooter,
+    footer: StepValidatorGroupFooter,
   },
   {
     id: "amount",
     label: <Trans i18nKey="celo.vote.steps.amount.title" />,
     component: StepAmount,
-    onBack: ({ transitionTo }: StepProps) => transitionTo("validator"),
+    onBack: ({ transitionTo }: StepProps) => transitionTo("validatorGroup"),
     noScroll: true,
     footer: StepAmountFooter,
   },
@@ -178,7 +178,7 @@ const Body = ({
     steps,
     errorSteps,
     disabledSteps: [],
-    hideBreadcrumb: !!error && ["validator"].includes(stepId),
+    hideBreadcrumb: !!error && ["validatorGroup"].includes(stepId),
     onRetry: handleRetry,
     onStepChange: handleStepChange,
     onClose: handleCloseModal,
@@ -198,7 +198,7 @@ const Body = ({
   return (
     <Stepper {...stepperProps}>
       <SyncSkipUnderPriority priority={100} />
-      <Track onUnmount event="CloseModalDelegation" />
+      <Track onUnmount event="CloseModalVote" />
     </Stepper>
   );
 };

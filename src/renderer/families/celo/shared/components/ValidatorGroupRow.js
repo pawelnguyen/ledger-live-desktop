@@ -1,7 +1,7 @@
 //@flow
 import { formatCurrencyUnit } from "@ledgerhq/live-common/lib/currencies";
 import { getAddressExplorer, getDefaultExplorerView } from "@ledgerhq/live-common/lib/explorers";
-import type { ValidatorAppValidator } from "@ledgerhq/live-common/lib/families/celo/validator-app";
+import type { CeloValidatorGroup } from "@ledgerhq/live-common/lib/families/celo/types";
 import type { CryptoCurrency, Unit } from "@ledgerhq/live-common/lib/types";
 import { BigNumber } from "bignumber.js";
 import React, { useCallback } from "react";
@@ -20,40 +20,46 @@ import { isDefaultValidatorGroup } from "@ledgerhq/live-common/lib/families/celo
 
 type Props = {
   currency: CryptoCurrency,
-  validator: ValidatorAppValidator,
+  validatorGroup: CeloValidatorGroup,
   active?: boolean,
   showStake?: boolean,
-  onClick?: (v: ValidatorAppValidator) => void,
+  onClick?: (v: CeloValidatorGroup) => void,
   unit: Unit,
 };
 
-function CeloValidatorRow({ validator, active, showStake, onClick, unit, currency }: Props) {
+function CeloValidatorGroupRow({
+  validatorGroup,
+  active,
+  showStake,
+  onClick,
+  unit,
+  currency,
+}: Props) {
   const explorerView = getDefaultExplorerView(currency);
 
   const onExternalLink = useCallback(() => {
-    const url = getAddressExplorer(explorerView, validator.address);
+    const url = getAddressExplorer(explorerView, validatorGroup.address);
 
     if (url) {
       openURL(url);
     }
-  }, [explorerView, validator]);
+  }, [explorerView, validatorGroup]);
 
-  // TODO: rename validator -> validator group
   return (
     <StyledValidatorRow
       onClick={onClick}
-      key={validator.address}
-      validator={{ address: validator.address }}
+      key={validatorGroup.address}
+      validator={{ address: validatorGroup.address }}
       icon={
         <IconContainer isSR>
-          {isDefaultValidatorGroup(validator) ? (
+          {isDefaultValidatorGroup(validatorGroup) ? (
             <Logo size={16} />
           ) : (
-            <FirstLetterIcon label={validator.name} />
+            <FirstLetterIcon label={validatorGroup.name} />
           )}
         </IconContainer>
       }
-      title={validator.name}
+      title={validatorGroup.name}
       onExternalLink={onExternalLink}
       unit={unit}
       sideInfo={
@@ -61,12 +67,12 @@ function CeloValidatorRow({ validator, active, showStake, onClick, unit, currenc
           {showStake && (
             <Box>
               <Text textAlign="center" ff="Inter|SemiBold" fontSize={2}>
-                {formatCurrencyUnit(unit, new BigNumber(validator.votes), {
+                {formatCurrencyUnit(unit, new BigNumber(validatorGroup.votes), {
                   showCode: true,
                 })}
               </Text>
               <Text textAlign="center" fontSize={1}>
-                <Trans i18nKey="celo.vote.steps.validator.totalVotes"></Trans>
+                <Trans i18nKey="celo.vote.steps.validatorGroup.totalVotes"></Trans>
               </Text>
             </Box>
           )}
@@ -89,4 +95,4 @@ const ChosenMark: ThemedComponent<{ active: boolean }> = styled(Check).attrs(p =
   size: 14,
 }))``;
 
-export default CeloValidatorRow;
+export default CeloValidatorGroupRow;

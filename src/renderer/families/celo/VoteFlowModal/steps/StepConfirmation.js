@@ -1,5 +1,4 @@
 // @flow
-
 import { SyncOneAccountOnMount } from "@ledgerhq/live-common/lib/bridge/react";
 import React from "react";
 import { Trans } from "react-i18next";
@@ -25,19 +24,11 @@ const Container: ThemedComponent<{ shouldSpace?: boolean }> = styled(Box).attrs(
   justify-content: ${p => (p.shouldSpace ? "space-between" : "center")};
 `;
 
-function StepConfirmation({
-  account,
-  t,
-  optimisticOperation,
-  error,
-  theme,
-  device,
-  signed,
-}: StepProps & { theme: * }) {
+function StepConfirmation({ t, optimisticOperation, error, signed }: StepProps & { theme: * }) {
   if (optimisticOperation) {
     return (
       <Container>
-        <TrackPage category="Celo Delegation" name="Step Confirmation" />
+        <TrackPage category="Celo Vote" name="Step Confirmation" />
         <SyncOneAccountOnMount priority={10} accountId={optimisticOperation.accountId} />
         <SuccessDisplay
           title={<Trans i18nKey="celo.vote.steps.confirmation.success.title" />}
@@ -50,7 +41,7 @@ function StepConfirmation({
   if (error) {
     return (
       <Container shouldSpace={signed}>
-        <TrackPage category="Delegation Celo" name="Step Confirmation Error" />
+        <TrackPage category="Vote Celo" name="Step Confirmation Error" />
         {signed ? (
           <BroadcastErrorDisclaimer
             title={<Trans i18nKey="celo.vote.steps.confirmation.broadcastError" />}
@@ -65,15 +56,12 @@ function StepConfirmation({
 }
 
 export function StepConfirmationFooter({
-  transitionTo,
   account,
   parentAccount,
   onRetry,
   error,
-  openModal,
   onClose,
   optimisticOperation,
-  transaction,
 }: StepProps) {
   return (
     <Box horizontal alignItems="right">
@@ -84,7 +72,7 @@ export function StepConfirmationFooter({
         <Button
           primary
           ml={2}
-          event="Celo Delegation View OpD Clicked"
+          event="Celo Vote View OpD Clicked"
           onClick={() => {
             onClose();
             if (account && optimisticOperation) {

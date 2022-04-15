@@ -1,5 +1,4 @@
 // @flow
-
 import { getMainAccount } from "@ledgerhq/live-common/lib/account";
 import React, { Fragment, PureComponent } from "react";
 import { Trans } from "react-i18next";
@@ -28,7 +27,7 @@ const StepAmount = ({
 
   return (
     <Box flow={4}>
-      <TrackPage category="Celo Delegation" name="Step Amount" />
+      <TrackPage category="Celo Vote" name="Step Amount" />
       {mainAccount ? <CurrencyDownStatusAlert currencies={[mainAccount.currency]} /> : null}
       {error ? <ErrorBanner error={error} /> : null}
       {account && transaction && mainAccount && (

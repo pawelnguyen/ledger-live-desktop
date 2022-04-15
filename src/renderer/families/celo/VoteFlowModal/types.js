@@ -5,7 +5,7 @@ import type { Account, Operation, TransactionStatus } from "@ledgerhq/live-commo
 import type { TFunction } from "react-i18next";
 import type { Step } from "~/renderer/components/Stepper";
 
-export type StepId = "validator" | "amount" | "connectDevice" | "confirmation";
+export type StepId = "validatorGroup" | "amount" | "connectDevice" | "confirmation";
 
 export type StepProps = {
   t: TFunction,

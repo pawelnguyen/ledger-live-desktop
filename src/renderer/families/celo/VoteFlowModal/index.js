@@ -8,12 +8,11 @@ type State = {
   stepId: StepId,
 };
 
-//TODO: rename to validator group
 const INITIAL_STATE = {
-  stepId: "validator",
+  stepId: "validatorGroup",
 };
 
-class DelegationModal extends PureComponent<{ name: string }, State> {
+class VoteModal extends PureComponent<{ name: string }, State> {
   state = INITIAL_STATE;
 
   handleReset = () => this.setState({ ...INITIAL_STATE });
@@ -48,4 +47,4 @@ class DelegationModal extends PureComponent<{ name: string }, State> {
   }
 }
 
-export default DelegationModal;
+export default VoteModal;

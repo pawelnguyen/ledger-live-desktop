@@ -63,7 +63,7 @@ import MODAL_POLKADOT_REBOND from "../families/polkadot/RebondFlowModal";
 import MODAL_CELO_MANAGE from "../families/celo/ManageModal";
 import MODAL_CELO_LOCK from "../families/celo/LockFlowModal";
 import MODAL_CELO_UNLOCK from "../families/celo/UnlockFlowModal";
-import MODAL_CELO_VOTE from "../families/celo/DelegationFlowModal";
+import MODAL_CELO_VOTE from "../families/celo/VoteFlowModal";
 import MODAL_CELO_SIMPLE_OPERATION from "../families/celo/SimpleOperationFlowModal";
 import MODAL_CELO_WITHDRAW from "../families/celo/WithdrawFlowModal";
 

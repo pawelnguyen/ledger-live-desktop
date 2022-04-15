@@ -1,63 +1,48 @@
 // @flow
 import { getAccountUnit } from "@ledgerhq/live-common/lib/account";
-import type { ValidatorAppValidator } from "@ledgerhq/live-common/lib/families/celo/validator-app";
+import type { CeloValidatorGroup } from "@ledgerhq/live-common/lib/families/celo/types";
 import type { Account, TransactionStatus } from "@ledgerhq/live-common/lib/types";
 import invariant from "invariant";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import type { TFunction } from "react-i18next";
 import { Trans } from "react-i18next";
 import styled from "styled-components";
 import Box from "~/renderer/components/Box";
-import { NoResultPlaceholder } from "~/renderer/components/Delegation/ValidatorSearchInput";
 import ScrollLoadingList from "~/renderer/components/ScrollLoadingList";
 import Text from "~/renderer/components/Text";
 import IconAngleDown from "~/renderer/icons/AngleDown";
 import type { ThemedComponent } from "~/renderer/styles/StyleProvider";
-import ValidatorRow from "../components/ValidatorRow";
+import ValidatorGroupRow from "../components/ValidatorGroupRow";
 
 import { useCeloPreloadData } from "@ledgerhq/live-common/lib/families/celo/react";
 
 type Props = {
-  t: TFunction,
   account: Account,
   status: TransactionStatus,
-  chosenVoteAccAddr: ?string,
-  onChangeValidator: (v: ValidatorAppValidator) => void,
+  chosenValidatorGroupAddress: ?string,
+  onChangeValidatorGroup: (v: CeloValidatorGroup) => void,
 };
 
-const ValidatorField = ({ t, account, onChangeValidator, chosenVoteAccAddr, status }: Props) => {
+const ValidatorGroupsField = ({
+  account,
+  onChangeValidatorGroup,
+  chosenValidatorGroupAddress,
+  status,
+}: Props) => {
   if (!status) return null;
 
   invariant(account && account.celoResources, "celo account and resources required");
 
-  // const { celoResources } = account;
-
-  const [search, setSearch] = useState("");
   const [showAll, setShowAll] = useState(false);
 
   const unit = getAccountUnit(account);
 
-  //TODO: check this method
-  // const validators = useLedgerFirstShuffledValidators(account.currency);
+  const { validatorGroups } = useCeloPreloadData();
 
-  //TODO: validator groups
-  const preloaded = useCeloPreloadData();
-  const { validatorGroups: validators } = preloaded;
-
-  const chosenValidator = useMemo(() => {
-    if (chosenVoteAccAddr !== null) {
-      return validators.find(v => v.address === chosenVoteAccAddr);
+  const chosenValidatorGroup = useMemo(() => {
+    if (chosenValidatorGroupAddress !== null) {
+      return validatorGroups.find(v => v.address === chosenValidatorGroupAddress);
     }
-  }, [validators, chosenVoteAccAddr]);
-
-  const validatorsFiltered = useMemo(() => {
-    return validators.filter(validator => {
-      return (
-        validator.name?.toLowerCase().includes(search) ||
-        validator.address.toLowerCase().includes(search)
-      );
-    });
-  }, [validators, search]);
+  }, [validatorGroups, chosenValidatorGroupAddress]);
 
   const containerRef = useRef();
 
@@ -70,17 +55,17 @@ const ValidatorField = ({ t, account, onChangeValidator, chosenVoteAccAddr, stat
     }
   }, []);
 
-  const renderItem = (validator: ValidatorAppValidator, validatorIdx: number) => {
+  const renderItem = (validatorGroup: CeloValidatorGroup, validatorGroupIdx: number) => {
     return (
-      <ValidatorRow
+      <ValidatorGroupRow
         currency={account.currency}
-        active={chosenVoteAccAddr === validator.address}
-        showStake={validatorIdx !== 0}
-        onClick={onChangeValidator}
-        key={validator.address}
-        validator={validator}
+        active={chosenValidatorGroupAddress === validatorGroup.address}
+        showStake={validatorGroupIdx !== 0}
+        onClick={onChangeValidatorGroup}
+        key={validatorGroup.address}
+        validatorGroup={validatorGroup}
         unit={unit}
-      ></ValidatorRow>
+      ></ValidatorGroupRow>
     );
   };
 
@@ -88,13 +73,9 @@ const ValidatorField = ({ t, account, onChangeValidator, chosenVoteAccAddr, stat
     <ValidatorsFieldContainer>
       <Box p={1}>
         <ScrollLoadingList
-          data={showAll ? validators : [chosenValidator ?? validators[0]]}
+          data={showAll ? validatorGroups : [chosenValidatorGroup ?? validatorGroups[0]]}
           style={{ flex: showAll ? "1 0 240px" : "1 0 56px", marginBottom: 0, paddingLeft: 0 }}
           renderItem={renderItem}
-          noResultPlaceholder={
-            validatorsFiltered.length <= 0 &&
-            search.length > 0 && <NoResultPlaceholder search={search} />
-          }
         />
       </Box>
       <SeeAllButton expanded={showAll} onClick={() => setShowAll(shown => !shown)}>
@@ -131,4 +112,4 @@ const SeeAllButton: ThemedComponent<{ expanded: boolean }> = styled.div`
   }
 `;
 
-export default ValidatorField;
+export default ValidatorGroupsField;

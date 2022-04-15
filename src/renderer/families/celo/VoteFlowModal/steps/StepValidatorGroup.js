@@ -10,11 +10,11 @@ import Box from "~/renderer/components/Box";
 import Button from "~/renderer/components/Button";
 import ErrorBanner from "~/renderer/components/ErrorBanner";
 import LedgerByFigmentTC from "../../shared/components/LedgerByFigmentTCLink";
-import ValidatorsField from "../../shared/fields/ValidatorsField";
+import ValidatorGroupsField from "../../shared/fields/ValidatorGroupsField";
 import type { StepProps } from "../types";
 import { isDefaultValidatorGroupAddress } from "@ledgerhq/live-common/lib/families/celo/logic";
 
-export default function StepValidator({
+export default function StepValidatorGroup({
   account,
   parentAccount,
   onUpdateTransaction,
@@ -28,7 +28,7 @@ export default function StepValidator({
     "celo account, resources and transaction required",
   );
 
-  const updateValidator = ({ address }: { address: string }) => {
+  const updateValidatorGroup = ({ address }: { address: string }) => {
     const bridge: AccountBridge<Transaction> = getAccountBridge(account, parentAccount);
     onUpdateTransaction(tx => {
       return bridge.updateTransaction(transaction, {
@@ -37,17 +37,16 @@ export default function StepValidator({
     });
   };
 
-  //TODO: check, rename
-  const chosenVoteAccAddr = transaction.recipient;
+  const chosenValidatorGroupAddress = transaction.recipient;
 
   return (
     <Box flow={1}>
-      <TrackPage category="Celo Voting" name="Step Validator" />
+      <TrackPage category="Celo Voting" name="Step ValidatorGroup" />
       {error && <ErrorBanner error={error} />}
-      <ValidatorsField
+      <ValidatorGroupsField
         account={account}
-        chosenVoteAccAddr={chosenVoteAccAddr}
-        onChangeValidator={updateValidator}
+        chosenValidatorGroupAddress={chosenValidatorGroupAddress}
+        onChangeValidatorGroup={updateValidatorGroup}
         status={status}
         t={t}
       />
@@ -55,7 +54,7 @@ export default function StepValidator({
   );
 }
 
-export function StepValidatorFooter({
+export function StepValidatorGroupFooter({
   transitionTo,
   account,
   onClose,
@@ -63,6 +62,7 @@ export function StepValidatorFooter({
   transaction,
 }: StepProps) {
   invariant(account, "account required");
+
   const canNext = !bridgePending && transaction.recipient;
   const displayTC = isDefaultValidatorGroupAddress(transaction.recipient);
 
