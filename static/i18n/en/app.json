@@ -2228,8 +2228,8 @@
           },
           "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
         },
-        "validator": {
-          "title": "Validators",
+        "validatorGroup": {
+          "title": "Validator Groups",
           "ledgerByFigmentTC": "Ledger by Figment T&Cs",
           "totalVotes": "Total Votes",
           "commission": "Commission"

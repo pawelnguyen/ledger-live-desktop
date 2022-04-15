@@ -11,7 +11,7 @@ export default function LedgerByFigmentTC() {
 
   return (
     <LinkWithExternalIcon
-      label={t("celo.vote.steps.validator.ledgerByFigmentTC")}
+      label={t("celo.vote.steps.validatorGroup.ledgerByFigmentTC")}
       onClick={openLedgerByFigmentTC}
     />
   );
