@@ -22,6 +22,9 @@ import AccountFooter from "~/renderer/modals/Send/AccountFooter";
 import ErrorBanner from "~/renderer/components/ErrorBanner";
 import type { AccountBridge } from "@ledgerhq/live-common/lib/types";
 import type { Transaction } from "@ledgerhq/live-common/lib/families/celo/types";
+import { useCeloPreloadData } from "@ledgerhq/live-common/lib/families/celo/react";
+import ValidatorGroupRow from "~/renderer/families/celo/shared/components/ValidatorGroupRow";
+import { getAccountUnit } from "@ledgerhq/live-common/lib/account";
 
 const Description = styled(Text).attrs(({ isPill }) => ({
   ff: isPill ? "Inter|SemiBold" : "Inter|Regular",
@@ -94,56 +97,63 @@ export default function StepAmount({
     (recipient: string) => {
       onChangeTransaction(
         bridge.updateTransaction(transaction, {
-          recipient: "0x0861a61Bf679A30680510EcC238ee43B82C5e843",
+          recipient,
         }),
       );
     },
     [bridge, transaction, onChangeTransaction],
   );
 
-  const { pendingWithdrawals } = account.celoResources;
+  const { votes } = account.celoResources;
+
+  console.log('votes', votes)
 
   // TODO: fix
-  if (
-    (transaction.recipient === null || transaction.recipient === undefined) &&
-    pendingWithdrawals[0]
-  )
-    onChange(pendingWithdrawals[0].index);
+  if ((transaction.recipient === null || transaction.recipient === undefined) && votes[0])
+    onChange(votes[0].validatorGroup);
+
+  // TODO: filter by activatable, logic.js
+
+  const { validatorGroups } = useCeloPreloadData();
+
+  const unit = getAccountUnit(account);
 
   return (
     <Box flow={1}>
       <TrackPage category="Withdraw Flow" name="Step 1" />
       {error ? <ErrorBanner error={error} /> : null}
       <Box vertical>
-        {pendingWithdrawals.map(({ value, time, index }) => {
-          const withdrawalTime = new Date(time.toNumber() * 1000);
-          const disabled = withdrawalTime > new Date();
+        {votes.map(({ validatorGroup: address, pendingAmount }) => {
+          const validatorGroup = validatorGroups.find(v => v.address === address);
           return (
-            <SelectResource disabled={disabled} key={index}>
-              <Text ff="Inter|SemiBold"></Text>
-              <Box horizontal alignItems="center">
-                {disabled && (
-                  <TimerWrapper>
-                    <Clock size={12} />
-                    <Description isPill>{moment(withdrawalTime).fromNow()}</Description>
-                  </TimerWrapper>
-                )}
-                <FormattedVal
-                  val={value}
-                  unit={account.unit}
-                  style={{ textAlign: "right", width: "auto", marginRight: 10 }}
-                  showCode
-                  fontSize={4}
-                  color="palette.text.shade60"
-                />
-                <CheckBox
-                  isRadio
-                  disabled={disabled}
-                  isChecked={transaction.index === index}
-                  onChange={() => onChange(index)}
-                />
-              </Box>
-            </SelectResource>
+            <ValidatorGroupRow
+              currency={account.currency}
+              active={transaction.recipient === validatorGroup.address}
+              showStake={false}
+              onClick={() => onChange(validatorGroup)}
+              key={validatorGroup.address}
+              validatorGroup={validatorGroup}
+              unit={unit}
+            ></ValidatorGroupRow>
+
+            // <SelectResource key={validatorGroup.address}>
+            //   <Text ff="Inter|SemiBold">{validatorGroup.name}</Text>
+            //   <Box horizontal alignItems="center">
+            //     <FormattedVal
+            //       val={pendingAmount}
+            //       unit={account.unit}
+            //       style={{ textAlign: "right", width: "auto", marginRight: 10 }}
+            //       showCode
+            //       fontSize={4}
+            //       color="palette.text.shade60"
+            //     />
+            //     <CheckBox
+            //       isRadio
+            //       isChecked={}
+            //       onChange={}
+            //     />
+            //   </Box>
+            // </SelectResource>
           );
         })}
       </Box>
