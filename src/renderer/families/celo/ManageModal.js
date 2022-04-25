@@ -218,24 +218,24 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </InfoWrapper>
                 </ManageButton>
                 <ManageButton
-                  disabled={true}
-                  onClick={() => onSelectAction(onClose, "MODAL_POLKADOT_NOMINATE")}
+                  disabled={false}
+                  onClick={() => onSelectAction(onClose, "MODAL_CELO_ACTIVATE")}
                 >
                   <IconWrapper>
                     <NominateIcon size={16} />
                   </IconWrapper>
                   <InfoWrapper>
                     <Title>
-                      <Trans i18nKey="Activate vote" />
+                      <Trans i18nKey="celo.manage.activate.title" />
                     </Title>
                     <Description>
-                      <Trans i18nKey="polkadot.manage.nominate.description" />
+                      <Trans i18nKey="celo.manage.activate.description" />
                     </Description>
                   </InfoWrapper>
                 </ManageButton>
                 <ManageButton
                   disabled={true}
-                  onClick={() => onSelectAction(onClose, "MODAL_POLKADOT_NOMINATE")}
+                  onClick={() => onSelectAction(onClose, "MODAL_CELO_ACTIVATE")}
                 >
                   <IconWrapper>
                     <NominateIcon size={16} />

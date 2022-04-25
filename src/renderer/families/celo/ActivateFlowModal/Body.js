@@ -54,20 +54,20 @@ type Props = OwnProps & StateProps;
 const steps: Array<St> = [
   {
     id: "amount",
-    label: <Trans i18nKey="celo.withdraw.steps.amount.title" />,
+    label: <Trans i18nKey="celo.activate.steps.amount.title" />,
     component: StepAmount,
     noScroll: true,
     footer: StepAmountFooter,
   },
   {
     id: "connectDevice",
-    label: <Trans i18nKey="celo.withdraw.steps.connectDevice.title" />,
+    label: <Trans i18nKey="celo.activate.steps.connectDevice.title" />,
     component: GenericStepConnectDevice,
     onBack: ({ transitionTo }: StepProps) => transitionTo("amount"),
   },
   {
     id: "confirmation",
-    label: <Trans i18nKey="celo.withdraw.steps.confirmation.title" />,
+    label: <Trans i18nKey="celo.activate.steps.confirmation.title" />,
     component: StepConfirmation,
     footer: StepConfirmationFooter,
   },
@@ -159,7 +159,7 @@ const Body = ({
     transactionError || bridgeError || (statusError instanceof Error ? statusError : null);
 
   const stepperProps = {
-    title: t("celo.withdraw.title"),
+    title: t("celo.activate.title"),
     device,
     account,
     parentAccount,
@@ -189,7 +189,7 @@ const Body = ({
   return (
     <Stepper {...stepperProps}>
       <SyncSkipUnderPriority priority={100} />
-      <Track onUnmount event="CloseModalWithdraw" />
+      <Track onUnmount event="CloseModalActivate" />
     </Stepper>
   );
 };

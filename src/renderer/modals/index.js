@@ -66,6 +66,7 @@ import MODAL_CELO_UNLOCK from "../families/celo/UnlockFlowModal";
 import MODAL_CELO_VOTE from "../families/celo/VoteFlowModal";
 import MODAL_CELO_SIMPLE_OPERATION from "../families/celo/SimpleOperationFlowModal";
 import MODAL_CELO_WITHDRAW from "../families/celo/WithdrawFlowModal";
+import MODAL_CELO_ACTIVATE from "../families/celo/ActivateFlowModal";
 
 // Lending
 import MODAL_LEND_MANAGE from "../screens/lend/modals/ManageLend";
@@ -131,6 +132,7 @@ const modals: { [_: string]: React$ComponentType<any> } = {
   MODAL_CELO_VOTE,
   MODAL_CELO_SIMPLE_OPERATION,
   MODAL_CELO_WITHDRAW,
+  MODAL_CELO_ACTIVATE,
   MODAL_FULL_NODE,
   MODAL_LOTTIE_DEBUGGER,
   MODAL_RECOVERY_SEED_WARNING,
