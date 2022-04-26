@@ -19,7 +19,10 @@ import WithdrawUnbondedIcon from "~/renderer/icons/Coins";
 import Text from "~/renderer/components/Text";
 import invariant from "invariant";
 
-import { availablePendingWithdrawals } from "@ledgerhq/live-common/lib/families/celo/logic";
+import {
+  availablePendingWithdrawals,
+  activatableVotes,
+} from "@ledgerhq/live-common/lib/families/celo/logic";
 
 const IconWrapper = styled.div`
   width: 32px;
@@ -126,6 +129,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
     celoResources.nonvotingLockedBalance.gt(new BigNumber(0));
   const unlockingEnabled = true;
   const withdrawEnabled = availablePendingWithdrawals(account).length > 0;
+  const activatingEnabled = activatableVotes(account).length > 0;
 
   //TODO: i18n, descriptions
   return (
@@ -218,7 +222,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </InfoWrapper>
                 </ManageButton>
                 <ManageButton
-                  disabled={false}
+                  disabled={!activatingEnabled}
                   onClick={() => onSelectAction(onClose, "MODAL_CELO_ACTIVATE")}
                 >
                   <IconWrapper>
