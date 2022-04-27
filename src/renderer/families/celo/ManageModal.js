@@ -124,12 +124,10 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
     [dispatch, account],
   );
 
-  const votingEnabled =
-    celoResources.nonvotingLockedBalance &&
-    celoResources.nonvotingLockedBalance.gt(new BigNumber(0));
-  const unlockingEnabled = true;
-  const withdrawEnabled = availablePendingWithdrawals(account).length > 0;
-  const activatingEnabled = activatableVotes(account).length > 0;
+  const unlockingEnabled = celoResources.nonvotingLockedBalance?.gt(0);
+  const votingEnabled = celoResources.nonvotingLockedBalance?.gt(0);
+  const withdrawEnabled = availablePendingWithdrawals(account).length;
+  const activatingEnabled = activatableVotes(account).length;
 
   //TODO: i18n, descriptions
   return (
@@ -137,7 +135,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
       {...rest}
       name={name}
       centered
-      render={({ onClose, data }) => (
+      render={({ onClose }) => (
         <ModalBody
           onClose={onClose}
           onBack={undefined}
