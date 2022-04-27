@@ -44,21 +44,9 @@ export default function StepAmount({
     [bridge, transaction, onChangeTransaction],
   );
 
-  // const {votes} = account.celoResources;
   const votes = activatableVotes(account);
 
-  console.log('votes', votes)
-
-  // TODO: fix
-  if (
-    (transaction.recipient === null ||
-      transaction.recipient === undefined ||
-      transaction.recipient === "") &&
-    votes[0]
-  )
-    onChange(votes[0].validatorGroup);
-
-  // TODO: filter by activatable, logic.js
+  if (!transaction.recipient && votes[0]) onChange(votes[0].validatorGroup);
 
   const { validatorGroups } = useCeloPreloadData();
 
@@ -71,7 +59,6 @@ export default function StepAmount({
       <Box vertical>
         {votes.map(({ validatorGroup: address, pendingAmount }) => {
           const validatorGroup = validatorGroups.find(v => v.address === address);
-          console.log('validatorGroup, address, pendingAmount', validatorGroup, address, pendingAmount);
           return (
             <ActivateValidatorGroupRow
               currency={account.currency}

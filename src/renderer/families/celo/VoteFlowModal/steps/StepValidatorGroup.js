@@ -9,8 +9,8 @@ import TrackPage from "~/renderer/analytics/TrackPage";
 import Box from "~/renderer/components/Box";
 import Button from "~/renderer/components/Button";
 import ErrorBanner from "~/renderer/components/ErrorBanner";
-import LedgerByFigmentTC from "../../shared/components/LedgerByFigmentTCLink";
-import ValidatorGroupsField from "../../shared/fields/ValidatorGroupsField";
+import LedgerByFigmentTC from "../components/LedgerByFigmentTCLink";
+import ValidatorGroupsField from "../fields/ValidatorGroupsField";
 import type { StepProps } from "../types";
 import { isDefaultValidatorGroupAddress } from "@ledgerhq/live-common/lib/families/celo/logic";
 
