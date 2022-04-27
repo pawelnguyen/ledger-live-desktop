@@ -2253,7 +2253,7 @@
           "title": "Confirmation",
           "success": {
             "title": "",
-            "text": "Your vote was activated successfully.",
+            "text": "Your vote was successfully activated.",
             "cta": "View details"
           },
           "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
