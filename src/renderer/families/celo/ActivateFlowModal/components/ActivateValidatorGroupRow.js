@@ -26,7 +26,7 @@ type Props = {
   pendingAmount: BigNumber,
 };
 
-//TODO: refactor, rename?
+//TODO: consider reusing ValidatorGroupRow and passing sideInfo
 function CeloActivateValidatorGroupRow({
   validatorGroup,
   active,
