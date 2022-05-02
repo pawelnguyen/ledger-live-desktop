@@ -128,8 +128,9 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
   const votingEnabled = celoResources.nonvotingLockedBalance?.gt(0);
   const withdrawEnabled = availablePendingWithdrawals(account).length;
   const activatingEnabled = activatableVotes(account).length;
+  //TODO:
+  const revokingEnabled = true;
 
-  //TODO: i18n, descriptions
   return (
     <Modal
       {...rest}
@@ -236,18 +237,18 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </InfoWrapper>
                 </ManageButton>
                 <ManageButton
-                  disabled={true}
-                  onClick={() => onSelectAction(onClose, "MODAL_CELO_ACTIVATE")}
+                  disabled={revokingEnabled}
+                  onClick={() => onSelectAction(onClose, "MODAL_CELO_REVOKE")}
                 >
                   <IconWrapper>
                     <NominateIcon size={16} />
                   </IconWrapper>
                   <InfoWrapper>
                     <Title>
-                      <Trans i18nKey="Revoke vote" />
+                      <Trans i18nKey="celo.manage.revoke.title" />
                     </Title>
                     <Description>
-                      <Trans i18nKey="polkadot.manage.nominate.description" />
+                      <Trans i18nKey="celo.manage.revoke.description" />
                     </Description>
                   </InfoWrapper>
                 </ManageButton>

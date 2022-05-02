@@ -27,8 +27,8 @@ export default function StepAmount({
   error,
 }: StepProps) {
   invariant(
-    account && transaction && account.celoResources && account.celoResources.pendingWithdrawals,
-    "account with pending withdrawals and transaction required",
+    account && transaction && account.celoResources && account.celoResources.votes,
+    "account with votes and transaction required",
   );
 
   const bridge = getAccountBridge(account, parentAccount);
