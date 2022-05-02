@@ -2087,6 +2087,10 @@
       "activate": {
         "title": "Activate vote",
         "description": "Activate your vote for validator group"
+      },
+      "revoke": {
+        "title": "Revoke vote",
+        "description": "Revoke your vote for validator group"
       }
     },
     "lock": {
@@ -2243,6 +2247,29 @@
             "cta": "View details"
           },
           "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
+        }
+      }
+    },
+    "revoke": {
+      "title": "Revoke vote",
+      "steps": {
+        "amount": {
+          "title": "Amount"
+        },
+        "connectDevice": {
+          "title": "Device"
+        },
+        "confirmation": {
+          "title": "Confirmation",
+          "success": {
+            "title": "You have successfully voted",
+            "text": "You will see your operation in history soon.",
+            "cta": "View details"
+          },
+          "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
+        },
+        "vote": {
+          "title": "Vote"
         }
       }
     }
