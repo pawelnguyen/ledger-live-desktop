@@ -5,7 +5,6 @@ import type { CeloValidatorGroup } from "@ledgerhq/live-common/lib/families/celo
 import type { CryptoCurrency, Unit } from "@ledgerhq/live-common/lib/types";
 import { BigNumber } from "bignumber.js";
 import React, { useCallback } from "react";
-import { Trans } from "react-i18next";
 import styled from "styled-components";
 import Box from "~/renderer/components/Box";
 import type { ValidatorRowProps } from "~/renderer/components/Delegation/ValidatorRow";
@@ -22,19 +21,13 @@ type Props = {
   currency: CryptoCurrency,
   validatorGroup: CeloValidatorGroup,
   active?: boolean,
-  showStake?: boolean,
   onClick?: (v: CeloValidatorGroup) => void,
   unit: Unit,
+  amount: BigNumber,
 };
 
-function CeloValidatorGroupRow({
-  validatorGroup,
-  active,
-  showStake,
-  onClick,
-  unit,
-  currency,
-}: Props) {
+//TODO: consider reusing ValidatorGroupRow and passing sideInfo
+function CeloRevokeVoteRow({ validatorGroup, active, onClick, unit, currency, amount }: Props) {
   const explorerView = getDefaultExplorerView(currency);
 
   const onExternalLink = useCallback(() => {
@@ -64,18 +57,13 @@ function CeloValidatorGroupRow({
       unit={unit}
       sideInfo={
         <Box ml={5} style={{ flexDirection: "row", alignItems: "center" }}>
-          {showStake && (
-            <Box>
-              <Text textAlign="center" ff="Inter|SemiBold" fontSize={2}>
-                {formatCurrencyUnit(unit, new BigNumber(validatorGroup.votes), {
-                  showCode: true,
-                })}
-              </Text>
-              <Text textAlign="center" fontSize={1}>
-                <Trans i18nKey="celo.revoke.steps.validatorGroup.totalVotes"></Trans>
-              </Text>
-            </Box>
-          )}
+          <Box>
+            <Text textAlign="center" ff="Inter|SemiBold" fontSize={2}>
+              {formatCurrencyUnit(unit, amount, {
+                showCode: true,
+              })}
+            </Text>
+          </Box>
           <Box ml={3}>
             <ChosenMark active={active ?? false} />
           </Box>
@@ -95,4 +83,4 @@ const ChosenMark: ThemedComponent<{ active: boolean }> = styled(Check).attrs(p =
   size: 14,
 }))``;
 
-export default CeloValidatorGroupRow;
+export default CeloRevokeVoteRow;
