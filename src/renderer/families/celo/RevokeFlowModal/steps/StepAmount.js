@@ -25,9 +25,10 @@ const StepAmount = ({
   if (!status) return null;
   const mainAccount = account ? getMainAccount(account, parentAccount) : null;
 
+  console.log('transactio', transaction)
   return (
     <Box flow={4}>
-      <TrackPage category="Celo Vote" name="Step Amount" />
+      <TrackPage category="Celo Revoke" name="Step Amount" />
       {mainAccount ? <CurrencyDownStatusAlert currencies={[mainAccount.currency]} /> : null}
       {error ? <ErrorBanner error={error} /> : null}
       {account && transaction && mainAccount && (

@@ -22,7 +22,7 @@ import GenericStepConnectDevice from "~/renderer/modals/Send/steps/GenericStepCo
 import { getCurrentDevice } from "~/renderer/reducers/devices";
 import StepAmount, { StepAmountFooter } from "./steps/StepAmount";
 import StepConfirmation, { StepConfirmationFooter } from "./steps/StepConfirmation";
-import StepValidatorGroup, { StepValidatorGroupFooter } from "./steps/StepValidatorGroup";
+import StepVote, { StepVoteFooter } from "./steps/StepVote";
 import type { St, StepProps, StepId } from "./types";
 import type { Device } from "@ledgerhq/live-common/lib/hw/actions/types";
 
@@ -52,9 +52,9 @@ const steps: Array<St> = [
   {
     id: "vote",
     label: <Trans i18nKey="celo.revoke.steps.vote.title" />,
-    component: StepValidatorGroup,
+    component: StepVote,
     noScroll: true,
-    footer: StepValidatorGroupFooter,
+    footer: StepVoteFooter,
   },
   {
     id: "amount",
@@ -119,7 +119,7 @@ const Body = ({
     const bridge: AccountBridge<Transaction> = getAccountBridge(account, undefined);
 
     const transaction = bridge.updateTransaction(bridge.createTransaction(account), {
-      mode: "vote",
+      mode: "revoke",
     });
 
     return { account, parentAccount: undefined, transaction };
@@ -178,7 +178,7 @@ const Body = ({
     steps,
     errorSteps,
     disabledSteps: [],
-    hideBreadcrumb: !!error && ["validatorGroup"].includes(stepId),
+    hideBreadcrumb: !!error && ["vote"].includes(stepId),
     onRetry: handleRetry,
     onStepChange: handleStepChange,
     onClose: handleCloseModal,
@@ -198,7 +198,7 @@ const Body = ({
   return (
     <Stepper {...stepperProps}>
       <SyncSkipUnderPriority priority={100} />
-      <Track onUnmount event="CloseModalVote" />
+      <Track onUnmount event="CloseModalRevoke" />
     </Stepper>
   );
 };

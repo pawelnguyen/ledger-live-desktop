@@ -237,7 +237,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </InfoWrapper>
                 </ManageButton>
                 <ManageButton
-                  disabled={revokingEnabled}
+                  disabled={!revokingEnabled}
                   onClick={() => onSelectAction(onClose, "MODAL_CELO_REVOKE")}
                 >
                   <IconWrapper>
