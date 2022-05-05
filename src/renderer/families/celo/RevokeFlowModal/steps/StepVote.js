@@ -41,8 +41,20 @@ export default function StepVote({
   // TODO: fetch flatten votes? with an index. revokable votes?
   const { votes } = account.celoResources;
 
-  const revokableVotes = votes.map(vote => {
-    return { ...vote, index: 1 };
+  const revokableVotes = [];
+  votes.forEach(vote => {
+    if (vote.pendingAmount > 0)
+      revokableVotes.push({
+        validatorGroup: vote.validatorGroup,
+        index: 0,
+        amount: vote.pendingAmount,
+      });
+    if (vote.activeAmount > 0)
+      revokableVotes.push({
+        validatorGroup: vote.validatorGroup,
+        index: 1,
+        amount: vote.activeAmount,
+      });
   });
 
   if (!transaction.recipient && revokableVotes[0])
@@ -52,22 +64,25 @@ export default function StepVote({
 
   const unit = getAccountUnit(account);
 
+  console.log('transaction AA', transaction)
   return (
     <Box flow={1}>
       <TrackPage category="Withdraw Flow" name="Step 1" />
       {error ? <ErrorBanner error={error} /> : null}
       <Box vertical>
-        {revokableVotes.map(({ validatorGroup: address, index, pendingAmount, activeAmount }) => {
+        {revokableVotes.map(({ validatorGroup: address, index, amount }) => {
           const validatorGroup = validatorGroups.find(v => v.address === address);
+          const activeVote =
+            transaction.recipient === validatorGroup.address && transaction.index === index;
           return (
             <RevokeVoteRow
               currency={account.currency}
-              active={transaction.recipient === validatorGroup.address}
+              active={activeVote}
               onClick={() => onChange(address, index)}
               key={validatorGroup.address}
               validatorGroup={validatorGroup}
               unit={unit}
-              amount={activeAmount}
+              amount={amount}
             ></RevokeVoteRow>
           );
         })}
@@ -85,7 +100,7 @@ export function StepVoteFooter({
 }: StepProps) {
   invariant(account, "account required");
 
-  const canNext = !bridgePending && transaction.recipient && transaction.index;
+  const canNext = !bridgePending && transaction.recipient && transaction.index != null;
 
   return (
     <>
