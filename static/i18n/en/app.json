@@ -2262,7 +2262,7 @@
         "confirmation": {
           "title": "Confirmation",
           "success": {
-            "title": "You have successfully voted",
+            "title": "You have successfully revoked your votes",
             "text": "You will see your operation in history soon.",
             "cta": "View details"
           },
