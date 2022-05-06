@@ -16,6 +16,14 @@ import { openURL } from "~/renderer/linking";
 import type { ThemedComponent } from "~/renderer/styles/StyleProvider";
 import Logo from "~/renderer/icons/Logo";
 import { isDefaultValidatorGroup } from "@ledgerhq/live-common/lib/families/celo/logic";
+import { Trans } from "react-i18next";
+
+const Status = styled(Text)`
+  font-size: 11px;
+  font-weight: 700;
+  color: ${p =>
+    p.activeVote ? p.theme.colors.positiveGreen : p.theme.colors.palette.text.shade60};
+`;
 
 type Props = {
   currency: CryptoCurrency,
@@ -24,10 +32,11 @@ type Props = {
   onClick?: (v: CeloValidatorGroup) => void,
   unit: Unit,
   amount: BigNumber,
+  activeStatus: boolean,
 };
 
 //TODO: consider reusing ValidatorGroupRow and passing sideInfo
-function CeloRevokeVoteRow({ validatorGroup, active, onClick, unit, currency, amount }: Props) {
+function CeloRevokeVoteRow({ validatorGroup, active, onClick, unit, currency, amount, activeStatus }: Props) {
   const explorerView = getDefaultExplorerView(currency);
 
   const onExternalLink = useCallback(() => {
@@ -55,6 +64,15 @@ function CeloRevokeVoteRow({ validatorGroup, active, onClick, unit, currency, am
       title={validatorGroup.name}
       onExternalLink={onExternalLink}
       unit={unit}
+      subtitle={
+        <Status activeVote={activeStatus}>
+          {activeStatus ? (
+            <Trans i18nKey="celo.revoke.steps.vote.active" />
+          ) : (
+            <Trans i18nKey="celo.revoke.steps.vote.pending" />
+          )}
+        </Status>
+      }
       sideInfo={
         <Box ml={5} style={{ flexDirection: "row", alignItems: "center" }}>
           <Box>
