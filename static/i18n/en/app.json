@@ -2269,7 +2269,9 @@
           "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
         },
         "vote": {
-          "title": "Vote"
+          "title": "Vote",
+          "active": "Active",
+          "pending": "Pending"
         }
       }
     }

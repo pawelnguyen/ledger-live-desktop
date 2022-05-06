@@ -24,6 +24,7 @@ const Warning = ({
     case "withdraw":
     case "vote":
     case "activate":
+    case "revoke":
       return null;
     default:
       return (
