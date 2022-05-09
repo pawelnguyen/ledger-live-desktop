@@ -60,7 +60,7 @@ const steps: Array<St> = [
     id: "amount",
     label: <Trans i18nKey="celo.revoke.steps.amount.title" />,
     component: StepAmount,
-    onBack: ({ transitionTo }: StepProps) => transitionTo("validatorGroup"),
+    onBack: ({ transitionTo }: StepProps) => transitionTo("vote"),
     noScroll: true,
     footer: StepAmountFooter,
   },
