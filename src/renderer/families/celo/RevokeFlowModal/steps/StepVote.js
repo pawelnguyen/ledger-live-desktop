@@ -11,7 +11,6 @@ import RevokeVoteRow from "../components/RevokeVoteRow";
 import type { StepProps } from "../types";
 import { useCeloPreloadData } from "@ledgerhq/live-common/lib/families/celo/react";
 import { getAccountUnit } from "@ledgerhq/live-common/lib/account";
-import { revokes } from "@ledgerhq/live-common/lib/families/celo/logic";
 
 export default function StepVote({
   account,

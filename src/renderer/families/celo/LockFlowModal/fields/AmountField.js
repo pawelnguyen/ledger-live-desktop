@@ -94,7 +94,7 @@ const AmountField = ({
     <Box vertical flow={1}>
       <Box horizontal justifyContent="space-between">
         <Label>
-          <Trans i18nKey="Amount to lock" />
+          <Trans i18nKey="celo.lock.steps.amount.amountLabel" />
         </Label>
         {typeof useAllAmount === "boolean" ? (
           <Box horizontal alignItems="center">
