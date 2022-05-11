@@ -22,7 +22,7 @@ const Status = styled(Text)`
   font-size: 11px;
   font-weight: 700;
   color: ${p =>
-    p.activeStatus ? p.theme.colors.positiveGreen : p.theme.colors.palette.text.shade60};
+    p.type === "active" ? p.theme.colors.positiveGreen : p.theme.colors.palette.text.shade60};
 `;
 
 type Props = {
@@ -32,7 +32,7 @@ type Props = {
   onClick?: (v: CeloValidatorGroup) => void,
   unit: Unit,
   amount: BigNumber,
-  activeStatus: boolean,
+  type: string,
 };
 
 //TODO: consider reusing ValidatorGroupRow and passing sideInfo
@@ -43,7 +43,7 @@ function CeloRevokeVoteRow({
   unit,
   currency,
   amount,
-  activeStatus,
+  type,
 }: Props) {
   const explorerView = getDefaultExplorerView(currency);
 
@@ -73,8 +73,8 @@ function CeloRevokeVoteRow({
       onExternalLink={onExternalLink}
       unit={unit}
       subtitle={
-        <Status activeStatus={activeStatus}>
-          {activeStatus ? (
+        <Status type={type}>
+          {type === "active" ? (
             <Trans i18nKey="celo.revoke.steps.vote.active" />
           ) : (
             <Trans i18nKey="celo.revoke.steps.vote.pending" />

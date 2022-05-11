@@ -23,7 +23,7 @@ type Props = {
   active?: boolean,
   onClick?: (v: CeloValidatorGroup) => void,
   unit: Unit,
-  pendingAmount: BigNumber,
+  amount: BigNumber,
 };
 
 //TODO: consider reusing ValidatorGroupRow and passing sideInfo
@@ -33,7 +33,7 @@ function CeloActivateValidatorGroupRow({
   onClick,
   unit,
   currency,
-  pendingAmount,
+  amount,
 }: Props) {
   const explorerView = getDefaultExplorerView(currency);
 
@@ -66,7 +66,7 @@ function CeloActivateValidatorGroupRow({
         <Box ml={5} style={{ flexDirection: "row", alignItems: "center" }}>
           <Box>
             <Text textAlign="center" ff="Inter|SemiBold" fontSize={2}>
-              {formatCurrencyUnit(unit, pendingAmount, {
+              {formatCurrencyUnit(unit, amount, {
                 showCode: true,
               })}
             </Text>

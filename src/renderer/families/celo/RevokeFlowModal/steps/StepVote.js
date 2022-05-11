@@ -39,11 +39,9 @@ export default function StepVote({
     [bridge, transaction, onChangeTransaction],
   );
 
-  //TODO: rename?
-  const celoRevokes = revokes(account);
+  const { votes } = account.celoResources;
 
-  if (!transaction.recipient && celoRevokes[0])
-    onChange(celoRevokes[0].validatorGroup, celoRevokes[0].index);
+  if (!transaction.recipient && votes[0]) onChange(votes[0].validatorGroup, votes[0].index);
 
   const { validatorGroups } = useCeloPreloadData();
 
@@ -54,7 +52,7 @@ export default function StepVote({
       <TrackPage category="Withdraw Flow" name="Step 1" />
       {error ? <ErrorBanner error={error} /> : null}
       <Box vertical>
-        {celoRevokes.map(({ validatorGroup: address, index, amount, activeStatus }) => {
+        {votes.map(({ validatorGroup: address, index, amount, type }) => {
           const validatorGroup = validatorGroups.find(v => v.address === address);
           const active =
             transaction.recipient === validatorGroup.address && transaction.index === index;
@@ -63,11 +61,11 @@ export default function StepVote({
               currency={account.currency}
               active={active}
               onClick={() => onChange(address, index)}
-              key={validatorGroup.address}
+              key={validatorGroup.address + index}
               validatorGroup={validatorGroup}
               unit={unit}
               amount={amount}
-              activeStatus={activeStatus}
+              type={type}
             ></RevokeVoteRow>
           );
         })}
