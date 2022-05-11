@@ -94,12 +94,12 @@ const AmountField = ({
     <Box vertical flow={1}>
       <Box horizontal justifyContent="space-between">
         <Label>
-          <Trans i18nKey="celo.unlock.steps.amount.amountLabel" />
+          <Trans i18nKey="celo.revoke.steps.amount.amountLabel" />
         </Label>
         {typeof useAllAmount === "boolean" ? (
           <Box horizontal alignItems="center">
             <Text color="palette.text.shade40" ff="Inter|Medium" fontSize={13}>
-              <Trans i18nKey="celo.lock.steps.amount.availableLabel" />
+              <Trans i18nKey="celo.revoke.steps.amount.availableLabel" />
               {": "}
             </Text>
             <Text color="palette.text.shade40" ff="Inter|Medium" fontSize={13}>
@@ -118,7 +118,7 @@ const AmountField = ({
               style={{ paddingRight: 5 }}
               onClick={() => onChangeUseMax(!useAllAmount)}
             >
-              <Trans i18nKey="celo.unlock.steps.amount.maxLabel" />
+              <Trans i18nKey="celo.revoke.steps.amount.maxLabel" />
             </Text>
             <Switch small isChecked={useAllAmount} onChange={onChangeUseMax} />
           </Box>
@@ -133,6 +133,7 @@ const AmountField = ({
         defaultUnit={defaultUnit}
         value={amount}
         onChange={onChange}
+        renderLeft={false}
         renderRight={<InputRight>{defaultUnit.code}</InputRight>}
       />
     </Box>

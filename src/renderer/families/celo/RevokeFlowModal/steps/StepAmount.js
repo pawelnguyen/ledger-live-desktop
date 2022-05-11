@@ -1,91 +1,78 @@
 // @flow
-import { getMainAccount } from "@ledgerhq/live-common/lib/account";
-import React, { Fragment, PureComponent } from "react";
+import invariant from "invariant";
+import React from "react";
 import { Trans } from "react-i18next";
-import TrackPage from "~/renderer/analytics/TrackPage";
+
+import { SyncSkipUnderPriority } from "@ledgerhq/live-common/lib/bridge/react";
+
+import AccountFooter from "~/renderer/modals/Send/AccountFooter";
 import Box from "~/renderer/components/Box";
 import Button from "~/renderer/components/Button";
-import CurrencyDownStatusAlert from "~/renderer/components/CurrencyDownStatusAlert";
 import ErrorBanner from "~/renderer/components/ErrorBanner";
-import SpendableBanner from "~/renderer/components/SpendableBanner";
-import AccountFooter from "~/renderer/modals/Send/AccountFooter";
-import AmountField from "~/renderer/modals/Send/fields/AmountField";
-import type { StepProps } from "../types";
 
-const StepAmount = ({
-  t,
+import type { StepProps } from "../types";
+import AmountField from "../fields/AmountField";
+
+export default function StepAmount({
   account,
   parentAccount,
-  transaction,
   onChangeTransaction,
-  error,
+  transaction,
   status,
+  error,
   bridgePending,
-}: StepProps) => {
+  t,
+}: StepProps) {
   if (!status) return null;
-  const mainAccount = account ? getMainAccount(account, parentAccount) : null;
+  invariant(account && transaction, "account and transaction required");
 
-  console.log('transactio', transaction)
   return (
-    <Box flow={4}>
-      <TrackPage category="Celo Revoke" name="Step Amount" />
-      {mainAccount ? <CurrencyDownStatusAlert currencies={[mainAccount.currency]} /> : null}
-      {error ? <ErrorBanner error={error} /> : null}
-      {account && transaction && mainAccount && (
-        <Fragment key={account.id}>
-          {account && transaction ? (
-            <SpendableBanner
-              account={account}
-              parentAccount={parentAccount}
-              transaction={transaction}
-            />
-          ) : null}
-          <AmountField
-            status={status}
-            account={account}
-            parentAccount={parentAccount}
-            transaction={transaction}
-            onChangeTransaction={onChangeTransaction}
-            bridgePending={bridgePending}
-            t={t}
-          />
-        </Fragment>
-      )}
+    <Box flow={1}>
+      <SyncSkipUnderPriority priority={100} />
+      {error && <ErrorBanner error={error} />}
+      <AmountField
+        transaction={transaction}
+        account={account}
+        parentAccount={parentAccount}
+        bridgePending={bridgePending}
+        onChangeTransaction={onChangeTransaction}
+        status={status}
+        t={t}
+      />
     </Box>
   );
-};
+}
 
-export class StepAmountFooter extends PureComponent<StepProps> {
-  onNext = async () => {
-    const { transitionTo } = this.props;
-    transitionTo("connectDevice");
-  };
+export function StepAmountFooter({
+  transitionTo,
+  account,
+  parentAccount,
+  onClose,
+  status,
+  bridgePending,
+  transaction,
+}: StepProps) {
+  invariant(account, "account required");
+  const { errors } = status;
+  const hasErrors = Object.keys(errors).length;
+  const canNext = !bridgePending && !hasErrors;
 
-  render() {
-    const { account, parentAccount, status, bridgePending } = this.props;
-    const { errors } = status;
-    if (!account) return null;
-
-    const mainAccount = getMainAccount(account, parentAccount);
-    const isTerminated = mainAccount.currency.terminated;
-    const hasErrors = Object.keys(errors).length;
-    const canNext = !bridgePending && !hasErrors && !isTerminated;
-
-    return (
-      <>
-        <AccountFooter parentAccount={parentAccount} account={account} status={status} />
+  return (
+    <>
+      <AccountFooter parentAccount={parentAccount} account={account} status={status} />
+      <Box horizontal>
+        <Button mr={1} secondary onClick={onClose}>
+          <Trans i18nKey="common.cancel" />
+        </Button>
         <Button
-          id={"send-amount-continue-button"}
+          disabled={!canNext}
           isLoading={bridgePending}
           primary
-          disabled={!canNext}
-          onClick={this.onNext}
+          onClick={() => transitionTo("connectDevice")}
         >
           <Trans i18nKey="common.continue" />
         </Button>
-      </>
-    );
-  }
+      </Box>
+    </>
+  );
 }
-
-export default StepAmount;

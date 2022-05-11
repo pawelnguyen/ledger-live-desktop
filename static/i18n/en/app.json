@@ -2268,7 +2268,10 @@
       "title": "Revoke vote",
       "steps": {
         "amount": {
-          "title": "Amount"
+          "title": "Amount",
+          "amountLabel": "Amount to revoke",
+          "availableLabel": "Available",
+          "maxLabel": "Max"
         },
         "connectDevice": {
           "title": "Device"

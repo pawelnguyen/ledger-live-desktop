@@ -61,12 +61,12 @@ export function StepAmountFooter({
   onClose,
   status,
   bridgePending,
-  transaction,
 }: StepProps) {
   invariant(account, "account required");
   const { errors } = status;
   const hasErrors = Object.keys(errors).length;
   const canNext = !bridgePending && !hasErrors;
+  console.log('canNext', canNext, !bridgePending, !hasErrors, errors)
 
   return (
     <>
