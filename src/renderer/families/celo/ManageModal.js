@@ -128,8 +128,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
   const votingEnabled = celoResources.nonvotingLockedBalance?.gt(0);
   const withdrawEnabled = availablePendingWithdrawals(account).length;
   const activatingEnabled = activatableVotes(account).length;
-  //TODO:
-  const revokingEnabled = true;
+  const revokingEnabled = celoResources.votes?.length;
 
   return (
     <Modal

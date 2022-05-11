@@ -57,7 +57,7 @@ export default function StepAmount({
       <TrackPage category="Withdraw Flow" name="Step 1" />
       {error ? <ErrorBanner error={error} /> : null}
       <Box vertical>
-        {votes.map(({ validatorGroup: address, pendingAmount }) => {
+        {votes.map(({ validatorGroup: address, amount }) => {
           const validatorGroup = validatorGroups.find(v => v.address === address);
           return (
             <ActivateValidatorGroupRow
@@ -67,7 +67,7 @@ export default function StepAmount({
               key={validatorGroup.address}
               validatorGroup={validatorGroup}
               unit={unit}
-              pendingAmount={pendingAmount}
+              amount={amount}
             ></ActivateValidatorGroupRow>
           );
         })}
