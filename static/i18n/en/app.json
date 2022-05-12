@@ -2080,6 +2080,8 @@
   "celo": {
     "lockedBalance": "Locked balance",
     "lockedTooltip": "Assets must be locked and voted for validator groups before earning rewards.",
+    "withdrawableBalance": "Withdrawable balance",
+    "withdrawableTooltip": "This amount you can withdraw now.",
     "manage": {
       "title": "Manage assets",
       "lock": {

@@ -18,6 +18,8 @@ import Box from "~/renderer/components/Box/Box";
 import Text from "~/renderer/components/Text";
 import InfoCircle from "~/renderer/icons/InfoCircle";
 import ToolTip from "~/renderer/components/Tooltip";
+import { availablePendingWithdrawals } from "@ledgerhq/live-common/lib/families/celo/logic";
+import { BigNumber } from "bignumber.js";
 
 const Wrapper: ThemedComponent<*> = styled(Box).attrs(() => ({
   horizontal: true,
@@ -73,6 +75,12 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
     // unlockedBalance: _unlockedBalance,
   } = celoResources;
 
+  //TODO: move to logic?
+  const _withdrawableBalance = availablePendingWithdrawals(account).reduce((sum, withdrawal) => {
+    sum = sum.plus(withdrawal.value);
+    return sum;
+  }, new BigNumber(0));
+
   const unit = getAccountUnit(account);
 
   const formatConfig = {
@@ -85,6 +93,7 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
 
   const spendableBalance = formatCurrencyUnit(unit, _spendableBalance, formatConfig);
   const lockedBalance = formatCurrencyUnit(unit, _lockedBalance, formatConfig);
+  const withdrawableBalance = formatCurrencyUnit(unit, _withdrawableBalance, formatConfig);
 
   return (
     <Wrapper>
@@ -113,6 +122,21 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
           </ToolTip>
           <AmountValue>
             <Discreet>{lockedBalance}</Discreet>
+          </AmountValue>
+        </BalanceDetail>
+      )}
+      {_withdrawableBalance.gt(0) && (
+        <BalanceDetail>
+          <ToolTip content={<Trans i18nKey="celo.withdrawableTooltip" />}>
+            <TitleWrapper>
+              <Title>
+                <Trans i18nKey="celo.withdrawableBalance" />
+              </Title>
+              <InfoCircle size={13} />
+            </TitleWrapper>
+          </ToolTip>
+          <AmountValue>
+            <Discreet>{withdrawableBalance}</Discreet>
           </AmountValue>
         </BalanceDetail>
       )}
