@@ -113,7 +113,7 @@ const Body = ({
     const t = bridge.createTransaction(account);
 
     const transaction = bridge.updateTransaction(t, {
-      mode: "activate",
+      mode: "withdraw",
     });
 
     return { account, parentAccount, transaction };
