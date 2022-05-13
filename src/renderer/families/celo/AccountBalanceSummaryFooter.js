@@ -18,8 +18,7 @@ import Box from "~/renderer/components/Box/Box";
 import Text from "~/renderer/components/Text";
 import InfoCircle from "~/renderer/icons/InfoCircle";
 import ToolTip from "~/renderer/components/Tooltip";
-import { availablePendingWithdrawals } from "@ledgerhq/live-common/lib/families/celo/logic";
-import { BigNumber } from "bignumber.js";
+import { withdrawableBalance } from "@ledgerhq/live-common/lib/families/celo/logic";
 
 const Wrapper: ThemedComponent<*> = styled(Box).attrs(() => ({
   horizontal: true,
@@ -69,17 +68,9 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
   if (!account.celoResources) return null;
 
   const { spendableBalance: _spendableBalance, celoResources } = account;
-  const {
-    lockedBalance: _lockedBalance,
-    // unlockingBalance: _unlockingBalance,
-    // unlockedBalance: _unlockedBalance,
-  } = celoResources;
+  const { lockedBalance: _lockedBalance } = celoResources;
 
-  //TODO: move to logic?
-  const _withdrawableBalance = availablePendingWithdrawals(account).reduce((sum, withdrawal) => {
-    sum = sum.plus(withdrawal.value);
-    return sum;
-  }, new BigNumber(0));
+  const _withdrawableBalance = withdrawableBalance(account);
 
   const unit = getAccountUnit(account);
 
@@ -91,9 +82,9 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
     locale,
   };
 
-  const spendableBalance = formatCurrencyUnit(unit, _spendableBalance, formatConfig);
-  const lockedBalance = formatCurrencyUnit(unit, _lockedBalance, formatConfig);
-  const withdrawableBalance = formatCurrencyUnit(unit, _withdrawableBalance, formatConfig);
+  const formattedSpendableBalance = formatCurrencyUnit(unit, _spendableBalance, formatConfig);
+  const formattedLockedBalance = formatCurrencyUnit(unit, _lockedBalance, formatConfig);
+  const formattedWithdrawableBalance = formatCurrencyUnit(unit, _withdrawableBalance, formatConfig);
 
   return (
     <Wrapper>
@@ -107,7 +98,7 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
           </TitleWrapper>
         </ToolTip>
         <AmountValue>
-          <Discreet>{spendableBalance}</Discreet>
+          <Discreet>{formattedSpendableBalance}</Discreet>
         </AmountValue>
       </BalanceDetail>
       {_lockedBalance.gt(0) && (
@@ -121,7 +112,7 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
             </TitleWrapper>
           </ToolTip>
           <AmountValue>
-            <Discreet>{lockedBalance}</Discreet>
+            <Discreet>{formattedLockedBalance}</Discreet>
           </AmountValue>
         </BalanceDetail>
       )}
@@ -136,7 +127,7 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
             </TitleWrapper>
           </ToolTip>
           <AmountValue>
-            <Discreet>{withdrawableBalance}</Discreet>
+            <Discreet>{formattedWithdrawableBalance}</Discreet>
           </AmountValue>
         </BalanceDetail>
       )}
