@@ -5,7 +5,7 @@ import type { CeloValidatorGroup } from "@ledgerhq/live-common/lib/families/celo
 import type { CryptoCurrency, Unit } from "@ledgerhq/live-common/lib/types";
 import { BigNumber } from "bignumber.js";
 import React, { useCallback } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Box from "~/renderer/components/Box";
 import type { ValidatorRowProps } from "~/renderer/components/Delegation/ValidatorRow";
 import ValidatorRow, { IconContainer } from "~/renderer/components/Delegation/ValidatorRow";
@@ -15,8 +15,11 @@ import Check from "~/renderer/icons/Check";
 import { openURL } from "~/renderer/linking";
 import type { ThemedComponent } from "~/renderer/styles/StyleProvider";
 import Logo from "~/renderer/icons/Logo";
+import ToolTip from "~/renderer/components/Tooltip";
 import { isDefaultValidatorGroup } from "@ledgerhq/live-common/lib/families/celo/logic";
 import { Trans } from "react-i18next";
+import InfoCircle from "~/renderer/icons/InfoCircle";
+import type { TFunction } from "react-i18next";
 
 const Status = styled(Text)`
   font-size: 11px;
@@ -29,21 +32,25 @@ type Props = {
   currency: CryptoCurrency,
   validatorGroup: CeloValidatorGroup,
   active?: boolean,
+  revokable?: boolean,
   onClick?: (v: CeloValidatorGroup) => void,
   unit: Unit,
   amount: BigNumber,
   type: string,
+  t: TFunction,
 };
 
 //TODO: consider reusing ValidatorGroupRow and passing sideInfo
 function CeloRevokeVoteRow({
   validatorGroup,
   active,
+  revokable,
   onClick,
   unit,
   currency,
   amount,
   type,
+  t,
 }: Props) {
   const explorerView = getDefaultExplorerView(currency);
 
@@ -69,6 +76,7 @@ function CeloRevokeVoteRow({
           )}
         </IconContainer>
       }
+      disabled={!revokable}
       title={validatorGroup.name}
       onExternalLink={onExternalLink}
       unit={unit}
@@ -91,7 +99,13 @@ function CeloRevokeVoteRow({
             </Text>
           </Box>
           <Box ml={3}>
-            <ChosenMark active={active ?? false} />
+            {revokable ? (
+              <ChosenMark active={active ?? false} />
+            ) : (
+              <ToolTip content={t("celo.revoke.steps.vote.nonRevokableInfo")}>
+                <InfoCircle size={16} />
+              </ToolTip>
+            )}
           </Box>
         </Box>
       }
@@ -102,6 +116,20 @@ function CeloRevokeVoteRow({
 const StyledValidatorRow: ThemedComponent<ValidatorRowProps> = styled(ValidatorRow)`
   border-color: transparent;
   margin-bottom: 0;
+  ${p =>
+    p.disabled
+      ? css`
+          cursor: auto;
+          ${Text} {
+            color: ${p.theme.colors.palette.text.shade20};
+          }
+          &:hover {
+            border-color: transparent;
+          }
+        `
+      : `
+        cursor: pointer;
+  `};
 `;
 
 const ChosenMark: ThemedComponent<{ active: boolean }> = styled(Check).attrs(p => ({

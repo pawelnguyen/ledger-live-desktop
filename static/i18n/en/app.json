@@ -2290,7 +2290,8 @@
         "vote": {
           "title": "Vote",
           "active": "Active",
-          "pending": "Pending"
+          "pending": "Pending",
+          "nonRevokableInfo": "Please revoke pending vote for that validator group first"
         }
       }
     }

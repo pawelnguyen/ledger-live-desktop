@@ -18,6 +18,7 @@ export default function StepVote({
   onChangeTransaction,
   transaction,
   error,
+  t,
 }: StepProps) {
   invariant(
     account && account.celoResources && transaction,
@@ -27,7 +28,8 @@ export default function StepVote({
   const bridge = getAccountBridge(account, parentAccount);
 
   const onChange = useCallback(
-    (recipient: string, index: number) => {
+    (recipient: string, index: number, revokable: boolean) => {
+      if (!revokable) return;
       onChangeTransaction(
         bridge.updateTransaction(transaction, {
           recipient,
@@ -40,7 +42,8 @@ export default function StepVote({
 
   const { votes } = account.celoResources;
 
-  if (!transaction.recipient && votes[0]) onChange(votes[0].validatorGroup, votes[0].index);
+  if (!transaction.recipient && votes[0])
+    onChange(votes[0].validatorGroup, votes[0].index, votes[0].revokable);
 
   const { validatorGroups } = useCeloPreloadData();
 
@@ -51,7 +54,7 @@ export default function StepVote({
       <TrackPage category="Withdraw Flow" name="Step 1" />
       {error ? <ErrorBanner error={error} /> : null}
       <Box vertical>
-        {votes.map(({ validatorGroup: address, index, amount, type }) => {
+        {votes.map(({ validatorGroup: address, index, amount, type, revokable }) => {
           const validatorGroup = validatorGroups.find(v => v.address === address);
           const active =
             transaction.recipient === validatorGroup.address && transaction.index === index;
@@ -59,12 +62,14 @@ export default function StepVote({
             <RevokeVoteRow
               currency={account.currency}
               active={active}
-              onClick={() => onChange(address, index)}
+              revokable={revokable}
+              onClick={() => onChange(address, index, revokable)}
               key={validatorGroup.address + index}
               validatorGroup={validatorGroup}
               unit={unit}
               amount={amount}
               type={type}
+              t={t}
             ></RevokeVoteRow>
           );
         })}
