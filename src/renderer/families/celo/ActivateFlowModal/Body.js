@@ -27,7 +27,9 @@ import StepAmount, { StepAmountFooter } from "./steps/StepAmount";
 import GenericStepConnectDevice from "~/renderer/modals/Send/steps/GenericStepConnectDevice";
 import StepConfirmation, { StepConfirmationFooter } from "./steps/StepConfirmation";
 import logger from "~/logger/logger";
+import { CeloVote } from "@ledgerhq/live-common/lib/families/celo/types";
 
+//TODO: check other modals - params
 type OwnProps = {|
   stepId: StepId,
   onClose: () => void,
@@ -35,7 +37,7 @@ type OwnProps = {|
   params: {
     account: Account,
     parentAccount: ?Account,
-    reward: number,
+    vote: CeloVote,
   },
   name: string,
 |};
@@ -106,7 +108,7 @@ const Body = ({
     bridgeError,
     bridgePending,
   } = useBridgeTransaction(() => {
-    const { account, parentAccount } = params;
+    const { account, parentAccount, vote } = params;
 
     const bridge = getAccountBridge(account, parentAccount);
 
@@ -114,6 +116,7 @@ const Body = ({
 
     const transaction = bridge.updateTransaction(t, {
       mode: "activate",
+      recipient: vote?.validatorGroup,
     });
 
     return { account, parentAccount, transaction };

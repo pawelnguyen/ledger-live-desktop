@@ -4,7 +4,7 @@ import { addPendingOperation } from "@ledgerhq/live-common/lib/account";
 import { getAccountBridge } from "@ledgerhq/live-common/lib/bridge";
 import { SyncSkipUnderPriority } from "@ledgerhq/live-common/lib/bridge/react";
 import useBridgeTransaction from "@ledgerhq/live-common/lib/bridge/useBridgeTransaction";
-import type { Transaction } from "@ledgerhq/live-common/lib/families/celo/types";
+import type { CeloVote, Transaction } from "@ledgerhq/live-common/lib/families/celo/types";
 import type { AccountBridge, Operation, Account } from "@ledgerhq/live-common/lib/types";
 import invariant from "invariant";
 import React, { useCallback, useState } from "react";
@@ -33,6 +33,7 @@ type OwnProps = {|
   params: {
     account: Account,
     parentAccount: ?Account,
+    vote: CeloVote,
   },
   name: string,
 |};
@@ -112,7 +113,7 @@ const Body = ({
     bridgeError,
     bridgePending,
   } = useBridgeTransaction(() => {
-    const { account } = params;
+    const { account, vote } = params;
 
     invariant(account && account.celoResources, "celo: account and celo resources required");
 
@@ -120,6 +121,8 @@ const Body = ({
 
     const transaction = bridge.updateTransaction(bridge.createTransaction(account), {
       mode: "revoke",
+      recipient: vote?.validatorGroup,
+      index: vote?.index,
     });
 
     return { account, parentAccount: undefined, transaction };
