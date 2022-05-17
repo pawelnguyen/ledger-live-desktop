@@ -1,5 +1,4 @@
 // @flow
-
 import { getAccountUnit } from "@ledgerhq/live-common/lib/account";
 import { formatCurrencyUnit } from "@ledgerhq/live-common/lib/currencies";
 import type { SolanaStakeWithMeta } from "@ledgerhq/live-common/lib/families/solana/types";
@@ -20,7 +19,6 @@ import type { ThemedComponent } from "~/renderer/styles/StyleProvider";
 import { TableLine } from "./Header";
 import { CeloVote } from "@ledgerhq/live-common/lib/families/celo/types";
 import { useCeloPreloadData } from "@ledgerhq/live-common/lib/families/celo/react";
-import { stakeActions as solanaStakeActions } from "@ledgerhq/live-common/lib/families/solana/logic";
 
 const Wrapper: ThemedComponent<*> = styled.div`
   display: flex;
@@ -90,7 +88,7 @@ export function Row({ account, vote, onManageAction, onExternalLink }: Props) {
 
   const onExternalLinkClick = () => onExternalLink(vote);
 
-  const stakeActions = ["activate", "revoke"].map(toStakeDropDownItem);
+  const actions = voteActions(vote);
 
   // TODO: performance? pre-fetch instead?
   const { validatorGroups } = useCeloPreloadData();
@@ -132,7 +130,7 @@ export function Row({ account, vote, onManageAction, onExternalLink }: Props) {
       </Column>
       <Column>{formatAmount(vote.amount ?? 0)}</Column>
       <Column>
-        <DropDown items={stakeActions} renderItem={ManageDropDownItem} onChange={onSelect}>
+        <DropDown items={actions} renderItem={ManageDropDownItem} onChange={onSelect}>
           {({ isOpen, value }) => {
             return (
               <Box flex horizontal alignItems="center">
@@ -149,19 +147,20 @@ export function Row({ account, vote, onManageAction, onExternalLink }: Props) {
   );
 }
 
-function toStakeDropDownItem(stakeAction: string) {
-  switch (stakeAction) {
-    case "activate":
-      return {
-        key: "MODAL_CELO_ACTIVATE",
-        label: <Trans i18nKey="solana.delegation.activate.flow.title" />,
-      };
-    case "revoke":
-      return {
-        key: "MODAL_CELO_REVOKE",
-        label: <Trans i18nKey="solana.delegation.withdraw.flow.title" />,
-      };
-    default:
-      throw new Error(`unsupported stake action: ${stakeAction}`);
+//TODO: refactor
+function voteActions(vote) {
+  const result = [];
+  if (vote.activatable) {
+    result.push({
+      key: "MODAL_CELO_ACTIVATE",
+      label: <Trans i18nKey="solana.delegation.activate.flow.title" />,
+    });
   }
+  if (vote.revokable) {
+    result.push({
+      key: "MODAL_CELO_REVOKE",
+      label: <Trans i18nKey="solana.delegation.withdraw.flow.title" />,
+    });
+  }
+  return result;
 }
