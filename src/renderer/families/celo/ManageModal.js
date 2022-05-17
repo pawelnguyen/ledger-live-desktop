@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 import { Trans } from "react-i18next";
 import type { Account } from "@ledgerhq/live-common/lib/types";
-import { BigNumber } from "bignumber.js";
 
 import { openModal } from "~/renderer/actions/modals";
 import Box from "~/renderer/components/Box";
@@ -22,6 +21,7 @@ import invariant from "invariant";
 import {
   availablePendingWithdrawals,
   activatableVotes,
+  revokableVotes,
 } from "@ledgerhq/live-common/lib/families/celo/logic";
 
 const IconWrapper = styled.div`
@@ -128,7 +128,7 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
   const votingEnabled = celoResources.nonvotingLockedBalance?.gt(0);
   const withdrawEnabled = availablePendingWithdrawals(account).length;
   const activatingEnabled = activatableVotes(account).length;
-  const revokingEnabled = celoResources.votes?.length;
+  const revokingEnabled = revokableVotes(account).length;
 
   return (
     <Modal

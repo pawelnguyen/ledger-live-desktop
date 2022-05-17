@@ -218,5 +218,7 @@ export const urls = {
     ledgerByFigmentTC: "https://drive.google.com/file/d/1vlIh2gTwtbMon8_bzFQGjCLhTUqS5uQc",
     staking:
       "https://www.ledger.com/staking-celo?utm_source=ledger_live_desktop&utm_medium=self_referral&utm_content=celo",
+    revoking:
+      "https://www.ledger.com/staking-celo?utm_source=ledger_live_desktop&utm_medium=self_referral&utm_content=celo",
   },
 };

@@ -32,7 +32,6 @@ type Props = {
   currency: CryptoCurrency,
   validatorGroup: CeloValidatorGroup,
   active?: boolean,
-  revokable?: boolean,
   onClick?: (v: CeloValidatorGroup) => void,
   unit: Unit,
   amount: BigNumber,
@@ -44,7 +43,6 @@ type Props = {
 function CeloRevokeVoteRow({
   validatorGroup,
   active,
-  revokable,
   onClick,
   unit,
   currency,
@@ -76,7 +74,6 @@ function CeloRevokeVoteRow({
           )}
         </IconContainer>
       }
-      disabled={!revokable}
       title={validatorGroup.name}
       onExternalLink={onExternalLink}
       unit={unit}
@@ -99,13 +96,7 @@ function CeloRevokeVoteRow({
             </Text>
           </Box>
           <Box ml={3}>
-            {revokable ? (
-              <ChosenMark active={active ?? false} />
-            ) : (
-              <ToolTip content={t("celo.revoke.steps.vote.nonRevokableInfo")}>
-                <InfoCircle size={16} />
-              </ToolTip>
-            )}
+            <ChosenMark active={active ?? false} />
           </Box>
         </Box>
       }
@@ -116,20 +107,6 @@ function CeloRevokeVoteRow({
 const StyledValidatorRow: ThemedComponent<ValidatorRowProps> = styled(ValidatorRow)`
   border-color: transparent;
   margin-bottom: 0;
-  ${p =>
-    p.disabled
-      ? css`
-          cursor: auto;
-          ${Text} {
-            color: ${p.theme.colors.palette.text.shade20};
-          }
-          &:hover {
-            border-color: transparent;
-          }
-        `
-      : `
-        cursor: pointer;
-  `};
 `;
 
 const ChosenMark: ThemedComponent<{ active: boolean }> = styled(Check).attrs(p => ({

@@ -11,6 +11,9 @@ import RevokeVoteRow from "../components/RevokeVoteRow";
 import type { StepProps } from "../types";
 import { useCeloPreloadData } from "@ledgerhq/live-common/lib/families/celo/react";
 import { getAccountUnit } from "@ledgerhq/live-common/lib/account";
+import { revokableVotes } from "@ledgerhq/live-common/lib/families/celo/logic";
+import Alert from "~/renderer/components/Alert";
+import { urls } from "~/config/urls";
 
 export default function StepVote({
   account,
@@ -28,8 +31,7 @@ export default function StepVote({
   const bridge = getAccountBridge(account, parentAccount);
 
   const onChange = useCallback(
-    (recipient: string, index: number, revokable: boolean) => {
-      if (!revokable) return;
+    (recipient: string, index: number) => {
       onChangeTransaction(
         bridge.updateTransaction(transaction, {
           recipient,
@@ -40,10 +42,9 @@ export default function StepVote({
     [bridge, transaction, onChangeTransaction],
   );
 
-  const { votes } = account.celoResources;
+  const votes = revokableVotes(account);
 
-  if (!transaction.recipient && votes[0])
-    onChange(votes[0].validatorGroup, votes[0].index, votes[0].revokable);
+  if (!transaction.recipient && votes[0]) onChange(votes[0].validatorGroup, votes[0].index);
 
   const { validatorGroups } = useCeloPreloadData();
 
@@ -53,8 +54,11 @@ export default function StepVote({
     <Box flow={1}>
       <TrackPage category="Withdraw Flow" name="Step 1" />
       {error ? <ErrorBanner error={error} /> : null}
+      <Alert type="primary" mb={4} learnMoreUrl={urls.celo.revoking}>
+        <Trans i18nKey="celo.revoke.steps.vote.info" />
+      </Alert>
       <Box vertical>
-        {votes.map(({ validatorGroup: address, index, amount, type, revokable }) => {
+        {votes.map(({ validatorGroup: address, index, amount, type }) => {
           const validatorGroup = validatorGroups.find(v => v.address === address);
           const active =
             transaction.recipient === validatorGroup.address && transaction.index === index;
@@ -62,8 +66,7 @@ export default function StepVote({
             <RevokeVoteRow
               currency={account.currency}
               active={active}
-              revokable={revokable}
-              onClick={() => onChange(address, index, revokable)}
+              onClick={() => onChange(address, index)}
               key={validatorGroup.address + index}
               validatorGroup={validatorGroup}
               unit={unit}
