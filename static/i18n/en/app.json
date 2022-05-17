@@ -2239,7 +2239,7 @@
           "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
         },
         "validatorGroup": {
-          "title": "Validator Groups",
+          "title": "Validator Group",
           "ledgerByFigmentTC": "Ledger by Figment T&Cs",
           "totalVotes": "Total Votes",
           "commission": "Commission"
@@ -2250,7 +2250,7 @@
       "title": "Activate vote",
       "steps": {
         "amount": {
-          "title": "Activate vote"
+          "title": "Vote"
         },
         "connectDevice": {
           "title": "Device"

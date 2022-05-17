@@ -29,7 +29,7 @@ export const TableLine: ThemedComponent<{}> = styled(Box).attrs(() => ({
 export const Header = () => (
   <HeaderWrapper>
     <TableLine>
-      <Trans i18nKey="delegation.validator" />
+      <Trans i18nKey="delegation.validatorGroup" />
     </TableLine>
     <TableLine>
       <Trans i18nKey="delegation.status" />
@@ -38,22 +38,5 @@ export const Header = () => (
       <Trans i18nKey="delegation.delegated" />
     </TableLine>
     <TableLine />
-  </HeaderWrapper>
-);
-
-export const UnbondingHeader = () => (
-  <HeaderWrapper>
-    <TableLine>
-      <Trans i18nKey="delegation.validator" />
-    </TableLine>
-    <TableLine>
-      <Trans i18nKey="delegation.status" />
-    </TableLine>
-    <TableLine>
-      <Trans i18nKey="delegation.delegated" />
-    </TableLine>
-    <TableLine>
-      <Trans i18nKey="delegation.completionDate" />
-    </TableLine>
   </HeaderWrapper>
 );

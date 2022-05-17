@@ -19,6 +19,8 @@ import Loader from "~/renderer/icons/Loader";
 import type { ThemedComponent } from "~/renderer/styles/StyleProvider";
 import { TableLine } from "./Header";
 import { CeloVote } from "@ledgerhq/live-common/lib/families/celo/types";
+import { useCeloPreloadData } from "@ledgerhq/live-common/lib/families/celo/react";
+import { stakeActions as solanaStakeActions } from "@ledgerhq/live-common/lib/families/solana/logic";
 
 const Wrapper: ThemedComponent<*> = styled.div`
   display: flex;
@@ -75,9 +77,10 @@ type Props = {
   account: Account,
   vote: CeloVote,
   onManageAction: (stakeWithMeta: SolanaStakeWithMeta, action: string) => void,
+  onExternalLink: (address: string) => void,
 };
 
-export function Row({ account, vote, onManageAction }: Props) {
+export function Row({ account, vote, onManageAction, onExternalLink }: Props) {
   const onSelect = useCallback(
     action => {
       onManageAction(vote, action.key);
@@ -85,9 +88,13 @@ export function Row({ account, vote, onManageAction }: Props) {
     [onManageAction],
   );
 
-  const stakeActions = [];
+  const onExternalLinkClick = () => onExternalLink(vote);
 
-  const validatorName = "";
+  const stakeActions = ["activate", "revoke"].map(toStakeDropDownItem);
+
+  // TODO: performance? pre-fetch instead?
+  const { validatorGroups } = useCeloPreloadData();
+  const validatorGroup = validatorGroups.find(v => v.address === vote.validatorGroup);
 
   const formatAmount = (amount: number) => {
     const unit = getAccountUnit(account);
@@ -100,11 +107,11 @@ export function Row({ account, vote, onManageAction }: Props) {
 
   return (
     <Wrapper>
-      <Column strong clickable>
+      <Column strong clickable onClick={onExternalLinkClick}>
         <Box mr={1}>
-          <FirstLetterIcon label={vote.validatorGroup ?? "-"} />
+          <FirstLetterIcon label={validatorGroup?.name} />
         </Box>
-        <Ellipsis>{vote.validatorGroup}</Ellipsis>
+        <Ellipsis>{validatorGroup?.name || "-"}</Ellipsis>
       </Column>
       <Column>
         {vote.type === "active" && (
@@ -146,22 +153,12 @@ function toStakeDropDownItem(stakeAction: string) {
   switch (stakeAction) {
     case "activate":
       return {
-        key: "MODAL_SOLANA_DELEGATION_ACTIVATE",
+        key: "MODAL_CELO_ACTIVATE",
         label: <Trans i18nKey="solana.delegation.activate.flow.title" />,
       };
-    case "reactivate":
+    case "revoke":
       return {
-        key: "MODAL_SOLANA_DELEGATION_REACTIVATE",
-        label: <Trans i18nKey="solana.delegation.reactivate.flow.title" />,
-      };
-    case "deactivate":
-      return {
-        key: "MODAL_SOLANA_DELEGATION_DEACTIVATE",
-        label: <Trans i18nKey="solana.delegation.deactivate.flow.title" />,
-      };
-    case "withdraw":
-      return {
-        key: "MODAL_SOLANA_DELEGATION_WITHDRAW",
+        key: "MODAL_CELO_REVOKE",
         label: <Trans i18nKey="solana.delegation.withdraw.flow.title" />,
       };
     default:

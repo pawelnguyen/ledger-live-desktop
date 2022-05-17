@@ -28,8 +28,6 @@ const ValidatorGroupsField = ({
   chosenValidatorGroupAddress,
   status,
 }: Props) => {
-  if (!status) return null;
-
   invariant(account && account.celoResources, "celo account and resources required");
 
   const [showAll, setShowAll] = useState(false);
@@ -54,6 +52,8 @@ const ValidatorGroupsField = ({
       if (firstInput && firstInput.focus) firstInput.focus();
     }
   }, []);
+
+  if (!status) return null;
 
   const renderItem = (validatorGroup: CeloValidatorGroup, validatorGroupIdx: number) => {
     return (

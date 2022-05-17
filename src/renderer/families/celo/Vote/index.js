@@ -1,5 +1,5 @@
 // @flow
-import { getDefaultExplorerView } from "@ledgerhq/live-common/lib/explorers";
+import { getAddressExplorer, getDefaultExplorerView } from "@ledgerhq/live-common/lib/explorers";
 import type { Account } from "@ledgerhq/live-common/lib/types";
 import invariant from "invariant";
 import React, { useCallback } from "react";
@@ -67,6 +67,19 @@ const Vote = ({ account }: Props) => {
     [account, dispatch],
   );
 
+  const explorerView = getDefaultExplorerView(account.currency);
+
+  const onExternalLink = useCallback(
+    (vote: CeloVote) => {
+      const url = getAddressExplorer(explorerView, vote.validatorGroup);
+
+      if (url) {
+        openURL(url);
+      }
+    },
+    [explorerView],
+  );
+
   const hasVotes = votes.length > 0;
 
   return (
@@ -97,6 +110,7 @@ const Vote = ({ account }: Props) => {
                 key={vote.validatorGroup + vote.index}
                 account={account}
                 onManageAction={onRedirect}
+                onExternalLink={onExternalLink}
               />
             ))}
           </>
