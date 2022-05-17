@@ -21,7 +21,6 @@ export default function StepVote({
   onChangeTransaction,
   transaction,
   error,
-  t,
 }: StepProps) {
   invariant(
     account && account.celoResources && transaction,
@@ -72,7 +71,6 @@ export default function StepVote({
               unit={unit}
               amount={amount}
               type={type}
-              t={t}
             ></RevokeVoteRow>
           );
         })}

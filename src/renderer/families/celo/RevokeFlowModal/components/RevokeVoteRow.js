@@ -5,7 +5,7 @@ import type { CeloValidatorGroup } from "@ledgerhq/live-common/lib/families/celo
 import type { CryptoCurrency, Unit } from "@ledgerhq/live-common/lib/types";
 import { BigNumber } from "bignumber.js";
 import React, { useCallback } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Box from "~/renderer/components/Box";
 import type { ValidatorRowProps } from "~/renderer/components/Delegation/ValidatorRow";
 import ValidatorRow, { IconContainer } from "~/renderer/components/Delegation/ValidatorRow";
@@ -15,11 +15,8 @@ import Check from "~/renderer/icons/Check";
 import { openURL } from "~/renderer/linking";
 import type { ThemedComponent } from "~/renderer/styles/StyleProvider";
 import Logo from "~/renderer/icons/Logo";
-import ToolTip from "~/renderer/components/Tooltip";
 import { isDefaultValidatorGroup } from "@ledgerhq/live-common/lib/families/celo/logic";
 import { Trans } from "react-i18next";
-import InfoCircle from "~/renderer/icons/InfoCircle";
-import type { TFunction } from "react-i18next";
 
 const Status = styled(Text)`
   font-size: 11px;
@@ -36,7 +33,6 @@ type Props = {
   unit: Unit,
   amount: BigNumber,
   type: string,
-  t: TFunction,
 };
 
 //TODO: consider reusing ValidatorGroupRow and passing sideInfo
@@ -48,7 +44,6 @@ function CeloRevokeVoteRow({
   currency,
   amount,
   type,
-  t,
 }: Props) {
   const explorerView = getDefaultExplorerView(currency);
 
