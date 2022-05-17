@@ -19,8 +19,7 @@ import { useCeloPreloadData } from "@ledgerhq/live-common/lib/families/celo/reac
 import { getAccountUnit } from "@ledgerhq/live-common/lib/account";
 import ActivateValidatorGroupRow from "~/renderer/families/celo/ActivateFlowModal/components/ActivateValidatorGroupRow";
 
-//TODO: rename to StepVote
-export default function StepAmount({
+export default function StepVote({
   account,
   parentAccount,
   onChangeTransaction,
@@ -77,7 +76,7 @@ export default function StepAmount({
   );
 }
 
-export function StepAmountFooter({
+export function StepVoteFooter({
   transitionTo,
   account,
   parentAccount,

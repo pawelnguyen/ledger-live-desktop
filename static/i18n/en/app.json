@@ -2249,7 +2249,7 @@
     "activate": {
       "title": "Activate vote",
       "steps": {
-        "amount": {
+        "vote": {
           "title": "Vote"
         },
         "connectDevice": {

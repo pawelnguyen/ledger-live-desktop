@@ -7,7 +7,7 @@ import type { Account, TransactionStatus, Operation } from "@ledgerhq/live-commo
 
 import type { Transaction } from "@ledgerhq/live-common/lib/families/tron/types";
 
-export type StepId = "amount" | "connectDevice" | "confirmation";
+export type StepId = "vote" | "connectDevice" | "confirmation";
 
 export type StepProps = {
   t: TFunction,

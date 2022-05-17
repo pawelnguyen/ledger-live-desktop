@@ -9,7 +9,7 @@ type State = {
 };
 
 const INITIAL_STATE = {
-  stepId: "amount",
+  stepId: "vote",
 };
 
 class Activate extends PureComponent<{ name: string }, State> {
@@ -21,7 +21,7 @@ class Activate extends PureComponent<{ name: string }, State> {
 
   handleReset = () =>
     this.setState({
-      stepId: "amount",
+      stepId: "vote",
     });
 
   handleStepChange = (stepId: StepId) => this.setState({ stepId });

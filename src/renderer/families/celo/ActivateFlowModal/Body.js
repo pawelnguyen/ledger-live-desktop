@@ -23,7 +23,7 @@ import { getCurrentDevice } from "~/renderer/reducers/devices";
 import { closeModal, openModal } from "~/renderer/actions/modals";
 
 import Stepper from "~/renderer/components/Stepper";
-import StepAmount, { StepAmountFooter } from "./steps/StepAmount";
+import StepVote, { StepVoteFooter } from "./steps/StepVote";
 import GenericStepConnectDevice from "~/renderer/modals/Send/steps/GenericStepConnectDevice";
 import StepConfirmation, { StepConfirmationFooter } from "./steps/StepConfirmation";
 import logger from "~/logger/logger";
@@ -55,17 +55,17 @@ type Props = OwnProps & StateProps;
 
 const steps: Array<St> = [
   {
-    id: "amount",
-    label: <Trans i18nKey="celo.activate.steps.amount.title" />,
-    component: StepAmount,
+    id: "vote",
+    label: <Trans i18nKey="celo.activate.steps.vote.title" />,
+    component: StepVote,
     noScroll: true,
-    footer: StepAmountFooter,
+    footer: StepVoteFooter,
   },
   {
     id: "connectDevice",
     label: <Trans i18nKey="celo.activate.steps.connectDevice.title" />,
     component: GenericStepConnectDevice,
-    onBack: ({ transitionTo }: StepProps) => transitionTo("amount"),
+    onBack: ({ transitionTo }: StepProps) => transitionTo("vote"),
   },
   {
     id: "confirmation",
@@ -129,7 +129,7 @@ const Body = ({
   const handleStepChange = useCallback(e => onChangeStepId(e.id), [onChangeStepId]);
 
   const handleRetry = useCallback(() => {
-    onChangeStepId("amount");
+    onChangeStepId("vote");
   }, [onChangeStepId]);
 
   const handleTransactionError = useCallback((error: Error) => {
