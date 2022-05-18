@@ -143,18 +143,20 @@ export function Row({ account, vote, onManageAction, onExternalLink }: Props) {
       </Column>
       <Column>{formatAmount(vote.amount ?? 0)}</Column>
       <Column>
-        <DropDown items={actions} renderItem={ManageDropDownItem} onChange={onSelect}>
-          {({ isOpen, value }) => {
-            return (
-              <Box flex horizontal alignItems="center">
-                <Trans i18nKey="common.manage" />
-                <div style={{ transform: "rotate(90deg)" }}>
-                  <ChevronRight size={16} />
-                </div>
-              </Box>
-            );
-          }}
-        </DropDown>
+        {actions.length > 0 && (
+          <DropDown items={actions} renderItem={ManageDropDownItem} onChange={onSelect}>
+            {({ isOpen, value }) => {
+              return (
+                <Box flex horizontal alignItems="center">
+                  <Trans i18nKey="common.manage" />
+                  <div style={{ transform: "rotate(90deg)" }}>
+                    <ChevronRight size={16} />
+                  </div>
+                </Box>
+              );
+            }}
+          </DropDown>
+        )}
       </Column>
     </Wrapper>
   );
