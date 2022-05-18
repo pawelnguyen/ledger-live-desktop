@@ -19,6 +19,9 @@ import type { ThemedComponent } from "~/renderer/styles/StyleProvider";
 import { TableLine } from "./Header";
 import { CeloVote } from "@ledgerhq/live-common/lib/families/celo/types";
 import { useCeloPreloadData } from "@ledgerhq/live-common/lib/families/celo/react";
+import { isDefaultValidatorGroup } from "@ledgerhq/live-common/lib/families/celo/logic";
+import Logo from "~/renderer/icons/Logo";
+import { IconContainer } from "~/renderer/components/Delegation/ValidatorRow";
 
 const Wrapper: ThemedComponent<*> = styled.div`
   display: flex;
@@ -33,6 +36,10 @@ const Column: ThemedComponent<{ clickable?: boolean }> = styled(TableLine).attrs
   fontSize: 3,
 }))`
   cursor: ${p => (p.clickable ? "pointer" : "cursor")};
+  ${IconContainer} {
+    color: ${p => p.theme.colors.palette.text.shade80};
+    opacity: 1;
+  }
   ${p =>
     p.clickable
       ? `
@@ -107,9 +114,15 @@ export function Row({ account, vote, onManageAction, onExternalLink }: Props) {
     <Wrapper>
       <Column strong clickable onClick={onExternalLinkClick}>
         <Box mr={1}>
-          <FirstLetterIcon label={validatorGroup?.name} />
+          <IconContainer isSR>
+            {isDefaultValidatorGroup(validatorGroup) ? (
+              <Logo size={16} />
+            ) : (
+              <FirstLetterIcon label={validatorGroup.name} />
+            )}
+          </IconContainer>
         </Box>
-        <Ellipsis>{validatorGroup?.name || "-"}</Ellipsis>
+        <Ellipsis>{validatorGroup.name}</Ellipsis>
       </Column>
       <Column>
         {vote.type === "active" && (
