@@ -1,7 +1,7 @@
 // @flow
 import { getAccountBridge } from "@ledgerhq/live-common/lib/bridge";
 import invariant from "invariant";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Trans } from "react-i18next";
 import TrackPage from "~/renderer/analytics/TrackPage";
 import Box from "~/renderer/components/Box";
@@ -47,6 +47,15 @@ export default function StepVote({
 
   const { validatorGroups } = useCeloPreloadData();
 
+  const mappedVotes = useMemo(
+    () =>
+      votes?.map(vote => ({
+        vote,
+        validatorGroup: validatorGroups.find(v => v.address === vote.validatorGroup),
+      })) || [],
+    [votes, validatorGroups],
+  );
+
   const unit = getAccountUnit(account);
 
   return (
@@ -57,20 +66,19 @@ export default function StepVote({
         <Trans i18nKey="celo.revoke.steps.vote.info" />
       </Alert>
       <Box vertical>
-        {votes.map(({ validatorGroup: address, index, amount, type }) => {
-          const validatorGroup = validatorGroups.find(v => v.address === address);
+        {mappedVotes.map(({ vote, validatorGroup }) => {
           const active =
-            transaction.recipient === validatorGroup.address && transaction.index === index;
+            transaction.recipient === validatorGroup.address && transaction.index === vote.index;
           return (
             <RevokeVoteRow
               currency={account.currency}
               active={active}
-              onClick={() => onChange(address, index)}
-              key={validatorGroup.address + index}
+              onClick={() => onChange(validatorGroup.address, vote.index)}
+              key={validatorGroup.address + vote.index}
               validatorGroup={validatorGroup}
               unit={unit}
-              amount={amount}
-              type={type}
+              amount={vote.amount}
+              type={vote.type}
             ></RevokeVoteRow>
           );
         })}

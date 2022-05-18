@@ -2085,8 +2085,8 @@
     "delegation": {
       "activeTooltip": "Active vote generates rewards",
       "pendingTooltip": "Pending vote does not generate rewards and needs to be activated after 24h",
-      "listHeader": "Votes",
-      "vote": "Vote",
+      "listHeader": "Delegations",
+      "add": "Add",
       "validatorGroup": "Validator Group",
       "actions": {
         "activate": "Activate",

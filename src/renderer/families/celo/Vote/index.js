@@ -97,7 +97,7 @@ const Vote = ({ account }: Props) => {
             <Box horizontal flow={1} alignItems="center">
               <DelegateIcon size={12} />
               <Box>
-                <Trans i18nKey="celo.delegation.vote" />
+                <Trans i18nKey="celo.delegation.add" />
               </Box>
             </Box>
           </Button>

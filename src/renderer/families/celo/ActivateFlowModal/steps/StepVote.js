@@ -1,6 +1,6 @@
 // @flow
 import invariant from "invariant";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 
 import { Trans } from "react-i18next";
 
@@ -50,6 +50,15 @@ export default function StepVote({
 
   const { validatorGroups } = useCeloPreloadData();
 
+  const mappedVotes = useMemo(
+    () =>
+      votes?.map(vote => ({
+        vote,
+        validatorGroup: validatorGroups.find(v => v.address === vote.validatorGroup),
+      })) || [],
+    [votes, validatorGroups],
+  );
+
   const unit = getAccountUnit(account);
 
   return (
@@ -57,17 +66,16 @@ export default function StepVote({
       <TrackPage category="Withdraw Flow" name="Step 1" />
       {error ? <ErrorBanner error={error} /> : null}
       <Box vertical>
-        {votes.map(({ validatorGroup: address, amount }) => {
-          const validatorGroup = validatorGroups.find(v => v.address === address);
+        {mappedVotes.map(({ vote, validatorGroup }) => {
           return (
             <ActivateValidatorGroupRow
               currency={account.currency}
               active={transaction.recipient === validatorGroup.address}
-              onClick={() => onChange(address)}
+              onClick={() => onChange(validatorGroup.address)}
               key={validatorGroup.address}
               validatorGroup={validatorGroup}
               unit={unit}
-              amount={amount}
+              amount={vote.amount}
             ></ActivateValidatorGroupRow>
           );
         })}

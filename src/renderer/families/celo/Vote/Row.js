@@ -3,7 +3,7 @@ import { getAccountUnit } from "@ledgerhq/live-common/lib/account";
 import { formatCurrencyUnit } from "@ledgerhq/live-common/lib/currencies";
 import type { Account } from "@ledgerhq/live-common/lib/types";
 import { BigNumber } from "bignumber.js";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Trans } from "react-i18next";
 import styled from "styled-components";
 import Box from "~/renderer/components/Box/Box";
@@ -96,9 +96,11 @@ export function Row({ account, vote, onManageAction, onExternalLink }: Props) {
 
   const actions = voteActions(vote);
 
-  // TODO: performance? pre-fetch instead?
   const { validatorGroups } = useCeloPreloadData();
-  const validatorGroup = validatorGroups.find(v => v.address === vote.validatorGroup);
+  const validatorGroup = useMemo(
+    () => validatorGroups.find(v => v.address === vote.validatorGroup),
+    [vote, validatorGroups],
+  );
 
   const formatAmount = (amount: number) => {
     const unit = getAccountUnit(account);
@@ -132,7 +134,7 @@ export function Row({ account, vote, onManageAction, onExternalLink }: Props) {
           </Box>
         )}
         {vote.type === "pending" && (
-          <Box color="orange">
+          <Box color="grey">
             <ToolTip content={<Trans i18nKey="celo.delegation.pendingTooltip" />}>
               <Loader size={14} />
             </ToolTip>
@@ -161,20 +163,20 @@ export function Row({ account, vote, onManageAction, onExternalLink }: Props) {
   );
 }
 
-//TODO: refactor
 function voteActions(vote) {
-  const result = [];
-  if (vote.activatable) {
-    result.push({
+  const actions = [];
+
+  if (vote.activatable)
+    actions.push({
       key: "MODAL_CELO_ACTIVATE",
       label: <Trans i18nKey="celo.delegation.actions.activate" />,
     });
-  }
-  if (vote.revokable) {
-    result.push({
+
+  if (vote.revokable)
+    actions.push({
       key: "MODAL_CELO_REVOKE",
       label: <Trans i18nKey="celo.delegation.actions.revoke" />,
     });
-  }
-  return result;
+
+  return actions;
 }
