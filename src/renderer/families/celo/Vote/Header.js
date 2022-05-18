@@ -29,7 +29,7 @@ export const TableLine: ThemedComponent<{}> = styled(Box).attrs(() => ({
 export const Header = () => (
   <HeaderWrapper>
     <TableLine>
-      <Trans i18nKey="delegation.validatorGroup" />
+      <Trans i18nKey="celo.delegation.validatorGroup" />
     </TableLine>
     <TableLine>
       <Trans i18nKey="delegation.status" />

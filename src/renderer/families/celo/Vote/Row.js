@@ -1,7 +1,6 @@
 // @flow
 import { getAccountUnit } from "@ledgerhq/live-common/lib/account";
 import { formatCurrencyUnit } from "@ledgerhq/live-common/lib/currencies";
-import type { SolanaStakeWithMeta } from "@ledgerhq/live-common/lib/families/solana/types";
 import type { Account } from "@ledgerhq/live-common/lib/types";
 import { BigNumber } from "bignumber.js";
 import React, { useCallback } from "react";
@@ -81,7 +80,7 @@ const ManageDropDownItem = ({
 type Props = {
   account: Account,
   vote: CeloVote,
-  onManageAction: (stakeWithMeta: SolanaStakeWithMeta, action: string) => void,
+  onManageAction: (vote: CeloVote, action: string) => void,
   onExternalLink: (address: string) => void,
 };
 
@@ -127,14 +126,14 @@ export function Row({ account, vote, onManageAction, onExternalLink }: Props) {
       <Column>
         {vote.type === "active" && (
           <Box color="positiveGreen">
-            <ToolTip content={<Trans i18nKey="solana.delegation.activeTooltip" />}>
+            <ToolTip content={<Trans i18nKey="celo.delegation.activeTooltip" />}>
               <CheckCircle size={14} />
             </ToolTip>
           </Box>
         )}
-        {vote === "pending" && (
+        {vote.type === "pending" && (
           <Box color="orange">
-            <ToolTip content={<Trans i18nKey="solana.delegation.inactiveTooltip" />}>
+            <ToolTip content={<Trans i18nKey="celo.delegation.pendingTooltip" />}>
               <Loader size={14} />
             </ToolTip>
           </Box>
@@ -168,13 +167,13 @@ function voteActions(vote) {
   if (vote.activatable) {
     result.push({
       key: "MODAL_CELO_ACTIVATE",
-      label: <Trans i18nKey="solana.delegation.activate.flow.title" />,
+      label: <Trans i18nKey="celo.delegation.actions.activate" />,
     });
   }
   if (vote.revokable) {
     result.push({
       key: "MODAL_CELO_REVOKE",
-      label: <Trans i18nKey="solana.delegation.withdraw.flow.title" />,
+      label: <Trans i18nKey="celo.delegation.actions.revoke" />,
     });
   }
   return result;

@@ -2082,6 +2082,22 @@
     "lockedTooltip": "Assets must be locked and voted for validator groups before earning rewards.",
     "withdrawableBalance": "Withdrawable balance",
     "withdrawableTooltip": "This amount you can withdraw now.",
+    "delegation": {
+      "activeTooltip": "Active vote generates rewards",
+      "pendingTooltip": "Pending vote does not generate rewards and needs to be activated after 24h",
+      "listHeader": "Votes",
+      "vote": "Vote",
+      "validatorGroup": "Validator Group",
+      "actions": {
+        "activate": "Activate",
+        "revoke": "Revoke"
+      },
+      "emptyState": {
+        "description": "You can earn CELO rewards by delegating your assets.",
+        "info": "How Delegation works",
+        "delegation": "Earn rewards"
+      }
+    },
     "manage": {
       "title": "Manage assets",
       "lock": {

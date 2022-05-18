@@ -18,6 +18,7 @@ import DelegateIcon from "~/renderer/icons/Delegate";
 import { openURL } from "~/renderer/linking";
 import { Header } from "./Header";
 import { Row } from "./Row";
+import { CeloVote } from "@ledgerhq/live-common/lib/families/celo/types";
 
 type Props = {
   account: Account,
@@ -56,7 +57,7 @@ const Vote = ({ account }: Props) => {
   }, [account, dispatch]);
 
   const onRedirect = useCallback(
-    (vote, modalName: string) => {
+    (vote: CeloVote, modalName: string) => {
       dispatch(
         openModal(modalName, {
           account,
@@ -96,7 +97,7 @@ const Vote = ({ account }: Props) => {
             <Box horizontal flow={1} alignItems="center">
               <DelegateIcon size={12} />
               <Box>
-                <Trans i18nKey="celo.delegation.delegate" />
+                <Trans i18nKey="celo.delegation.vote" />
               </Box>
             </Box>
           </Button>
