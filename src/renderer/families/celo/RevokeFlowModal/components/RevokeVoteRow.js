@@ -35,7 +35,6 @@ type Props = {
   type: string,
 };
 
-//TODO: consider reusing ValidatorGroupRow and passing sideInfo
 function CeloRevokeVoteRow({
   validatorGroup,
   active,

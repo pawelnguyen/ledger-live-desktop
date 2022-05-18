@@ -29,7 +29,6 @@ import StepConfirmation, { StepConfirmationFooter } from "./steps/StepConfirmati
 import logger from "~/logger/logger";
 import { CeloVote } from "@ledgerhq/live-common/lib/families/celo/types";
 
-//TODO: check other modals - params
 type OwnProps = {|
   stepId: StepId,
   onClose: () => void,
@@ -176,7 +175,6 @@ const Body = ({
     onRetry: handleRetry,
     onStepChange: handleStepChange,
     onClose: handleCloseModal,
-    reward: params.reward,
     error,
     status,
     optimisticOperation,

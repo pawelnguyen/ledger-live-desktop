@@ -26,7 +26,6 @@ type Props = {
   amount: BigNumber,
 };
 
-//TODO: consider reusing ValidatorGroupRow and passing sideInfo
 function CeloActivateValidatorGroupRow({
   validatorGroup,
   active,

@@ -1,7 +1,7 @@
 // @flow
 
 import { useSelector } from "react-redux";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback } from "react";
 import { Trans } from "react-i18next";
 import styled, { withTheme } from "styled-components";
 
@@ -15,7 +15,6 @@ import RetryButton from "~/renderer/components/RetryButton";
 import ErrorDisplay from "~/renderer/components/ErrorDisplay";
 import SuccessDisplay from "~/renderer/components/SuccessDisplay";
 import BroadcastErrorDisclaimer from "~/renderer/components/BroadcastErrorDisclaimer";
-import Text from "~/renderer/components/Text";
 import { OperationDetails } from "~/renderer/drawers/OperationDetails";
 import { setDrawer } from "~/renderer/drawers/Provider";
 
@@ -30,16 +29,7 @@ const Container: ThemedComponent<{ shouldSpace?: boolean }> = styled(Box).attrs(
   min-height: 220px;
 `;
 
-function StepConfirmation({
-  account,
-  t,
-  optimisticOperation,
-  error,
-  theme,
-  device,
-  signed,
-  transaction,
-}: StepProps & { theme: * }) {
+function StepConfirmation({ t, optimisticOperation, error, signed }: StepProps & { theme: * }) {
   if (optimisticOperation) {
     return (
       <Container>
@@ -70,12 +60,9 @@ function StepConfirmation({
 }
 
 export function StepConfirmationFooter({
-  t,
-  transitionTo,
   account: initialAccount,
   onRetry,
   error,
-  openModal,
   onClose,
   optimisticOperation,
 }: StepProps) {

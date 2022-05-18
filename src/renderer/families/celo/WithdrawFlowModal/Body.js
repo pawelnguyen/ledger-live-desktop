@@ -35,7 +35,6 @@ type OwnProps = {|
   params: {
     account: Account,
     parentAccount: ?Account,
-    reward: number,
   },
   name: string,
 |};
@@ -173,7 +172,6 @@ const Body = ({
     onRetry: handleRetry,
     onStepChange: handleStepChange,
     onClose: handleCloseModal,
-    reward: params.reward,
     error,
     status,
     optimisticOperation,

@@ -35,7 +35,6 @@ type OwnProps = {|
   params: {
     account: Account,
     parentAccount: ?Account,
-    reward: number,
   },
   name: string,
 |};
@@ -51,11 +50,10 @@ type StateProps = {|
 
 type Props = OwnProps & StateProps;
 
-// TODO: i18n
 const steps: Array<St> = [
   {
     id: "amount",
-    label: <Trans i18nKey="Amount to lock" />,
+    label: <Trans i18nKey="celo.lock.steps.amount.title" />,
     component: StepAmount,
     noScroll: true,
     footer: StepAmountFooter,
@@ -154,9 +152,8 @@ const Body = ({
 
   const error = transactionError || bridgeError;
 
-  // TODO: i18n
   const stepperProps = {
-    title: "Lock assets",
+    title: t("celo.lock.title"),
     device,
     account,
     parentAccount,
@@ -170,7 +167,6 @@ const Body = ({
     onRetry: handleRetry,
     onStepChange: handleStepChange,
     onClose: handleCloseModal,
-    reward: params.reward,
     error,
     status,
     optimisticOperation,
