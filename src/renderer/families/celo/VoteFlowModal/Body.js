@@ -25,6 +25,7 @@ import StepConfirmation, { StepConfirmationFooter } from "./steps/StepConfirmati
 import StepValidatorGroup, { StepValidatorGroupFooter } from "./steps/StepValidatorGroup";
 import type { St, StepProps, StepId } from "./types";
 import type { Device } from "@ledgerhq/live-common/lib/hw/actions/types";
+import { defaultValidatorGroupAddress } from "@ledgerhq/live-common/lib/families/celo/logic";
 
 type OwnProps = {|
   stepId: StepId,
@@ -120,6 +121,7 @@ const Body = ({
 
     const transaction = bridge.updateTransaction(bridge.createTransaction(account), {
       mode: "vote",
+      recipient: defaultValidatorGroupAddress(),
     });
 
     return { account, parentAccount: undefined, transaction };
