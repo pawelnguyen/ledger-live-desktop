@@ -18,7 +18,7 @@ import type { ThemedComponent } from "~/renderer/styles/StyleProvider";
 import { TableLine } from "./Header";
 import { CeloVote } from "@ledgerhq/live-common/lib/families/celo/types";
 import { useCeloPreloadData } from "@ledgerhq/live-common/lib/families/celo/react";
-import { isDefaultValidatorGroup } from "@ledgerhq/live-common/lib/families/celo/logic";
+import { isDefaultValidatorGroup, voteStatus } from "@ledgerhq/live-common/lib/families/celo/logic";
 import Logo from "~/renderer/icons/Logo";
 import { IconContainer } from "~/renderer/components/Delegation/ValidatorRow";
 
@@ -101,6 +101,7 @@ export function Row({ account, vote, onManageAction, onExternalLink }: Props) {
     () => validatorGroups.find(v => v.address === vote.validatorGroup),
     [vote, validatorGroups],
   );
+  const status = voteStatus(vote);
 
   const formatAmount = (amount: number) => {
     const unit = getAccountUnit(account);
@@ -126,21 +127,30 @@ export function Row({ account, vote, onManageAction, onExternalLink }: Props) {
         <Ellipsis>{validatorGroup.name}</Ellipsis>
       </Column>
       <Column>
-        {vote.type === "active" && (
+        {status === "active" && (
           <Box color="positiveGreen">
             <ToolTip content={<Trans i18nKey="celo.delegation.activeTooltip" />}>
               <CheckCircle size={14} />
             </ToolTip>
           </Box>
         )}
-        {vote.type === "pending" && (
+        {status === "awaitingActivation" && (
+          <Box color="orange">
+            <ToolTip content={<Trans i18nKey="celo.delegation.awaitingActivationTooltip" />}>
+              <Loader size={14} />
+            </ToolTip>
+          </Box>
+        )}
+        {status === "pending" && (
           <Box color="grey">
             <ToolTip content={<Trans i18nKey="celo.delegation.pendingTooltip" />}>
               <Loader size={14} />
             </ToolTip>
           </Box>
         )}
-        <Box ml={1}>{vote.type}</Box>
+        <Box ml={1}>
+          <Trans i18nKey={`celo.revoke.steps.vote.${status}`} />
+        </Box>
       </Column>
       <Column>{formatAmount(vote.amount ?? 0)}</Column>
       <Column>
