@@ -75,7 +75,7 @@ const AccountBalanceSummaryFooter = ({ account, countervalue }: Props) => {
   const unit = getAccountUnit(account);
 
   const formatConfig = {
-    disableRounding: true,
+    disableRounding: false,
     alwaysShowSign: false,
     showCode: true,
     discreet,
