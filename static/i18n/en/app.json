@@ -159,7 +159,13 @@
       "WITHDRAW_UNBONDED": "Withdrawal",
       "NOMINATE": "Nomination",
       "CHILL": "Clear nominations",
-      "SET_CONTROLLER": "Set controller"
+      "SET_CONTROLLER": "Set controller",
+      "LOCK": "Locked",
+      "UNLOCK": "Unlocked",
+      "WITHDRAW": "Withdrawn",
+      "REVOKE": "Revoked",
+      "ACTIVATE": "Activated",
+      "REGISTER": "Registered"
     }
   },
   "byteSize": {
