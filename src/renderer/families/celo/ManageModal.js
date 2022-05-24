@@ -168,42 +168,6 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                   </InfoWrapper>
                 </ManageButton>
                 <ManageButton
-                  disabled={!unlockingEnabled}
-                  onClick={() => onSelectAction(onClose, "MODAL_CELO_UNLOCK")}
-                >
-                  <IconWrapper>
-                    <UnbondIcon size={16} />
-                  </IconWrapper>
-                  <InfoWrapper>
-                    <Title>
-                      <Trans i18nKey="Unlock" />
-                    </Title>
-                    <Description>
-                      <Trans i18nKey="celo.manage.unlock.description" />
-                    </Description>
-                  </InfoWrapper>
-                </ManageButton>
-                <ManageButton
-                  disabled={!withdrawEnabled}
-                  onClick={() =>
-                    onSelectAction(onClose, "MODAL_CELO_WITHDRAW", {
-                      mode: "withdraw",
-                    })
-                  }
-                >
-                  <IconWrapper>
-                    <WithdrawUnbondedIcon size={16} />
-                  </IconWrapper>
-                  <InfoWrapper>
-                    <Title>
-                      <Trans i18nKey="celo.manage.withdraw.title" />
-                    </Title>
-                    <Description>
-                      <Trans i18nKey="celo.manage.withdraw.description" />
-                    </Description>
-                  </InfoWrapper>
-                </ManageButton>
-                <ManageButton
                   disabled={!votingEnabled}
                   onClick={() => onSelectAction(onClose, "MODAL_CELO_VOTE")}
                 >
@@ -248,6 +212,42 @@ const ManageModal = ({ name, account, ...rest }: Props) => {
                     </Title>
                     <Description>
                       <Trans i18nKey="celo.manage.revoke.description" />
+                    </Description>
+                  </InfoWrapper>
+                </ManageButton>
+                <ManageButton
+                  disabled={!unlockingEnabled}
+                  onClick={() => onSelectAction(onClose, "MODAL_CELO_UNLOCK")}
+                >
+                  <IconWrapper>
+                    <UnbondIcon size={16} />
+                  </IconWrapper>
+                  <InfoWrapper>
+                    <Title>
+                      <Trans i18nKey="Unlock" />
+                    </Title>
+                    <Description>
+                      <Trans i18nKey="celo.manage.unlock.description" />
+                    </Description>
+                  </InfoWrapper>
+                </ManageButton>
+                <ManageButton
+                  disabled={!withdrawEnabled}
+                  onClick={() =>
+                    onSelectAction(onClose, "MODAL_CELO_WITHDRAW", {
+                      mode: "withdraw",
+                    })
+                  }
+                >
+                  <IconWrapper>
+                    <WithdrawUnbondedIcon size={16} />
+                  </IconWrapper>
+                  <InfoWrapper>
+                    <Title>
+                      <Trans i18nKey="celo.manage.withdraw.title" />
+                    </Title>
+                    <Description>
+                      <Trans i18nKey="celo.manage.withdraw.description" />
                     </Description>
                   </InfoWrapper>
                 </ManageButton>
