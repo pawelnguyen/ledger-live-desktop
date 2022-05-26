@@ -48,22 +48,24 @@ const OperationDetailsExtra = ({ operation, type, account }: OperationDetailsExt
 
       return (
         <>
-          <OpDetailsSection>
-            <OpDetailsTitle>
-              <Trans i18nKey={`operation.type.${type}`} />
-            </OpDetailsTitle>
-            <OpDetailsData>
-              <Box>
-                <FormattedVal
-                  val={operation.value}
-                  unit={account.unit}
-                  showCode
-                  fontSize={4}
-                  color="palette.text.shade60"
-                />
-              </Box>
-            </OpDetailsData>
-          </OpDetailsSection>
+          {type !== "ACTIVATE" && (
+            <OpDetailsSection>
+              <OpDetailsTitle>
+                <Trans i18nKey={`operation.type.${type}`} />
+              </OpDetailsTitle>
+              <OpDetailsData>
+                <Box>
+                  <FormattedVal
+                    val={operation.value}
+                    unit={account.unit}
+                    showCode
+                    fontSize={4}
+                    color="palette.text.shade60"
+                  />
+                </Box>
+              </OpDetailsData>
+            </OpDetailsSection>
+          )}
           <OpDetailsSection>
             <OpDetailsTitle>
               <Trans i18nKey={"celo.delegation.validatorGroup"} />
@@ -84,6 +86,48 @@ const OperationDetailsExtra = ({ operation, type, account }: OperationDetailsExt
         </>
       );
     }
+    case "LOCK":
+      return (
+        <>
+          <OpDetailsSection>
+            <OpDetailsTitle>
+              <Trans i18nKey={`operation.type.${type}`} />
+            </OpDetailsTitle>
+            <OpDetailsData>
+              <Box>
+                <FormattedVal
+                  val={operation.value.minus(operation.fee)}
+                  unit={account.unit}
+                  showCode
+                  fontSize={4}
+                  color="palette.text.shade60"
+                />
+              </Box>
+            </OpDetailsData>
+          </OpDetailsSection>
+        </>
+      );
+    case "UNLOCK":
+      return (
+        <>
+          <OpDetailsSection>
+            <OpDetailsTitle>
+              <Trans i18nKey={`operation.type.${type}`} />
+            </OpDetailsTitle>
+            <OpDetailsData>
+              <Box>
+                <FormattedVal
+                  val={operation.value}
+                  unit={account.unit}
+                  showCode
+                  fontSize={4}
+                  color="palette.text.shade60"
+                />
+              </Box>
+            </OpDetailsData>
+          </OpDetailsSection>
+        </>
+      );
     default:
       return null;
   }
